@@ -1,4 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import configureStore from './redux/store';
+import { Provider } from 'react-redux';
+import App from './App';
+import DevTools from './DevTools.jsx';
 
-ReactDOM.render(<div />, document.getElementById('root'));
+const store = configureStore({});
+
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+    {process.env.NODE_ENV !== 'production' && <DevTools />}
+  </Provider>,
+  document.getElementById('root')
+);

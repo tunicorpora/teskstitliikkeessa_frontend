@@ -1,9 +1,12 @@
 {
-    "extends": [
-        "airbnb-base",
-        "plugin:prettier/recommended"
-    ],
-    "rules": {
-        "no-console": "off"
+  "extends": ["airbnb-base", "plugin:prettier/recommended", "plugin:react"],
+  "rules": {
+    "no-console": "off",
+    "react/jsx-uses-react": "error"
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
     }
+  }
 }
