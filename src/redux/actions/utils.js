@@ -1,11 +1,8 @@
 export const thunkCreator = action => {
   const { types, promise, ...rest } = action;
   const [REQUESTED, RESOLVED, REJECTED] = types;
-  console.log('MORO hei');
 
   return dispatch => {
-    console.log('anybody...?');
-    //an async call...
     dispatch({ ...rest, type: REQUESTED });
 
     return promise

@@ -1,9 +1,8 @@
-export default function authorReducer(state = {}, action) {
+export function authorReducer(state = {}, action) {
   const { type, ...authorlist } = action;
 
   switch (type) {
     case 'AUTHORLIST_REQUEST':
-      console.log('request sent ');
       break;
     case 'AUTHORLIST_SUCCESS':
       return authorlist.result;
