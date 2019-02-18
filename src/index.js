@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import App from './App';
 import DevTools from './DevTools.jsx';
 
-const store = configureStore({ authorlist: [] });
+const store = configureStore({ authorlist: ['Teuvo Testi'] });
 
 ReactDOM.render(
   <Provider store={store}>

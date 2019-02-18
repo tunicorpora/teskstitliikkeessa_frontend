@@ -12,13 +12,18 @@ export default class Main extends Component {
   }
 
   render() {
+    const { authorlist, dispatch } = this.props;
+
     return (
       <HashRouter>
         <main>
           <Nav />
           <Switch>
             <Route exact path="/" component={About} />
-            <Route path="/toimijat" component={Agents} />
+            <Route
+              path="/toimijat"
+              render={() => <Agents list={authorlist} />}
+            />
             <Route path="/kontribuutiot" component={Contributions} />
           </Switch>
         </main>
