@@ -22,7 +22,7 @@ export default class Main extends Component {
             <Route exact path="/" component={About} />
             <Route
               path="/toimijat"
-              render={() => <Agents list={authorlist} />}
+              render={() => <Agents list={authorlist} dispatch={dispatch} />}
             />
             <Route path="/kontribuutiot" component={Contributions} />
           </Switch>
