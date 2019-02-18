@@ -15,11 +15,13 @@ export default class Contributionlist extends Component {
     if (this.props.list.length) {
       colnames = Object.keys(this.props.list[0])
         .map(col => {
-          if (col.indexOf('_') !== 0) {
+          if (col.indexOf('_') !== 0 && col !== 'author') {
             return col;
           }
         })
         .filter(item => item !== undefined);
+      // Forcing 'author' to be the first column
+      colnames.unshift('author');
       tbody = this.props.list;
     }
 
