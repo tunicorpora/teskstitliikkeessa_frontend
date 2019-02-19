@@ -6,8 +6,8 @@ import App from './App';
 import DevTools from './DevTools.jsx';
 
 const store = configureStore({
-  authorlist: ['Teuvo Testi'],
-  contributionlist: [{ x: 'y' }],
+  authorlist: [],
+  contributionlist: [],
 });
 
 ReactDOM.render(

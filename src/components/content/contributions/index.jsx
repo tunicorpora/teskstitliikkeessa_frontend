@@ -15,13 +15,12 @@ export default class Contributionlist extends Component {
     if (this.props.list.length) {
       colnames = Object.keys(this.props.list[0])
         .map(col => {
+          // Note: skipping the author column
           if (col.indexOf('_') !== 0 && col !== 'author') {
             return col;
           }
         })
         .filter(item => item !== undefined);
-      // Forcing 'author' to be the first column
-      colnames.unshift('author');
       tbody = this.props.list;
     }
 
@@ -35,6 +34,7 @@ export default class Contributionlist extends Component {
         <table>
           <thead>
             <tr>
+              <th key={`header_author`}>Toimija</th>
               {colnames.map(colname => (
                 <th key={`header_${colname}`}>{colname}</th>
               ))}
@@ -43,6 +43,7 @@ export default class Contributionlist extends Component {
           <tbody>
             {tbody.map((row, idx) => (
               <tr key={idx}>
+                <td key={`td_${idx}_author`}>{row.author.name}</td>
                 {colnames.map(colname => (
                   <td key={`td_${idx}_${colname}`}>{row[colname]}</td>
                 ))}
