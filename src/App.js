@@ -5,6 +5,8 @@ function mapStateToProps(state) {
   return {
     authorlist: state.authorlist,
     contributionlist: state.contributionlist,
+    uploadStatus: state.contributionlist,
+    form: state.form,
   };
 }
 

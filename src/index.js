@@ -8,6 +8,7 @@ import DevTools from './DevTools.jsx';
 const store = configureStore({
   authorlist: [],
   contributionlist: [],
+  uploadStatus: 'none',
 });
 
 ReactDOM.render(
