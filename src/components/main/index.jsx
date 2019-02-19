@@ -13,7 +13,7 @@ export default class Main extends Component {
   }
 
   render() {
-    const { authorlist, contributionlist, dispatch } = this.props;
+    const { authorlist, contributionlist, dispatch, rowEdit } = this.props;
 
     return (
       <HashRouter>
@@ -32,7 +32,11 @@ export default class Main extends Component {
             <Route
               path="/kontribuutiot"
               render={() => (
-                <Contributions list={contributionlist} dispatch={dispatch} />
+                <Contributions
+                  rowEdit={rowEdit}
+                  list={contributionlist}
+                  dispatch={dispatch}
+                />
               )}
             />
           </Switch>

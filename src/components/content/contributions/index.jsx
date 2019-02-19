@@ -4,9 +4,26 @@ import ReactDOM from 'react-dom';
 import {
   fetchContributions,
   deleteContribution,
+  startContributionEdit,
+  saveContributionEdit,
+  makeContributionEdit,
 } from '../../../redux/actions/contribution';
 
 export default class Contributionlist extends Component {
+  handleEdit(id, colname, newval) {
+    let edited = { id: id };
+    edited[colname] = newval;
+    this.props.dispatch(makeContributionEdit(edited));
+  }
+
+  editOrSave(id, type) {
+    if (type == 'Muokkaa') {
+      this.props.dispatch(startContributionEdit(id));
+    } else {
+      this.props.dispatch(saveContributionEdit(this.props.rowEdit));
+    }
+  }
+
   componentDidMount() {
     this.props.dispatch(fetchContributions());
   }
@@ -14,7 +31,7 @@ export default class Contributionlist extends Component {
   render() {
     let colnames = [],
       tbody = [];
-    const { dispatch } = this.props;
+    const { dispatch, rowEdit } = this.props;
 
     if (this.props.list.length) {
       colnames = Object.keys(this.props.list[0])
@@ -46,20 +63,43 @@ export default class Contributionlist extends Component {
             </tr>
           </thead>
           <tbody>
-            {tbody.map((row, idx) => (
-              <tr key={row._id}>
-                <td key={`td_${idx}_utils`}>
-                  <button onClick={() => dispatch(deleteContribution(row._id))}>
-                    Poista
-                  </button>
-                  <button>Muokkaa</button>
-                </td>
-                <td key={`td_${idx}_author`}>{row.author.name}</td>
-                {colnames.map(colname => (
-                  <td key={`td_${idx}_${colname}`}>{row[colname]}</td>
-                ))}
-              </tr>
-            ))}
+            {tbody.map((row, idx) => {
+              const editText = row._id === rowEdit.id ? 'Tallenna' : 'Muokkaa';
+              return (
+                <tr key={row._id}>
+                  <td key={`td_${idx}_utils`}>
+                    <button
+                      onClick={() => dispatch(deleteContribution(row._id))}
+                    >
+                      Poista
+                    </button>
+                    <button onClick={() => this.editOrSave(row._id, editText)}>
+                      {editText}
+                    </button>
+                  </td>
+                  <td key={`td_${idx}_author`}>{row.author.name}</td>
+                  {colnames.map(colname => {
+                    const key = `td_${idx}_${colname}`,
+                      val = row[colname];
+                    if (rowEdit.id === row._id) {
+                      return (
+                        <td key={key}>
+                          <input
+                            type="text"
+                            defaultValue={val}
+                            onChange={ev =>
+                              this.handleEdit(row._id, colname, ev.target.value)
+                            }
+                          />
+                        </td>
+                      );
+                    } else {
+                      return <td key={key}>{val}</td>;
+                    }
+                  })}
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

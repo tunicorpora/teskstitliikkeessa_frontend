@@ -9,7 +9,7 @@ const store = configureStore({
   authorlist: [],
   contributionlist: [],
   uploadStatus: 'none',
-  rowEdit: {},
+  rowEdit: { id: null },
 });
 
 ReactDOM.render(
