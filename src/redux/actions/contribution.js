@@ -1,4 +1,5 @@
 import { thunkCreator } from './utils';
+import { dispatch } from 'rxjs/internal/observable/range';
 
 export function fetchContributions() {
   const url = 'http://localhost:3000/entry';
@@ -12,7 +13,7 @@ export function fetchContributions() {
   });
 }
 
-export function deleteContribution(id) {
+function _deleteContribution(id) {
   const url = `http://localhost:3000/entry/${id}`;
   return thunkCreator({
     types: [
@@ -20,6 +21,11 @@ export function deleteContribution(id) {
       'CONTRIBUTIONDELETE_SUCCESS',
       'CONTRIBUTIONDELETE_ERROR',
     ],
-    promise: fetch(url, { method: 'DELETE' }),
+    promise: fetch(url, { method: 'DELETE' }).then(response => response.json()),
   });
 }
+
+export const deleteContribution = id => dispatch =>
+  _deleteContribution(id)(dispatch).then(result =>
+    fetchContributions()(dispatch)
+  );
