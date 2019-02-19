@@ -1,11 +1,15 @@
 import React from 'react';
 import ListItem from './listitem/index.jsx';
+import { Link } from 'react-router-dom';
 
 export default () => (
   <nav>
     <ul>
       <ListItem target={'toimijat'}>Toimijat</ListItem>
       <ListItem target={'kontribuutiot'}>Kontribuutiot</ListItem>
+      <li>
+        <Link to={'/tuonti'}>Tuo uutta dataa</Link>
+      </li>
     </ul>
   </nav>
 );
