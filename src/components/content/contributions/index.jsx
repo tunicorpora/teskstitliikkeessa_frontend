@@ -10,6 +10,7 @@ import {
 } from '../../../redux/actions/contribution';
 
 export default class Contributionlist extends Component {
+
   handleEdit(id, colname, newval) {
     let edited = { id: id };
     edited[colname] = newval;

@@ -13,6 +13,9 @@ export function contributionReducer(state = {}, action) {
     case 'CONTRIBUTIONDELETE_ERROR':
       console.log('request error. ');
       break;
+    case 'CONTRIBUTIONSAVE_ERROR':
+      console.log('request error. ');
+      break;
     default:
       return state;
   }
