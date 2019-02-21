@@ -2,6 +2,7 @@ import React from 'react';
 import { Component } from 'react';
 import { HashRouter, Switch, Route } from 'react-router-dom';
 import Nav from '../nav/index.jsx';
+import Signin from '../auth/signin.jsx';
 import Agents from '../content/authors/index.jsx';
 import Xlsimporter from '../content/xlsimporter/index.jsx';
 import About from '../content/about/index.jsx';
@@ -28,6 +29,10 @@ export default class Main extends Component {
             <Route
               path="/toimijat"
               render={() => <Agents list={authorlist} dispatch={dispatch} />}
+            />
+            <Route
+              path="/signin"
+              render={() => <Signin dispatch={dispatch} />}
             />
             <Route
               path="/kontribuutiot"

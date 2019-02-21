@@ -10,6 +10,9 @@ export default () => (
       <li>
         <Link to={'/tuonti'}>Tuo uutta dataa</Link>
       </li>
+      <li>
+        <Link to={'/signin'}>Kirjaudu sisään</Link>
+      </li>
     </ul>
   </nav>
 );
