@@ -14,7 +14,13 @@ export default class Main extends Component {
   }
 
   render() {
-    const { authorlist, contributionlist, dispatch, rowEdit } = this.props;
+    const {
+      authorlist,
+      contributionlist,
+      dispatch,
+      rowEdit,
+      auth,
+    } = this.props;
 
     return (
       <HashRouter>
@@ -32,7 +38,7 @@ export default class Main extends Component {
             />
             <Route
               path="/signin"
-              render={() => <Signin dispatch={dispatch} />}
+              render={() => <Signin dispatch={dispatch} auth={auth} />}
             />
             <Route
               path="/kontribuutiot"

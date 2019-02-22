@@ -1,7 +1,11 @@
-export function authenticate(jwt, cb) {
-  if (typeof window !== 'undefined')
+export function authenticate(jwt) {
+  if (jwt.error) {
+    return jwt;
+  }
+  if (typeof window !== 'undefined') {
     sessionStorage.setItem('jwt', JSON.stringify(jwt));
-  cb();
+    return { authstatus: 'success' };
+  }
 }
 
 export function isAuthenticated() {

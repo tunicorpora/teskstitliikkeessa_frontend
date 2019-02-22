@@ -10,6 +10,7 @@ const store = configureStore({
   contributionlist: [],
   uploadStatus: 'none',
   rowEdit: { id: null },
+  auth: { user: {}, status: 'not signed' },
 });
 
 ReactDOM.render(

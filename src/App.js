@@ -7,6 +7,7 @@ function mapStateToProps(state) {
     contributionlist: state.contributionlist,
     uploadStatus: state.contributionlist,
     rowEdit: state.rowEdit,
+    auth: state.auth,
   };
 }
 
