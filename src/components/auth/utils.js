@@ -15,10 +15,9 @@ export function isAuthenticated() {
   else return false;
 }
 
-export function signout(cb) {
+export function signout() {
   if (typeof window !== 'undefined') sessionStorage.removeItem('jwt');
-  cb();
-  signout().then(data => {
-    document.cookie = 't=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-  });
+  //signout().then(data => {
+  //  document.cookie = 't=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+  //});
 }

@@ -25,7 +25,7 @@ export default class Main extends Component {
     return (
       <HashRouter>
         <main>
-          <Nav />
+          <Nav dispatch={dispatch} />
           <Switch>
             <Route exact path="/" component={About} />
             <Route

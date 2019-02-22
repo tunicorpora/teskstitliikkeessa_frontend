@@ -1,8 +1,9 @@
 import React from 'react';
 import ListItem from './listitem/index.jsx';
 import { Link } from 'react-router-dom';
+import { signout } from '../auth/utils';
 
-export default () => (
+export default ({ dispatch }) => (
   <nav>
     <ul>
       <ListItem target={'toimijat'}>Toimijat</ListItem>
@@ -12,6 +13,17 @@ export default () => (
       </li>
       <li>
         <Link to={'/signin'}>Kirjaudu sisään</Link>
+      </li>
+      <li>
+        <a
+          href="javascript:void(0)"
+          onClick={() => {
+            signout();
+            dispatch();
+          }}
+        >
+          Kirjaudu ulos
+        </a>
       </li>
     </ul>
   </nav>

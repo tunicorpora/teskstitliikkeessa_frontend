@@ -8,9 +8,10 @@ import {
   saveContributionEdit,
   makeContributionEdit,
 } from '../../../redux/actions/contribution';
+import { isAuthenticated } from '../../auth/utils';
+import { visible } from 'ansi-colors';
 
 export default class Contributionlist extends Component {
-
   handleEdit(id, colname, newval) {
     let edited = { id: id };
     edited[colname] = newval;
@@ -29,10 +30,13 @@ export default class Contributionlist extends Component {
     this.props.dispatch(fetchContributions());
   }
 
+  printEditControls() {}
+
   render() {
     let colnames = [],
       tbody = [];
-    const { dispatch, rowEdit } = this.props;
+    const { dispatch, rowEdit } = this.props,
+      showcontrols = isAuthenticated();
 
     if (this.props.list.length) {
       colnames = Object.keys(this.props.list[0])
@@ -56,7 +60,12 @@ export default class Contributionlist extends Component {
         <table>
           <thead>
             <tr>
-              <th key={`header_utils`} />
+              <th
+                key={`header_utils`}
+                style={
+                  showcontrols ? { display: 'block' } : { display: 'none' }
+                }
+              />
               <th key={`header_author`}>Toimija</th>
               {colnames.map(colname => (
                 <th key={`header_${colname}`}>{colname}</th>
@@ -68,7 +77,12 @@ export default class Contributionlist extends Component {
               const editText = row._id === rowEdit.id ? 'Tallenna' : 'Muokkaa';
               return (
                 <tr key={row._id}>
-                  <td key={`td_${idx}_utils`}>
+                  <td
+                    key={`td_${idx}_utils`}
+                    style={
+                      showcontrols ? { display: 'block' } : { display: 'none' }
+                    }
+                  >
                     <button
                       onClick={() => dispatch(deleteContribution(row._id))}
                     >
