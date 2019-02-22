@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { signIn, editCredentials } from '../../redux/actions/auth';
+import { isAuthenticated } from '../auth/utils';
 
 export default class SignIn extends Component {
   handleEdit(target) {
@@ -9,6 +10,10 @@ export default class SignIn extends Component {
 
   render() {
     const { dispatch, auth } = this.props;
+
+    if (isAuthenticated()) {
+      return <div>Muokkausoikeudet käytössä.</div>;
+    }
 
     return (
       <form

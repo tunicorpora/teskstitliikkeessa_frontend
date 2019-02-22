@@ -1,4 +1,5 @@
 import { thunkCreator } from './utils';
+import { isAuthenticated } from '../../components/auth/utils';
 
 export function testUpload(targetform) {
   console.log(targetform);
@@ -12,10 +13,17 @@ export function testUpload(targetform) {
 export function uploadData(targetform) {
   const form = new FormData(targetform);
   const url = 'http://localhost:3000/upload';
+  const jwt = isAuthenticated();
+  console.log(jwt);
   return thunkCreator({
     types: ['UPLOAD_REQUEST', 'UPLOAD_SUCCESS', 'UPLOAD_ERROR'],
-    promise: fetch(url, { method: 'POST', body: form }).then(response =>
-      response.json()
-    ),
+    promise: fetch(url, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + jwt.token,
+      },
+      body: form,
+    }).then(response => response.json()),
   });
 }

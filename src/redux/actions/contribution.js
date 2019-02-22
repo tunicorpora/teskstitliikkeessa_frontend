@@ -1,5 +1,6 @@
 import { thunkCreator } from './utils';
 import { dispatch } from 'rxjs/internal/observable/range';
+import { isAuthenticated } from '../../components/auth/utils';
 
 function fetchContributions() {
   const url = 'http://localhost:3000/entry';
@@ -15,13 +16,21 @@ function fetchContributions() {
 
 function _deleteContribution(id) {
   const url = `http://localhost:3000/entry/${id}`;
+  const jwt = isAuthenticated();
   return thunkCreator({
     types: [
       'CONTRIBUTIONDELETE_REQUEST',
       'CONTRIBUTIONDELETE_SUCCESS',
       'CONTRIBUTIONDELETE_ERROR',
     ],
-    promise: fetch(url, { method: 'DELETE' }).then(response => response.json()),
+    promise: fetch(url, {
+      method: 'DELETE',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + jwt.token,
+      },
+    }).then(response => response.json()),
   });
 }
 
@@ -40,6 +49,7 @@ const startContributionEdit = id => {
 function _saveContributionEdit(rowEdit) {
   const { id, ...data } = rowEdit;
   const url = `http://localhost:3000/entry/${id}`;
+  const jwt = isAuthenticated();
   return thunkCreator({
     types: [
       'CONTRIBUTIONEDIT_REQUEST',
@@ -48,7 +58,11 @@ function _saveContributionEdit(rowEdit) {
     ],
     promise: fetch(url, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + jwt.token,
+      },
       body: JSON.stringify(data),
     }).then(response => {
       return response.json();
