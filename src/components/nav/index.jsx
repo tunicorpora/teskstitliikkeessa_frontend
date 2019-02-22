@@ -19,7 +19,7 @@ export default ({ dispatch }) => (
           href="javascript:void(0)"
           onClick={() => {
             signout();
-            dispatch();
+            dispatch({ type: 'SIGNOUT' });
           }}
         >
           Kirjaudu ulos

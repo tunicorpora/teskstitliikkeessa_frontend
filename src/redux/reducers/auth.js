@@ -12,6 +12,11 @@ export function authReducer(state = {}, action) {
       console.log('error signin in..');
       return state;
       break;
+    case 'SIGNOUT':
+      let signoutstate = Object.assign({}, state);
+      signoutstate.status = 'Signed out';
+      return signoutstate;
+      break;
     default:
       return state;
   }
