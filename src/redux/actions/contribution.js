@@ -1,9 +1,14 @@
 import { thunkCreator } from './utils';
 import { dispatch } from 'rxjs/internal/observable/range';
 import { isAuthenticated } from '../../components/auth/utils';
+import { userInfo } from 'os';
 
-function fetchContributions() {
-  const url = 'http://localhost:3000/entry';
+function fetchContributions(filters) {
+  let url = 'http://localhost:3000/entry';
+  if (filters.length) {
+    console.log(JSON.stringify(filters));
+    url += '?filters=' + JSON.stringify(filters);
+  }
   return thunkCreator({
     types: [
       'CONTRIBUTIONLIST_REQUEST',

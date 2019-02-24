@@ -20,6 +20,7 @@ export default class Main extends Component {
       dispatch,
       rowEdit,
       auth,
+      contributionfilters,
     } = this.props;
 
     return (
@@ -46,6 +47,7 @@ export default class Main extends Component {
                 <Contributions
                   rowEdit={rowEdit}
                   list={contributionlist}
+                  filters={contributionfilters}
                   dispatch={dispatch}
                 />
               )}

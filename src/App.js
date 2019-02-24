@@ -8,6 +8,7 @@ function mapStateToProps(state) {
     uploadStatus: state.contributionlist,
     rowEdit: state.rowEdit,
     auth: state.auth,
+    contributionfilters: state.contributionfilters,
   };
 }
 

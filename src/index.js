@@ -4,6 +4,7 @@ import configureStore from './redux/store';
 import { Provider } from 'react-redux';
 import App from './App';
 import DevTools from './DevTools.jsx';
+import 'url-search-params-polyfill';
 
 const store = configureStore({
   authorlist: [],
@@ -11,6 +12,7 @@ const store = configureStore({
   uploadStatus: 'none',
   rowEdit: { id: null },
   auth: { user: {}, status: '' },
+  contributionfilters: [],
 });
 
 ReactDOM.render(

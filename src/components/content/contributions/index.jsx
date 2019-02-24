@@ -8,8 +8,9 @@ import {
   saveContributionEdit,
   makeContributionEdit,
 } from '../../../redux/actions/contribution';
+import { addFilter } from '../../../redux/actions/filter';
 import { isAuthenticated } from '../../auth/utils';
-import { visible } from 'ansi-colors';
+import Filter from '../filter/index.jsx';
 
 export default class Contributionlist extends Component {
   handleEdit(id, colname, newval) {
@@ -27,15 +28,14 @@ export default class Contributionlist extends Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(fetchContributions());
+    const { dispatch, filters } = this.props;
+    dispatch(fetchContributions(filters));
   }
-
-  printEditControls() {}
 
   render() {
     let colnames = [],
       tbody = [];
-    const { dispatch, rowEdit } = this.props,
+    const { dispatch, rowEdit, filters } = this.props,
       showcontrols = isAuthenticated();
 
     if (this.props.list.length) {
@@ -57,6 +57,23 @@ export default class Contributionlist extends Component {
           Kontribuutioilla tarkoitetaan tässsä kaikkia "kirjallisia tekoja":
           kirjoja, käännöksiä, artikkeleita, mainintoja...
         </p>
+
+        <h3>Suodata</h3>
+
+        {filters.map((filter, idx) => (
+          <Filter
+            allfilters={filters}
+            colnames={colnames}
+            dispatch={dispatch}
+            key={idx}
+            idx={idx}
+          />
+        ))}
+
+        <button onClick={() => dispatch(addFilter())}>
+          Lisää pakollinen ehto
+        </button>
+
         <table>
           <thead>
             <tr>
