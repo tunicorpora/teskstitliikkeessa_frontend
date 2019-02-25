@@ -9,9 +9,7 @@ export function rowReducer(state = {}, action) {
       return { id: edit.id };
       break;
     case 'EDIT_CONTRIBUTION':
-      let newstate = Object.assign({}, state);
-      let edited = Object.assign(newstate, edit);
-      return edited;
+      return { ...state, ...edit };
       break;
     default:
       return state;

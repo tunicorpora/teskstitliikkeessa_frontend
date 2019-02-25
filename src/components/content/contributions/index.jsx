@@ -15,10 +15,14 @@ import { isAuthenticated } from '../../auth/utils';
 import Filter from '../filter/index.jsx';
 
 export default class Contributionlist extends Component {
-  handleEdit(id, colname, newval) {
-    let edited = { id: id };
-    edited[colname] = newval;
-    this.props.dispatch(makeContributionEdit(edited));
+  handleEdit(id, colname, newval, authorId) {
+    this.props.dispatch(
+      makeContributionEdit({
+        [colname]: newval,
+        id: id,
+        authorId: authorId,
+      })
+    );
   }
 
   handleColumnActivity(colname, checked) {
@@ -29,7 +33,9 @@ export default class Contributionlist extends Component {
     if (type == 'Muokkaa') {
       this.props.dispatch(startContributionEdit(id));
     } else {
-      this.props.dispatch(saveContributionEdit(this.props.rowEdit));
+      this.props.dispatch(
+        saveContributionEdit(this.props.rowEdit, this.props.filters)
+      );
     }
   }
 
@@ -112,7 +118,9 @@ export default class Contributionlist extends Component {
                     }
                   >
                     <button
-                      onClick={() => dispatch(deleteContribution(row._id))}
+                      onClick={() =>
+                        dispatch(deleteContribution(row._id, filters))
+                      }
                     >
                       Poista
                     </button>
@@ -130,9 +138,16 @@ export default class Contributionlist extends Component {
                           <input
                             type="text"
                             defaultValue={val}
-                            onChange={ev =>
-                              this.handleEdit(row._id, colname, ev.target.value)
-                            }
+                            onChange={ev => {
+                              console.log(row.author._id);
+                              console.log(row._id);
+                              this.handleEdit(
+                                row._id,
+                                colname,
+                                ev.target.value,
+                                row.author._id
+                              );
+                            }}
                           />
                         </td>
                       );

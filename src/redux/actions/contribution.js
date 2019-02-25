@@ -55,9 +55,9 @@ function _deleteContribution(id) {
   });
 }
 
-const deleteContribution = id => dispatch =>
+const deleteContribution = (id, filters) => dispatch =>
   _deleteContribution(id)(dispatch).then(result =>
-    fetchContributions()(dispatch)
+    fetchContributions(filters)(dispatch)
   );
 
 const startContributionEdit = id => {
@@ -91,11 +91,12 @@ function _saveContributionEdit(rowEdit) {
   });
 }
 
-const saveContributionEdit = rowEdit => dispatch =>
+const saveContributionEdit = (rowEdit, filters) => dispatch => {
+  console.log('editing: ' + JSON.stringify(rowEdit));
   _saveContributionEdit(rowEdit)(dispatch)
-    .then(() => dispatch(fetchContributions()))
+    .then(() => dispatch(fetchContributions(filters)))
     .then(dispatch({ type: 'CANCEL_EDITS' }));
-
+};
 const makeContributionEdit = rowEdit => {
   return {
     type: 'EDIT_CONTRIBUTION',
