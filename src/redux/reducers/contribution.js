@@ -46,7 +46,17 @@ export function colNameReducer(state = {}, action) {
         .map(key => (key === 'author' ? 'Toimija' : key));
       return {
         all: colnames,
-        active: colnames,
+        active: colnames.filter(
+          col =>
+            [
+              'Ensi-ilta',
+              'Ohjaaja',
+              'Esityspaikka',
+              'Linkki',
+              'Tietokanta',
+              'Lisätiedot',
+            ].indexOf(col) < 0
+        ),
       };
       break;
 
