@@ -1,5 +1,6 @@
 import { thunkCreator } from './utils';
 import { fetchContributions } from './contribution';
+import { filterReducer } from '../reducers/filter';
 
 function _updateFilter(field, val, idx) {
   return {
@@ -11,8 +12,11 @@ function _updateFilter(field, val, idx) {
 }
 
 export const updateFilter = (field, val, idx, allfilters) => dispatch => {
-  dispatch({ type: 'UPDATE_FILTER', field: field, val: val, idx: idx });
-  return dispatch(fetchContributions(allfilters));
+  const action = { type: 'UPDATE_FILTER', field: field, val: val, idx: idx };
+  // Kind of a hack: getting the latest state by (mis)using the reducer
+  const futureState = filterReducer(allfilters, action);
+  dispatch(action);
+  return dispatch(fetchContributions(futureState));
 };
 
 export function filterContributions() {
