@@ -23,19 +23,33 @@ export function contributionReducer(state = {}, action) {
   return state;
 }
 
-export function colNameReducer(state = [], action) {
-  const { type, ...contributionlist } = action;
+export function colNameReducer(state = {}, action) {
+  const { type, ...rest } = action;
 
   switch (type) {
+    case 'CHANGE_COL_STATE':
+      return {
+        all: state.all,
+        active: state.all.filter(
+          colname =>
+            (rest.name === colname && rest.include) ||
+            (rest.name !== colname && state.active.indexOf(colname) > -1)
+        ),
+      };
+      break;
     case 'CONTRIBUTION_COLNAMES_REQUEST':
       return state;
       break;
     case 'CONTRIBUTION_COLNAMES_SUCCESS':
-      return Object.keys(contributionlist.result)
+      const colnames = Object.keys(rest.result)
         .filter(key => key.indexOf('_') !== 0 && key)
         .map(key => (key === 'author' ? 'Toimija' : key));
-      return contributionlist.result;
+      return {
+        all: colnames,
+        active: colnames,
+      };
       break;
+
     default:
       return state;
   }

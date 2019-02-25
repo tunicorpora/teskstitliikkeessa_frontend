@@ -15,6 +15,10 @@ function fetchColNames() {
   });
 }
 
+function changeColState(name, include) {
+  return { type: 'CHANGE_COL_STATE', name: name, include: include };
+}
+
 function fetchContributions(filters) {
   let url = 'http://localhost:3000/entry';
   if (filters.length) {
@@ -106,4 +110,5 @@ export {
   fetchContributions,
   deleteContribution,
   fetchColNames,
+  changeColState,
 };

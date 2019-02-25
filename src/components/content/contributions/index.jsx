@@ -8,6 +8,7 @@ import {
   saveContributionEdit,
   makeContributionEdit,
   fetchColNames,
+  changeColState,
 } from '../../../redux/actions/contribution';
 import { addFilter } from '../../../redux/actions/filter';
 import { isAuthenticated } from '../../auth/utils';
@@ -18,6 +19,10 @@ export default class Contributionlist extends Component {
     let edited = { id: id };
     edited[colname] = newval;
     this.props.dispatch(makeContributionEdit(edited));
+  }
+
+  handleColumnActivity(colname, checked) {
+    this.props.dispatch(changeColState(colname, checked));
   }
 
   editOrSave(id, type) {
@@ -52,7 +57,7 @@ export default class Contributionlist extends Component {
         {filters.map((filter, idx) => (
           <Filter
             allfilters={filters}
-            colnames={colnames}
+            colnames={colnames.active}
             dispatch={dispatch}
             key={idx}
             idx={idx}
@@ -63,6 +68,24 @@ export default class Contributionlist extends Component {
           Lisää pakollinen ehto
         </button>
 
+        <div>
+          Näytettävät kentät
+          <ul>
+            {colnames.all.map(col => (
+              <li>
+                <input
+                  type="checkbox"
+                  onChange={ev =>
+                    this.handleColumnActivity(col, ev.target.checked)
+                  }
+                  checked={colnames.active.indexOf(col) > -1 ? true : false}
+                />{' '}
+                {col}
+              </li>
+            ))}
+          </ul>
+        </div>
+
         <table>
           <thead>
             <tr>
@@ -72,7 +95,7 @@ export default class Contributionlist extends Component {
                   showcontrols ? { display: 'block' } : { display: 'none' }
                 }
               />
-              {colnames.map(colname => (
+              {colnames.active.map(colname => (
                 <th key={`header_${colname}`}>{colname}</th>
               ))}
             </tr>
@@ -97,7 +120,7 @@ export default class Contributionlist extends Component {
                       {editText}
                     </button>
                   </td>
-                  {colnames.map(colname => {
+                  {colnames.active.map(colname => {
                     const key = `td_${idx}_${colname}`,
                       val =
                         colname == 'Toimija' ? row.author.name : row[colname];
