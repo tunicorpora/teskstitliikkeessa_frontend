@@ -4,7 +4,7 @@ import { fetchContributions } from './contribution';
 function _updateFilter(field, val, idx) {
   return {
     type: 'UPDATE_FILTER',
-    field: field,
+    field: field == 'Toimija' ? 'author' : field,
     val: val,
     idx: idx,
   };

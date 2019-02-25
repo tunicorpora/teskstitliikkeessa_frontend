@@ -22,3 +22,23 @@ export function contributionReducer(state = {}, action) {
 
   return state;
 }
+
+export function colNameReducer(state = [], action) {
+  const { type, ...contributionlist } = action;
+
+  switch (type) {
+    case 'CONTRIBUTION_COLNAMES_REQUEST':
+      return state;
+      break;
+    case 'CONTRIBUTION_COLNAMES_SUCCESS':
+      return Object.keys(contributionlist.result)
+        .filter(key => key.indexOf('_') !== 0 && key)
+        .map(key => (key === 'author' ? 'Toimija' : key));
+      return contributionlist.result;
+      break;
+    default:
+      return state;
+  }
+
+  return state;
+}

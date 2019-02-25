@@ -11,7 +11,6 @@ export default class Filter extends Component {
     const { dispatch, allfilters } = this.props;
     console.log(allfilters);
     dispatch(updateFilter(field, val, idx, allfilters));
-    //dispatch(fetchContributions(allfilters));
   }
 
   render() {
@@ -26,7 +25,6 @@ export default class Filter extends Component {
               this.handleChange('fieldname', ev.target.value, filterIndex)
             }
           >
-            <option>Toimija</option>
             {colnames.map((colname, idx) => {
               if (colname) {
                 return <option key={`colnameopt _${idx}`}>{colname}</option>;

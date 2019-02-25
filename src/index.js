@@ -13,6 +13,7 @@ const store = configureStore({
   rowEdit: { id: null },
   auth: { user: {}, status: '' },
   contributionfilters: [],
+  contributioncolnames: [],
 });
 
 ReactDOM.render(

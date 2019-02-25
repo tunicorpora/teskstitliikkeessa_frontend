@@ -21,6 +21,7 @@ export default class Main extends Component {
       rowEdit,
       auth,
       contributionfilters,
+      contributioncolnames: colnames,
     } = this.props;
 
     return (
@@ -49,6 +50,7 @@ export default class Main extends Component {
                   list={contributionlist}
                   filters={contributionfilters}
                   dispatch={dispatch}
+                  colnames={colnames}
                 />
               )}
             />

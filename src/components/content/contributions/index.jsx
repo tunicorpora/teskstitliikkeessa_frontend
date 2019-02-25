@@ -7,6 +7,7 @@ import {
   startContributionEdit,
   saveContributionEdit,
   makeContributionEdit,
+  fetchColNames,
 } from '../../../redux/actions/contribution';
 import { addFilter } from '../../../redux/actions/filter';
 import { isAuthenticated } from '../../auth/utils';
@@ -29,26 +30,14 @@ export default class Contributionlist extends Component {
 
   componentDidMount() {
     const { dispatch, filters } = this.props;
+    dispatch(fetchColNames());
     dispatch(fetchContributions(filters));
   }
 
   render() {
-    let colnames = [],
-      tbody = [];
-    const { dispatch, rowEdit, filters } = this.props,
+    const tbody = this.props.list.length ? this.props.list : [];
+    const { dispatch, rowEdit, filters, colnames } = this.props,
       showcontrols = isAuthenticated();
-
-    if (this.props.list.length) {
-      colnames = Object.keys(this.props.list[0])
-        .map(col => {
-          // Note: skipping the author column
-          if (col.indexOf('_') !== 0 && col !== 'author') {
-            return col;
-          }
-        })
-        .filter(item => item !== undefined);
-      tbody = this.props.list;
-    }
 
     return (
       <div>
@@ -83,7 +72,6 @@ export default class Contributionlist extends Component {
                   showcontrols ? { display: 'block' } : { display: 'none' }
                 }
               />
-              <th key={`header_author`}>Toimija</th>
               {colnames.map(colname => (
                 <th key={`header_${colname}`}>{colname}</th>
               ))}
@@ -109,10 +97,10 @@ export default class Contributionlist extends Component {
                       {editText}
                     </button>
                   </td>
-                  <td key={`td_${idx}_author`}>{row.author.name}</td>
                   {colnames.map(colname => {
                     const key = `td_${idx}_${colname}`,
-                      val = row[colname];
+                      val =
+                        colname == 'Toimija' ? row.author.name : row[colname];
                     if (rowEdit.id === row._id) {
                       return (
                         <td key={key}>

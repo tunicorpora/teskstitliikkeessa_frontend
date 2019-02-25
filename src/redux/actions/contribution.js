@@ -3,6 +3,18 @@ import { dispatch } from 'rxjs/internal/observable/range';
 import { isAuthenticated } from '../../components/auth/utils';
 import { userInfo } from 'os';
 
+function fetchColNames() {
+  let url = 'http://localhost:3000/colnames';
+  return thunkCreator({
+    types: [
+      'CONTRIBUTION_COLNAMES_REQUEST',
+      'CONTRIBUTION_COLNAMES_SUCCESS',
+      'CONTRIBUTION_COLNAMES_ERROR',
+    ],
+    promise: fetch(url).then(response => response.json()),
+  });
+}
+
 function fetchContributions(filters) {
   let url = 'http://localhost:3000/entry';
   if (filters.length) {
@@ -93,4 +105,5 @@ export {
   saveContributionEdit,
   fetchContributions,
   deleteContribution,
+  fetchColNames,
 };

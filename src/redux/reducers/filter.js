@@ -9,7 +9,11 @@ export function filterReducer(state = {}, action) {
       const { idx, field, val } = rest;
       return state.map((filter, stateidx) => {
         if (stateidx === idx) {
-          return { ...filter, ...{ [field]: val } };
+          let altered = filter;
+          if (!altered.fieldname) {
+            altered.fieldname = 'Toimija';
+          }
+          return { ...altered, ...{ [field]: val } };
         } else {
           return filter;
         }

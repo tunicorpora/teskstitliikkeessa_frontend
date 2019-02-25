@@ -9,6 +9,7 @@ function mapStateToProps(state) {
     rowEdit: state.rowEdit,
     auth: state.auth,
     contributionfilters: state.contributionfilters,
+    contributioncolnames: state.contributioncolnames,
   };
 }
 
