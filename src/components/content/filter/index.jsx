@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styles from './styles.scss';
 import {
   updateFilter,
+  removeFilter,
   filterContributions,
 } from '../../../redux/actions/filter';
 import { fetchContributions } from '../../../redux/actions/contribution';
@@ -14,7 +15,7 @@ export default class Filter extends Component {
   }
 
   render() {
-    const { colnames, idx: filterIndex } = this.props;
+    const { colnames, idx: filterIndex, dispatch } = this.props;
 
     return (
       <div className={styles.cont}>
@@ -40,6 +41,11 @@ export default class Filter extends Component {
               this.handleChange('value', ev.target.value, filterIndex);
             }}
           />
+        </div>
+        <div>
+          <button onClick={() => dispatch(removeFilter(filterIndex))}>
+            Poista ehto
+          </button>
         </div>
       </div>
     );

@@ -60,7 +60,7 @@ export default class Contributionlist extends Component {
           kirjoja, käännöksiä, artikkeleita, mainintoja...
         </p>
 
-        <h3>Suodata</h3>
+        <h3>Hakuehdot</h3>
 
         {filters.map((filter, idx) => (
           <Filter
@@ -72,12 +72,10 @@ export default class Contributionlist extends Component {
           />
         ))}
 
-        <button onClick={() => dispatch(addFilter())}>
-          Lisää pakollinen ehto
-        </button>
+        <button onClick={() => dispatch(addFilter())}>Lisää hakuehto</button>
 
         <div>
-          Näytettävät kentät
+          <h3>Näytettävät kentät</h3>
           <ul>
             {colnames.all.map(col => (
               <li>

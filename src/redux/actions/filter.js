@@ -19,6 +19,14 @@ export const updateFilter = (field, val, idx, allfilters) => dispatch => {
   return dispatch(fetchContributions(futureState));
 };
 
+export const removeFilter = (idx, allfilters) => dispatch => {
+  const action = { type: 'REMOVE_FILTER', idx: idx };
+  // Kind of a hack: getting the latest state by (mis)using the reducer
+  const futureState = filterReducer(allfilters, action);
+  dispatch(action);
+  return dispatch(fetchContributions(futureState));
+};
+
 export function filterContributions() {
   return {
     type: 'FILTER',
