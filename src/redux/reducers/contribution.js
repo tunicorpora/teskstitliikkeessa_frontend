@@ -1,8 +1,6 @@
 export function contributionReducer(state = {}, action) {
   const { type, ...contributionlist } = action;
 
-  console.log(contributionlist);
-
   switch (type) {
     case 'CONTRIBUTIONLIST_REQUEST':
       break;

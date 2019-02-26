@@ -7,6 +7,7 @@ import Agents from '../content/authors/index.jsx';
 import Xlsimporter from '../content/xlsimporter/index.jsx';
 import About from '../content/about/index.jsx';
 import Contributions from '../content/contributions/index.jsx';
+import styles from './general_styles.scss';
 
 export default class Main extends Component {
   constructor(props) {
@@ -28,33 +29,35 @@ export default class Main extends Component {
       <HashRouter>
         <main>
           <Nav dispatch={dispatch} />
-          <Switch>
-            <Route exact path="/" component={About} />
-            <Route
-              path="/tuonti"
-              render={() => <Xlsimporter dispatch={dispatch} />}
-            />
-            <Route
-              path="/toimijat"
-              render={() => <Agents list={authorlist} dispatch={dispatch} />}
-            />
-            <Route
-              path="/signin"
-              render={() => <Signin dispatch={dispatch} auth={auth} />}
-            />
-            <Route
-              path="/kontribuutiot"
-              render={() => (
-                <Contributions
-                  rowEdit={rowEdit}
-                  list={contributionlist}
-                  filters={contributionfilters}
-                  dispatch={dispatch}
-                  colnames={colnames}
-                />
-              )}
-            />
-          </Switch>
+          <div className={styles.content}>
+            <Switch>
+              <Route exact path="/" component={About} />
+              <Route
+                path="/tuonti"
+                render={() => <Xlsimporter dispatch={dispatch} />}
+              />
+              <Route
+                path="/toimijat"
+                render={() => <Agents list={authorlist} dispatch={dispatch} />}
+              />
+              <Route
+                path="/signin"
+                render={() => <Signin dispatch={dispatch} auth={auth} />}
+              />
+              <Route
+                path="/kontribuutiot"
+                render={() => (
+                  <Contributions
+                    rowEdit={rowEdit}
+                    list={contributionlist}
+                    filters={contributionfilters}
+                    dispatch={dispatch}
+                    colnames={colnames}
+                  />
+                )}
+              />
+            </Switch>
+          </div>
         </main>
       </HashRouter>
     );

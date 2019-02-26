@@ -4,14 +4,7 @@ import { Link } from 'react-router-dom';
 export default props => {
   return (
     <li>
-      {props.children}
-      <ul>
-        <li>
-          <Link to={'/' + props.target}>Selaus</Link>
-        </li>
-        <li>Haku</li>
-        <li>Syöttö</li>
-      </ul>
+      <Link to={'/' + props.target}>{props.children}</Link>
     </li>
   );
 };

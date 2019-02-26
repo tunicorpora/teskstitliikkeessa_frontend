@@ -40,7 +40,7 @@ export default class Filter extends Component {
             }
           >
             <option>Sisältää</option>
-            <option>=</option>
+            <option value="=">On täsmälleen</option>
           </select>
         </div>
         <div>

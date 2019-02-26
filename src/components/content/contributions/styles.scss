@@ -1,0 +1,19 @@
+.optionContainer {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.fieldList,
+.pageList {
+  list-style-type: none;
+  padding-left: 0em;
+}
+
+.pageList {
+  li {
+    display: inline-block;
+  }
+  li + li {
+    margin-left: 0.3em;
+  }
+}

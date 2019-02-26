@@ -1,6 +1,7 @@
 import React from 'react';
 import { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { range } from 'lodash';
 import {
   fetchContributions,
   deleteContribution,
@@ -10,10 +11,12 @@ import {
   fetchColNames,
   changeColState,
 } from '../../../redux/actions/contribution';
+import ToggledBox from '../../ui/ToggledBox';
 import { addFilter } from '../../../redux/actions/filter';
 import { isAuthenticated } from '../../auth/utils';
 import Filter from '../filter/index.jsx';
-import { range } from 'lodash';
+import styles from './styles.scss';
+import generalStyles from '../../main/general_styles.scss';
 
 export default class Contributionlist extends Component {
   handleEdit(id, colname, newval, authorId) {
@@ -54,51 +57,54 @@ export default class Contributionlist extends Component {
 
     return (
       <div>
-        <h2>Kontribuutiot</h2>
         <p>
           Kontribuutioilla tarkoitetaan tässsä kaikkia "kirjallisia tekoja":
           kirjoja, käännöksiä, artikkeleita, mainintoja...
         </p>
 
-        <h3>Hakuehdot</h3>
-
-        {filters.map((filter, idx) => (
-          <Filter
-            allfilters={filters}
-            colnames={colnames.all}
-            dispatch={dispatch}
-            key={idx}
-            idx={idx}
-          />
-        ))}
-
-        <button onClick={() => dispatch(addFilter())}>Lisää hakuehto</button>
-
-        <div>
-          <h3>Näytettävät kentät</h3>
-          <ul>
-            {colnames.all.map(col => (
-              <li>
-                <input
-                  type="checkbox"
-                  onChange={ev =>
-                    this.handleColumnActivity(col, ev.target.checked)
-                  }
-                  checked={colnames.active.indexOf(col) > -1 ? true : false}
-                />{' '}
-                {col}
-              </li>
+        <section className={styles.optionContainer}>
+          <ToggledBox header="Hakuehdot">
+            {filters.map((filter, idx) => (
+              <Filter
+                allfilters={filters}
+                colnames={colnames.all}
+                dispatch={dispatch}
+                key={idx}
+                idx={idx}
+              />
             ))}
-          </ul>
-        </div>
+
+            <section className={generalStyles.verticalMargin}>
+              <button onClick={() => dispatch(addFilter())}>
+                Lisää hakuehto
+              </button>
+            </section>
+          </ToggledBox>
+          <ToggledBox header="Näytettävät kentät">
+            <ul className={styles.fieldList}>
+              {colnames.all.map(col => (
+                <li>
+                  <input
+                    type="checkbox"
+                    onChange={ev =>
+                      this.handleColumnActivity(col, ev.target.checked)
+                    }
+                    checked={colnames.active.indexOf(col) > -1 ? true : false}
+                  />{' '}
+                  {col}
+                </li>
+              ))}
+            </ul>
+          </ToggledBox>
+        </section>
 
         <div>
           <p>
             Näytetään tuloksia: {list.meta.total} ({list.meta.showing} tällä
             sivulla)
           </p>
-          <p>Sivut: </p>
-          <ul>
+          <ul className={styles.pageList}>
+            <li>Sivut: </li>
             {range(1, list.meta.pages + 1).map(no => (
               <li>
                 <a
