@@ -65,7 +65,7 @@ export default class Contributionlist extends Component {
         {filters.map((filter, idx) => (
           <Filter
             allfilters={filters}
-            colnames={colnames.active}
+            colnames={colnames.all}
             dispatch={dispatch}
             key={idx}
             idx={idx}
