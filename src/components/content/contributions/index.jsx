@@ -95,15 +95,19 @@ export default class Contributionlist extends Component {
         </div>
 
         <div>
+          <p>
+            Näytetään tuloksia: {list.meta.total} ({list.meta.showing} tällä
+            sivulla)
+          </p>
+          <p>Sivut: </p>
           <ul>
-            <li> Yhteensä tuloksia: {list.meta.total}</li>
-            {range(1, list.meta.pages).map(no => (
+            {range(1, list.meta.pages + 1).map(no => (
               <li>
                 <a
                   href="javascript:void(0)"
                   onClick={() => dispatch(fetchContributions(filters, no))}
                 >
-                  {no}
+                  {list.meta.page == no ? <strong>{no}</strong> : no}
                 </a>
               </li>
             ))}

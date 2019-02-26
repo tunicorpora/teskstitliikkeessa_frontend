@@ -22,8 +22,9 @@ function changeColState(name, include) {
 function fetchContributions(filters, page = 1) {
   let url = 'http://localhost:3000/entry?page=' + page;
   if (filters.length) {
-    url += '&filters=' + JSON.stringify(filters);
+    url += '&filters=' + encodeURIComponent(JSON.stringify(filters));
   }
+  console.log(url);
   return thunkCreator({
     types: [
       'CONTRIBUTIONLIST_REQUEST',
