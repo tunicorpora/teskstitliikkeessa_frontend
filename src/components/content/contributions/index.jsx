@@ -13,6 +13,7 @@ import {
 import { addFilter } from '../../../redux/actions/filter';
 import { isAuthenticated } from '../../auth/utils';
 import Filter from '../filter/index.jsx';
+import { range } from 'lodash';
 
 export default class Contributionlist extends Component {
   handleEdit(id, colname, newval, authorId) {
@@ -46,9 +47,10 @@ export default class Contributionlist extends Component {
   }
 
   render() {
-    const tbody = this.props.list.length ? this.props.list : [];
-    const { dispatch, rowEdit, filters, colnames } = this.props,
-      showcontrols = isAuthenticated();
+    const { dispatch, rowEdit, filters, colnames, list } = this.props,
+      showcontrols = isAuthenticated(),
+      tbody = list.data.length ? list.data : [];
+    // tbody = list.data.length ? list.data : [];
 
     return (
       <div>
@@ -87,6 +89,22 @@ export default class Contributionlist extends Component {
                   checked={colnames.active.indexOf(col) > -1 ? true : false}
                 />{' '}
                 {col}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <ul>
+            <li> Yhteensä tuloksia: {list.meta.total}</li>
+            {range(1, list.meta.pages).map(no => (
+              <li>
+                <a
+                  href="javascript:void(0)"
+                  onClick={() => dispatch(fetchContributions(filters, no))}
+                >
+                  {no}
+                </a>
               </li>
             ))}
           </ul>
@@ -139,8 +157,6 @@ export default class Contributionlist extends Component {
                             type="text"
                             defaultValue={val}
                             onChange={ev => {
-                              console.log(row.author._id);
-                              console.log(row._id);
                               this.handleEdit(
                                 row._id,
                                 colname,

@@ -19,11 +19,10 @@ function changeColState(name, include) {
   return { type: 'CHANGE_COL_STATE', name: name, include: include };
 }
 
-function fetchContributions(filters) {
-  let url = 'http://localhost:3000/entry';
+function fetchContributions(filters, page = 1) {
+  let url = 'http://localhost:3000/entry?page=' + page;
   if (filters.length) {
-    console.log(JSON.stringify(filters));
-    url += '?filters=' + JSON.stringify(filters);
+    url += '&filters=' + JSON.stringify(filters);
   }
   return thunkCreator({
     types: [
@@ -92,7 +91,6 @@ function _saveContributionEdit(rowEdit) {
 }
 
 const saveContributionEdit = (rowEdit, filters) => dispatch => {
-  console.log('editing: ' + JSON.stringify(rowEdit));
   _saveContributionEdit(rowEdit)(dispatch)
     .then(() => dispatch(fetchContributions(filters)))
     .then(dispatch({ type: 'CANCEL_EDITS' }));

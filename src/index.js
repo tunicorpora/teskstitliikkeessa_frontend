@@ -8,7 +8,7 @@ import 'url-search-params-polyfill';
 
 const store = configureStore({
   authorlist: [],
-  contributionlist: [],
+  contributionlist: { data: [], meta: [] },
   uploadStatus: 'none',
   rowEdit: { id: null },
   auth: { user: {}, status: '' },
