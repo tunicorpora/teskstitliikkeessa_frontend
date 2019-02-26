@@ -33,7 +33,16 @@ export default class Filter extends Component {
             })}
           </select>
         </div>
-        <div>sisältää</div>
+        <div>
+          <select
+            onChange={ev =>
+              this.handleChange('operator', ev.target.value, filterIndex)
+            }
+          >
+            <option>Sisältää</option>
+            <option>=</option>
+          </select>
+        </div>
         <div>
           <input
             type="text"
