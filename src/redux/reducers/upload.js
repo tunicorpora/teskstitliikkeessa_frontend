@@ -9,7 +9,7 @@ export function uploadReducer(state = 'none', action) {
       return 'in progress';
       break;
     case 'UPLOAD_SUCCESS':
-      return 'saved ' + uploadStatus.result.saved;
+      return uploadStatus.result.saved;
       break;
     case 'UPLOAD_ERROR':
       console.log('upload error');

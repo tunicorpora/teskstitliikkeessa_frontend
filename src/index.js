@@ -9,7 +9,7 @@ import 'url-search-params-polyfill';
 const store = configureStore({
   authorlist: [],
   contributionlist: { data: [], meta: [] },
-  uploadStatus: 'none',
+  uploadStatus: null,
   rowEdit: { id: null },
   colEdit: { name: null, newname: null },
   auth: { user: {}, status: '' },

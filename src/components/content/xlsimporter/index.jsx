@@ -38,8 +38,15 @@ const removeCol = (colName, dispatch) => {
 
 export default class Xlsimporter extends Component {
   render() {
-    const { dispatch, colnames, colEdit } = this.props;
-    console.log(colEdit);
+    const { dispatch, colnames, colEdit, uploadStatus } = this.props;
+
+    let uploadInfo;
+    if (uploadStatus === 'in progress') {
+      uploadInfo = <p>Lataus käynnissä, odota hetki...</p>;
+    } else if (uploadStatus) {
+      uploadInfo = <p>Lataus valmis, lisättiin {uploadStatus} tietuetta.</p>;
+    }
+
     return (
       <div className={styles.narrowed}>
         <ToggleBox header="Tuo uutta dataa">
@@ -74,6 +81,7 @@ export default class Xlsimporter extends Component {
               <input id="filefield" type="file" name="upload" />
               <input type="submit" value="Lataa tiedosto" />
             </div>
+            <div>{uploadInfo}</div>
           </form>
         </ToggleBox>
         <ToggleBox
@@ -81,7 +89,7 @@ export default class Xlsimporter extends Component {
           data={() => {
             dispatch(fetchColNames());
           }}
-          openByDefault={true}
+          openByDefault={false}
         >
           <p>
             Voit muokata tietokannasssa jo olevia kenttiä (taulukon sarakkeita)

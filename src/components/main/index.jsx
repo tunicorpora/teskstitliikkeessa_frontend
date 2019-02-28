@@ -24,11 +24,9 @@ export default class Main extends Component {
       colEdit,
       auth,
       contributionfilters,
+      uploadStatus,
       contributioncolnames: colnames,
     } = this.props;
-    console.log('in main:');
-    console.log(colEdit);
-    console.log('<<<<');
 
     return (
       <HashRouter>
@@ -47,6 +45,7 @@ export default class Main extends Component {
                         dispatch={dispatch}
                         colEdit={colEdit}
                         colnames={colnames}
+                        uploadStatus={uploadStatus}
                       />
                     )}
                   />
