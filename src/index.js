@@ -11,6 +11,7 @@ const store = configureStore({
   contributionlist: { data: [], meta: [] },
   uploadStatus: 'none',
   rowEdit: { id: null },
+  colEdit: { name: null, newname: null },
   auth: { user: {}, status: '' },
   contributionfilters: [],
   contributioncolnames: { all: [], active: [] },
@@ -19,7 +20,7 @@ const store = configureStore({
 ReactDOM.render(
   <Provider store={store}>
     <App />
-    {process.env.NODE_ENV == 'aproduction' && <DevTools />}
+    {process.env.NODE_ENV !== 'production' && <DevTools />}
   </Provider>,
   document.getElementById('root')
 );

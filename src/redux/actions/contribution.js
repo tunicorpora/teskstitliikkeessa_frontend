@@ -24,7 +24,6 @@ function fetchContributions(filters, page = 1) {
   if (filters.length) {
     url += '&filters=' + encodeURIComponent(JSON.stringify(filters));
   }
-  console.log(url);
   return thunkCreator({
     types: [
       'CONTRIBUTIONLIST_REQUEST',
@@ -60,11 +59,43 @@ const deleteContribution = (id, filters) => dispatch =>
     fetchContributions(filters)(dispatch)
   );
 
+const startColEdit = name => {
+  return {
+    type: 'START_TO_EDIT_COLNAME',
+    name: name,
+  };
+};
+
 const startContributionEdit = id => {
   return {
     type: 'START_TO_EDIT_CONTRIBUTION',
     id: id,
   };
+};
+
+function _saveColEdit(name, newname) {
+  const url = `http://localhost:3000/colnames/${name}/${newname}`;
+  const jwt = isAuthenticated();
+  return thunkCreator({
+    types: ['COLEDIT_REQUEST', 'COLEDIT_SUCCESS', 'COLEDIT_ERROR'],
+    promise: fetch(url, {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + jwt.token,
+      },
+    }).then(response => {
+      return response.json();
+    }),
+  });
+}
+
+const saveColEdit = (name, newname) => dispatch => {
+  console.log(newname);
+  _saveColEdit(name, newname)(dispatch)
+    .then(() => dispatch(fetchColNames()))
+    .then(dispatch({ type: 'CANCEL_COL_EDIT' }));
 };
 
 function _saveContributionEdit(rowEdit) {
@@ -91,6 +122,14 @@ function _saveContributionEdit(rowEdit) {
   });
 }
 
+const makeColedit = (name, newname) => {
+  return {
+    type: 'EDIT_COLNAME',
+    name: name,
+    newname: newname,
+  };
+};
+
 const saveContributionEdit = (rowEdit, filters) => dispatch => {
   _saveContributionEdit(rowEdit)(dispatch)
     .then(() => dispatch(fetchContributions(filters)))
@@ -111,4 +150,7 @@ export {
   deleteContribution,
   fetchColNames,
   changeColState,
+  startColEdit,
+  saveColEdit,
+  makeColedit,
 };

@@ -7,6 +7,7 @@ function mapStateToProps(state) {
     contributionlist: state.contributionlist,
     uploadStatus: state.contributionlist,
     rowEdit: state.rowEdit,
+    colEdit: state.colEdit,
     auth: state.auth,
     contributionfilters: state.contributionfilters,
     contributioncolnames: state.contributioncolnames,

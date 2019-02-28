@@ -15,3 +15,18 @@ export function rowReducer(state = {}, action) {
       return state;
   }
 }
+
+export function colReducer(state = {}, action) {
+  const { type, ...edit } = action;
+
+  switch (type) {
+    case 'EDIT_COLNAME':
+      return { name: edit.name, newname: edit.newname };
+      break;
+    case 'START_TO_EDIT_COLNAME':
+      return { name: edit.name, newname: edit.name };
+      break;
+    default:
+      return state;
+  }
+}

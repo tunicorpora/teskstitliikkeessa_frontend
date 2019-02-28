@@ -21,10 +21,14 @@ export default class Main extends Component {
       contributionlist,
       dispatch,
       rowEdit,
+      colEdit,
       auth,
       contributionfilters,
       contributioncolnames: colnames,
     } = this.props;
+    console.log('in main:');
+    console.log(colEdit);
+    console.log('<<<<');
 
     return (
       <HashRouter>
@@ -39,7 +43,11 @@ export default class Main extends Component {
                   <Route
                     path="/tuonti"
                     render={() => (
-                      <Xlsimporter dispatch={dispatch} colnames={colnames} />
+                      <Xlsimporter
+                        dispatch={dispatch}
+                        colEdit={colEdit}
+                        colnames={colnames}
+                      />
                     )}
                   />
                   <Route
