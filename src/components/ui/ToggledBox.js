@@ -10,6 +10,16 @@ export default class ToggledBox extends Component {
     this.state = { isOpen: false };
   }
 
+  componentDidMount() {
+    const { data, openByDefault } = this.props;
+    if (data) {
+      data();
+    }
+    if (openByDefault) {
+      this.setState({ isOpen: true });
+    }
+  }
+
   render() {
     const { isOpen } = this.state,
       { children, header } = this.props;

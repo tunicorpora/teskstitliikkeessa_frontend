@@ -38,7 +38,9 @@ export default class Main extends Component {
                   <Route exact path="/" component={About} />
                   <Route
                     path="/tuonti"
-                    render={() => <Xlsimporter dispatch={dispatch} />}
+                    render={() => (
+                      <Xlsimporter dispatch={dispatch} colnames={colnames} />
+                    )}
                   />
                   <Route
                     path="/toimijat"

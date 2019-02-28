@@ -15,7 +15,7 @@ export default class Nav extends Component {
             <ListItem target={'toimijat'}>Toimijat</ListItem>
             <ListItem target={'kontribuutiot'}>Kontribuutiot</ListItem>
             <li className={isAuthenticated() ? styles.visible : styles.hidden}>
-              <Link to={'/tuonti'}>Tuo uutta dataa</Link>
+              <Link to={'/tuonti'}>Muokkaa tietokantaa</Link>
             </li>
             <li className={isAuthenticated() ? styles.hidden : styles.visible}>
               <Link to={'/signin'}>Kirjaudu sisään</Link>
