@@ -20,6 +20,9 @@ export function colReducer(state = {}, action) {
   const { type, ...edit } = action;
 
   switch (type) {
+    case 'CANCEL_COL_EDIT':
+      return { name: null, newname: null };
+      break;
     case 'EDIT_COLNAME':
       return { name: edit.name, newname: edit.newname };
       break;
