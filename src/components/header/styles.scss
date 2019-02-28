@@ -1,0 +1,22 @@
+@import 'src/components/main/configs.scss';
+
+.pageHeader {
+  background: $headercolor;
+  margin: 0em 0em 0em 0em;
+  padding: 0em 0em 0em 0em;
+  color: white;
+  display: flex;
+  justify-content: center;
+  padding: 1em 0em 1.5em 0em;
+  h1 {
+    font-family: $headerfont;
+    font-weight: normal;
+  }
+}
+
+.innerHeader {
+  width: 100%;
+  @media only screen and (min-width: 920px) {
+    max-width: $contentwidth;
+  }
+}

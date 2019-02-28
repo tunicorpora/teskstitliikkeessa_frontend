@@ -1,10 +1,40 @@
+@import 'src/components/main/configs.scss';
+
 body {
   margin: 0;
   padding: 0;
+  font-family: $bodyfont;
+}
+
+h2,
+h3,
+h4 {
+  font-weight: bold;
+}
+
+h3 {
+  font-size: 1.1em;
+  font-family: $bodyfont;
+}
+
+main {
+  display: flex;
+  flex-flow: column;
+}
+
+.pageContainer {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
 }
 
 .content {
-  padding: 0.2em 0.2em 0.2em 1em;
+  padding: 1em 0.2em 0.2em 1em;
+  background: white;
+  width: 100%;
+  @media only screen and (min-width: 920px) {
+    max-width: $contentwidth;
+  }
 }
 
 .noselect {
@@ -19,4 +49,11 @@ body {
 
 .verticalMargin {
   margin: 0.5em 0em 0.5em 0em;
+}
+
+tbody {
+  font-family: $datafont;
+  tr:nth-child(odd) {
+    background: $oddrow;
+  }
 }

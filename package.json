@@ -30,6 +30,7 @@
     "@fortawesome/react-fontawesome": "^0.1.4",
     "css-loader": "^2.1.0",
     "cuid": "^2.1.4",
+    "downloadjs": "^1.4.7",
     "eslint": "^5.13.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-config-prettier": "^4.0.0",

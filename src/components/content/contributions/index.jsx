@@ -2,6 +2,7 @@ import React from 'react';
 import { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { range } from 'lodash';
+import download from 'downloadjs';
 import {
   fetchContributions,
   deleteContribution,
@@ -27,6 +28,17 @@ export default class Contributionlist extends Component {
         authorId: authorId,
       })
     );
+  }
+
+  exportToExcel() {
+    const { filters } = this.props;
+    let url = `http://localhost:3000/entry/excel`;
+    if (filters.length) {
+      url += '?filters=' + encodeURIComponent(JSON.stringify(filters));
+    }
+    fetch(url)
+      .then(response => response.blob())
+      .then(file => download(file, 'tekstit-liikkeessa_tietokannasta.xlsx'));
   }
 
   handleColumnActivity(colname, checked) {
@@ -102,6 +114,11 @@ export default class Contributionlist extends Component {
           <p>
             Näytetään tuloksia: {list.meta.total} ({list.meta.showing} tällä
             sivulla)
+          </p>
+          <p>
+            <button onClick={this.exportToExcel.bind(this)}>
+              Vie tulokset exceliin
+            </button>
           </p>
           <ul className={styles.pageList}>
             <li>Sivut: </li>

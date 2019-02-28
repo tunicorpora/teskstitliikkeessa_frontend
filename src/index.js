@@ -19,7 +19,7 @@ const store = configureStore({
 ReactDOM.render(
   <Provider store={store}>
     <App />
-    {process.env.NODE_ENV !== 'production' && <DevTools />}
+    {process.env.NODE_ENV == 'aproduction' && <DevTools />}
   </Provider>,
   document.getElementById('root')
 );

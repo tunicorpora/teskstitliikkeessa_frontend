@@ -6,4 +6,7 @@ export default {
     filename: 'bundle.js',
   },
   extension: ['.js', '.jsx'],
+  alias: {
+    styles: 'src/components/main',
+  },
 };
