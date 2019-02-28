@@ -12,7 +12,7 @@ export function testUpload(targetform) {
 
 export function uploadData(targetform) {
   const form = new FormData(targetform);
-  const url = 'http://localhost:3000/upload';
+  const url = `${ENV.apiUrl}/upload`;
   const jwt = isAuthenticated();
   console.log(jwt);
   return thunkCreator({

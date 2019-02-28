@@ -32,7 +32,7 @@ export default class Contributionlist extends Component {
 
   exportToExcel() {
     const { filters } = this.props;
-    let url = `http://localhost:3000/entry/excel`;
+    let url = `${ENV.apiUrl}/entry/excel`;
     if (filters.length) {
       url += '?filters=' + encodeURIComponent(JSON.stringify(filters));
     }

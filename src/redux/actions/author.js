@@ -8,7 +8,7 @@ export function testAuthors() {
 }
 
 export function fetchAuthors() {
-  const url = 'http://localhost:3000/author';
+  const url = `${ENV.apiUrl}/author`;
   return thunkCreator({
     types: ['AUTHORLIST_REQUEST', 'AUTHORLIST_SUCCESS', 'AUTHORLIST_ERROR'],
     promise: fetch(url).then(response => response.json()),

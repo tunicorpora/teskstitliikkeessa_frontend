@@ -4,7 +4,7 @@ import { isAuthenticated } from '../../components/auth/utils';
 import { userInfo } from 'os';
 
 function fetchColNames() {
-  let url = 'http://localhost:3000/colnames';
+  let url = `${ENV.apiUrl}/colnames`;
   return thunkCreator({
     types: [
       'CONTRIBUTION_COLNAMES_REQUEST',
@@ -20,7 +20,7 @@ function changeColState(name, include) {
 }
 
 function fetchContributions(filters, page = 1) {
-  let url = 'http://localhost:3000/entry?page=' + page;
+  let url = `${ENV.apiUrl}/entry?page=` + page;
   if (filters.length) {
     url += '&filters=' + encodeURIComponent(JSON.stringify(filters));
   }
@@ -35,7 +35,7 @@ function fetchContributions(filters, page = 1) {
 }
 
 function _deleteContribution(id) {
-  const url = `http://localhost:3000/entry/${id}`;
+  const url = `${ENV.apiUrl}/entry/${id}`;
   const jwt = isAuthenticated();
   return thunkCreator({
     types: [
@@ -74,7 +74,7 @@ const startContributionEdit = id => {
 };
 
 function _saveColEdit(name, newname) {
-  const url = `http://localhost:3000/colnames/${name}/${newname}`;
+  const url = `${ENV.apiUrl}/colnames/${name}/${newname}`;
   const jwt = isAuthenticated();
   return thunkCreator({
     types: ['COLEDIT_REQUEST', 'COLEDIT_SUCCESS', 'COLEDIT_ERROR'],
@@ -100,7 +100,7 @@ const saveColEdit = (name, newname) => dispatch => {
 
 function _saveContributionEdit(rowEdit) {
   const { id, ...data } = rowEdit;
-  const url = `http://localhost:3000/entry/${id}`;
+  const url = `${ENV.apiUrl}/entry/${id}`;
   const jwt = isAuthenticated();
   return thunkCreator({
     types: [

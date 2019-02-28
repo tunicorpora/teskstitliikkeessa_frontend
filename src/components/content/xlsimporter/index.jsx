@@ -24,7 +24,7 @@ const removeCol = (colName, dispatch) => {
   );
   if (proceed) {
     const jwt = isAuthenticated();
-    const url = 'http://localhost:3000/colnames/' + encodeURIComponent(colName);
+    const url = `${ENV.apiUrl}/colnames/` + encodeURIComponent(colName);
     fetch(url, {
       method: 'DELETE',
       headers: {

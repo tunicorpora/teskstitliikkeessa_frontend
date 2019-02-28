@@ -10,7 +10,7 @@ export function editCredentials(field, val) {
 }
 
 export function signIn(user) {
-  const url = 'http://localhost:3000/signin';
+  const url = `${ENV.apiUrl}/signin`;
   return thunkCreator({
     types: ['SIGNIN_REQUEST', 'SIGNIN_SUCCESS', 'SIGNIN_ERROR'],
     promise: fetch(url, {
