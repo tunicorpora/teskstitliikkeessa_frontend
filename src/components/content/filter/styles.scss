@@ -1,5 +1,6 @@
 .cont {
   display: flex;
+  flex-flow: row wrap;
   margin: 0.2em 0em 0.3em 0em;
   > div {
     margin-right: 0.4em;

@@ -26,6 +26,7 @@ main {
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
+  min-height: 99vh;
 }
 
 .content {
@@ -55,5 +56,17 @@ tbody {
   font-family: $datafont;
   tr:nth-child(odd) {
     background: $oddrow;
+  }
+}
+
+footer {
+  color: white;
+  font-size: 0.6em;
+  background: $headercolor;
+  min-height: 10em;
+  padding: 2em;
+  margin-top: 2em;
+  a {
+    color: white;
   }
 }

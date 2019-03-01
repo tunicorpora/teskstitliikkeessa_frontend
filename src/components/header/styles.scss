@@ -11,6 +11,9 @@
   h1 {
     font-family: $headerfont;
     font-weight: normal;
+    @media only screen and (max-width: 920px) {
+      padding-left: 1em;
+    }
   }
 }
 

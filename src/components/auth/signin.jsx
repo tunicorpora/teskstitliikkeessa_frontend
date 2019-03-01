@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { signIn, editCredentials } from '../../redux/actions/auth';
 import { isAuthenticated } from '../auth/utils';
+import styles from './signin_styles.scss';
+import general_styles from '../main/general_styles.scss';
 
 export default class SignIn extends Component {
   handleEdit(target) {
@@ -22,21 +24,29 @@ export default class SignIn extends Component {
           dispatch(signIn(auth.user));
         }}
       >
-        <div>
-          <label htmlFor="username">Käyttäjänimi</label>
-          <input
-            onChange={e => this.handleEdit(e.target)}
-            name="username"
-            type="text"
-          />
+        <div className={styles.fieldContainer}>
+          <div>
+            <label htmlFor="username">Käyttäjänimi</label>
+          </div>
+          <div>
+            <input
+              onChange={e => this.handleEdit(e.target)}
+              name="username"
+              type="text"
+            />
+          </div>
         </div>
-        <div>
-          <label htmlFor="password">Salasana</label>
-          <input
-            onChange={e => this.handleEdit(e.target)}
-            name="password"
-            type="password"
-          />
+        <div className={styles.fieldContainer}>
+          <div>
+            <label htmlFor="password">Salasana</label>
+          </div>
+          <div>
+            <input
+              onChange={e => this.handleEdit(e.target)}
+              name="password"
+              type="password"
+            />
+          </div>
         </div>
         <button type="submit">Kirjaudu</button>
       </form>

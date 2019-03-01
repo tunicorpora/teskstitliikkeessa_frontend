@@ -37,6 +37,7 @@ export default class Main extends Component {
             <div className={styles.content}>
               <div className={styles.innerContent}>
                 <Switch>
+                  <Route exact path="/about" component={About} />
                   <Route exact path="/" component={About} />
                   <Route
                     path="/tuonti"
@@ -75,6 +76,25 @@ export default class Main extends Component {
               </div>
             </div>
           </div>
+          <footer>
+            <p>
+              Tekninen toteutus ja toteutukseen liittyvät kysymykset: Juho Härme
+              (juho.harme at gmail.com).
+            </p>
+            <p>
+              Lähdekoodi &nbsp;
+              <a href="https://github.com/tunicorpora/tekstitliikkeessa_api">
+                täällä
+              </a>
+              &nbsp; ja &nbsp;
+              <a href="https://github.com/tunicorpora/teskstitliikkeessa_frontend">
+                täällä
+              </a>
+              .
+            </p>
+            <p>Palvelin Tampereen yliopistolta / CSC:ltä.</p>
+            <p>YLEISTÄ TIETOA PROJEKTISTA / varsinaiset vastuuhenkilöt?</p>
+          </footer>
         </main>
       </HashRouter>
     );
