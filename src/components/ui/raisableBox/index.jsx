@@ -35,40 +35,21 @@ export default class FoldableBox extends Component {
       items = [],
       header = '',
       children = '',
-      launchertype = 'button',
       headerclass,
       onOpen,
       id,
     } = this.props;
-    console.log('render method fired');
     const { open } = this.state;
-    // const open = true;
-    let launcher = (
-      <button
-        className={styles.orderButton}
-        onClick={() => this.setState({ open: !open })}
-      >
-        <FontAwesomeIcon icon={open ? faCaretDown : faCaretRight} />
-        {header}
-      </button>
-    );
-    if (launchertype == 'heading') {
-      launcher = (
-        <h4
-          className={`${styles.orderHeading} ${headerclass}`}
+
+    return (
+      <div className={styles.container} id={id}>
+        <button
+          className={styles.orderButton}
           onClick={() => this.setState({ open: !open })}
         >
           <FontAwesomeIcon icon={open ? faCaretDown : faCaretRight} />
           {header}
-        </h4>
-      );
-    }
-    // TODO: move the visiblity definitions out of inline style attr
-    // NOTE: can't use display:block because of react-vis's flexiblXYplot
-
-    return (
-      <div className={styles.container} id={id}>
-        {launcher}
+        </button>
         <div className={styles.dropDown} style={this.setVisibilityStyle()}>
           {children}
         </div>

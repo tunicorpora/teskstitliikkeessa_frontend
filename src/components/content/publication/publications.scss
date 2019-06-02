@@ -1,0 +1,13 @@
+.details {
+  list-style-type: none;
+  li {
+    > *:first-child {
+      width: 5em;
+      margin-right: 1em;
+    }
+  }
+  padding: 0.3em;
+  background: lighten(grey, 40%);
+  font-size: 0.8em;
+  max-width: 20em;
+}
