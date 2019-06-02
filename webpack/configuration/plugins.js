@@ -1,4 +1,4 @@
-//import CopyWebpackPlugin from 'copy-webpack-plugin';
+// import CopyWebpackPlugin from 'copy-webpack-plugin';
 import HtmlWebPackPlugin from 'html-webpack-plugin';
 import { DefinePlugin } from 'webpack';
 

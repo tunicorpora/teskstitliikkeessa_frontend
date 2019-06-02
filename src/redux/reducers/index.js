@@ -5,9 +5,11 @@ import { rowReducer, colReducer } from './editing';
 import { uploadReducer } from './upload';
 import { authReducer } from './auth';
 import { filterReducer } from './filter';
+import linkReducer from './links';
+import publicationReducer from './publication';
 
 const appReducer = combineReducers({
-  authorlist: authorReducer,
+  author: authorReducer,
   contributionlist: contributionReducer,
   uploadStatus: uploadReducer,
   rowEdit: rowReducer,
@@ -15,6 +17,8 @@ const appReducer = combineReducers({
   auth: authReducer,
   contributionfilters: filterReducer,
   contributioncolnames: colNameReducer,
+  links: linkReducer,
+  publications: publicationReducer,
 });
 
 export default appReducer;

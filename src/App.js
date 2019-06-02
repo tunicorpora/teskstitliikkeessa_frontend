@@ -3,7 +3,7 @@ import Main from './components/main/index.jsx';
 
 function mapStateToProps(state) {
   return {
-    authorlist: state.authorlist,
+    author: state.author,
     contributionlist: state.contributionlist,
     uploadStatus: state.uploadStatus,
     rowEdit: state.rowEdit,
@@ -11,6 +11,8 @@ function mapStateToProps(state) {
     auth: state.auth,
     contributionfilters: state.contributionfilters,
     contributioncolnames: state.contributioncolnames,
+    links: state.links,
+    publications: state.publications,
   };
 }
 

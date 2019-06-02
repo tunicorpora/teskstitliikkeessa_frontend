@@ -1,17 +1,14 @@
 export function authorReducer(state = {}, action) {
-  const { type, ...authorlist } = action;
+  const { type, ...rest } = action;
 
   switch (type) {
-    case 'AUTHORLIST_REQUEST':
+    case 'AUTHOR_REQUEST':
       break;
-    case 'AUTHORLIST_SUCCESS':
-      return authorlist.result;
-      break;
-    case 'AUTHORLIST_ERROR':
-      console.log('request error. ');
-      break;
-    case 'TEST_AUTHORS':
-      return authorlist.list;
+    case 'AUTHOR_SUCCESS':
+      return rest.result;
+    case 'AUTHOR_ERROR':
+      console.log('Error requesting author..');
+      console.log(rest);
       break;
     default:
       return state;

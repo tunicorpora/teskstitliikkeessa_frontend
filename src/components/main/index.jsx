@@ -1,13 +1,15 @@
-import React from 'react';
-import { Component } from 'react';
 import { HashRouter, Switch, Route } from 'react-router-dom';
-import Nav from '../nav/index.jsx';
-import Header from '../header/index.jsx';
-import Signin from '../auth/signin.jsx';
-import Agents from '../content/authors/index.jsx';
-import Xlsimporter from '../content/xlsimporter/index.jsx';
+import React, { Component } from 'react';
+
 import About from '../content/about/index.jsx';
+import Agents from '../content/authors/index.jsx';
 import Contributions from '../content/contributions/index.jsx';
+import Header from '../header/index.jsx';
+import Inspector from '../content/inspector/index.jsx';
+import LinkAdder from '../content/linkadder/index.jsx';
+import Nav from '../nav/index.jsx';
+import Signin from '../auth/signin.jsx';
+import Xlsimporter from '../content/xlsimporter/index.jsx';
 import styles from './general_styles.scss';
 
 export default class Main extends Component {
@@ -17,7 +19,6 @@ export default class Main extends Component {
 
   render() {
     const {
-      authorlist,
       contributionlist,
       dispatch,
       rowEdit,
@@ -26,6 +27,9 @@ export default class Main extends Component {
       contributionfilters,
       uploadStatus,
       contributioncolnames: colnames,
+      links,
+      author,
+      publications,
     } = this.props;
 
     return (
@@ -40,6 +44,16 @@ export default class Main extends Component {
                   <Route exact path="/about" component={About} />
                   <Route exact path="/" component={About} />
                   <Route
+                    path="/authors"
+                    render={() => (
+                      <Inspector
+                        author={author}
+                        dispatch={dispatch}
+                        publications={publications}
+                      />
+                    )}
+                  />
+                  <Route
                     path="/tuonti"
                     render={() => (
                       <Xlsimporter
@@ -51,9 +65,9 @@ export default class Main extends Component {
                     )}
                   />
                   <Route
-                    path="/toimijat"
+                    path="/addlinks"
                     render={() => (
-                      <Agents list={authorlist} dispatch={dispatch} />
+                      <LinkAdder dispatch={dispatch} links={links} />
                     )}
                   />
                   <Route
