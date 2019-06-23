@@ -1,9 +1,9 @@
 module.exports = {
-  extends: ['airbnb'],
+  extends: ['airbnb', 'prettier', 'prettier/babel', 'prettier/react'],
   plugins: ['babel'],
   parser: 'babel-eslint',
   globals: {
-    fetch: false,
+    fetch: false
   },
   rules: {
     'max-len': 1,
@@ -12,13 +12,13 @@ module.exports = {
       {
         components: ['Label'],
         required: {
-          some: ['nesting', 'id'],
+          some: ['nesting', 'id']
         },
-        allowChildren: false,
-      },
-    ],
+        allowChildren: false
+      }
+    ]
   },
   env: {
-    jest: true,
-  },
+    jest: true
+  }
 };

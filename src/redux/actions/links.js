@@ -1,20 +1,24 @@
 import { thunkCreator } from './utils';
+import { fetchReceptions } from './author';
 
-const editLink = (linkType, sourceId) => {
+const editSource = sourceId => ({
+  type: 'EDIT_SOURCE',
+  sourceId
+});
+
+const editLink = (linkType, sourceId) => dispatch => {
   if (linkType === 'source') {
-    return {
-      type: 'EDIT_SOURCE',
-      sourceId,
-    };
+    dispatch(editSource(sourceId));
+    //dispatch(fetchReceptions(sourceId)).then(() => dispatch(editSource(sourceId)));
   }
   return {
     type: 'EDIT_LINK',
     sourceId: sourceId && sourceId.map(s => s.value),
-    linkType,
+    linkType
   };
 };
 
-const saveLinks = (links) => {
+const saveLinks = links => {
   const url = 'http://10.127.153.68/savelinks';
   console.log(JSON.stringify(links));
   // const jwt = isAuthenticated();
@@ -24,11 +28,11 @@ const saveLinks = (links) => {
       method: 'POST',
       headers: {
         Accept: 'application/json',
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
         // Authorization: 'Bearer ' + jwt.token,
       },
-      body: JSON.stringify(links),
-    }).then(response => response.json()),
+      body: JSON.stringify(links)
+    }).then(response => response.json())
   });
 };
 
