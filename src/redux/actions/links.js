@@ -6,16 +6,17 @@ const editSource = sourceId => ({
   sourceId
 });
 
+const editLinks = (linkType, sourceId) => ({
+  type: 'EDIT_LINK',
+  sourceId: sourceId && sourceId.map(s => s.value),
+  linkType
+});
+
 const editLink = (linkType, sourceId) => dispatch => {
   if (linkType === 'source') {
-    dispatch(editSource(sourceId));
-    //dispatch(fetchReceptions(sourceId)).then(() => dispatch(editSource(sourceId)));
+    return dispatch(fetchReceptions(sourceId)).then(() => dispatch(editSource(sourceId)));
   }
-  return {
-    type: 'EDIT_LINK',
-    sourceId: sourceId && sourceId.map(s => s.value),
-    linkType
-  };
+  return dispatch(editLinks(linkType, sourceId));
 };
 
 const saveLinks = links => {

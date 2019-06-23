@@ -63,7 +63,7 @@ export default props => {
           </div>
         )}
       </div>
-      <SaveButton onClick={() => console.log('clicked!')} />
+      <SaveButton onClick={() => dispatch(saveLinks(links))} />
     </div>
   );
 };
