@@ -1,18 +1,20 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { components } from 'react-select';
 import AsyncSelect from 'react-select/async';
 import React, { Component } from 'react';
 import Tooltip from '@atlaskit/tooltip';
-import { components } from 'react-select';
 
+import { getTooltip } from '../../../utils/misc';
 import styles from './autocompletefield.scss';
+
 // TODO: get from .env
 const baseUrl = 'http://10.127.153.68';
 
 const selectStyle = {
   container: provided => ({
     ...provided,
-    'min-width': '10em',
-  }),
+    'min-width': '10em'
+  })
 };
 
 const Option = props => (
@@ -23,13 +25,7 @@ const Option = props => (
 
 export default class AutoCompleteField extends Component {
   getOptions(inputValue) {
-    const {
-      categoryName,
-      tooltipName,
-      path,
-      labelName,
-      maxEntries = 10,
-    } = this.props;
+    const { categoryName, tooltipName, path, labelName, maxEntries = 10 } = this.props;
     const url = `${baseUrl}/${path}?search=${inputValue}`;
     return fetch(url, { mode: 'cors' })
       .then(response => response.json())
@@ -39,20 +35,20 @@ export default class AutoCompleteField extends Component {
             return {
               label: option,
               value: option,
-              tooltip: undefined,
+              tooltip: undefined
             };
           }
 
           let tooltip;
           if (Array.isArray(tooltipName)) {
-            tooltip = tooltipName.map(tt => `${tt}: ${option[tt]}`).join(' ;');
+            tooltip = getTooltip(tooltipName, option);
           } else {
             tooltip = option[tooltipName];
           }
           return {
             label: option[labelName || categoryName],
             value: option[categoryName],
-            tooltip: tooltip,
+            tooltip
           };
         })
       );
@@ -67,7 +63,7 @@ export default class AutoCompleteField extends Component {
       onChange,
       fieldname,
       defaultOptions = true,
-      value,
+      value
     } = this.props;
 
     let select;
@@ -78,7 +74,7 @@ export default class AutoCompleteField extends Component {
       loadOptions: inputValue => this.getOptions(inputValue),
       defaultOptions,
       styles: selectStyle,
-      creatable: false,
+      creatable: false
     };
     if (value !== undefined) {
       outProps.value = value;

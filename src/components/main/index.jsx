@@ -57,7 +57,9 @@ const main = props => {
                 />
                 <Route
                   path="/addlinks"
-                  render={() => <LinkAdder dispatch={dispatch} links={links} />}
+                  render={() => (
+                    <LinkAdder dispatch={dispatch} links={links} publications={publications} />
+                  )}
                 />
                 <Route path="/signin" render={() => <Signin dispatch={dispatch} auth={auth} />} />
                 <Route

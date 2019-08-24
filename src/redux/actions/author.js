@@ -27,7 +27,6 @@ export function fetchAuthorByName(name) {
 
 export function fetchReceptions(id) {
   const url = `http://10.127.153.68/receptions/${id}`;
-  console.log(url);
   return thunkCreator({
     types: ['RECEPTIONS_REQUEST', 'RECEPTIONS_SUCCESS', 'RECEPTIONS_ERROR'],
     promise: fetch(url)

@@ -1,12 +1,21 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
-import { editLink, saveLinks } from '../../../redux/actions/links';
+import { editSource, saveLinks } from '../../../redux/actions/links';
+import { getTooltip } from '../../../utils/misc';
 import AutoCompleteField from '../../ui/autocompletefield/index.jsx';
 import SaveButton from '../../ui/savebutton/index.jsx';
 import styles from './linkadder.scss';
 
-export default props => {
-  const { dispatch, links } = props;
+const linkAdder = props => {
+  const {
+    dispatch,
+    links: {
+      source,
+      receptions: { translations = [], adaptations = [] }
+    },
+    publications
+  } = props;
   const selectProps = {
     path: 'publications',
     labelName: 'title',
@@ -14,7 +23,15 @@ export default props => {
     tooltipName: ['title', 'author', 'Language']
   };
 
-  const { source } = links;
+  const translationValues = translations.map(id => {
+    const details = publications[id] || { title: '...', author: '', Language: '' };
+    return {
+      label: details.title || '...',
+      value: id,
+      tooltip: getTooltip(selectProps.tooltipName, details)
+    };
+  });
+  console.log(translationValues);
 
   return (
     <div>
@@ -23,7 +40,7 @@ export default props => {
         <div>
           <AutoCompleteField
             {...selectProps}
-            onChange={selected => dispatch(editLink('source', selected.value))}
+            onChange={selected => dispatch(editSource(selected.value))}
           />
         </div>
         {source && (
@@ -35,7 +52,8 @@ export default props => {
                   <AutoCompleteField
                     {...selectProps}
                     isMulti
-                    onChange={selected => dispatch(editLink('translations', selected))}
+                    value={translationValues}
+                    onChange={selected => console.log(selected)}
                   />
                 </div>
               </li>
@@ -67,3 +85,19 @@ export default props => {
     </div>
   );
 };
+
+linkAdder.propTypes = {
+  links: PropTypes.shape({
+    links: {
+      source: PropTypes.string,
+      receptions: {
+        translations: PropTypes.arrayOf(PropTypes.string),
+        adaptations: PropTypes.arrayOf(PropTypes.string)
+      }
+    }
+  }).isRequired,
+  dispatch: PropTypes.func.isRequired,
+  publications: PropTypes.objectOf(PropTypes.object).isRequired
+};
+
+export default linkAdder;

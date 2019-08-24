@@ -1,22 +1,28 @@
 import { thunkCreator } from './utils';
 import { fetchReceptions } from './author';
+import { fetchDetails, fetchDetailsRaw } from './publications';
 
-const editSource = sourceId => ({
-  type: 'EDIT_SOURCE',
-  sourceId
+const setSourceId = id => ({
+  type: 'SET_SOURCE_ID',
+  id
 });
 
-const editLinks = (linkType, sourceId) => ({
+const editLink = (linkType, ids) => ({
   type: 'EDIT_LINK',
-  sourceId: sourceId && sourceId.map(s => s.value),
+  ids,
   linkType
 });
 
-const editLink = (linkType, sourceId) => dispatch => {
-  if (linkType === 'source') {
-    return dispatch(fetchReceptions(sourceId)).then(() => dispatch(editSource(sourceId)));
-  }
-  return dispatch(editLinks(linkType, sourceId));
+const editSource = sourceId => dispatch => {
+  dispatch(setSourceId(sourceId));
+  dispatch(fetchDetails(sourceId)).then(res => {
+    Object.keys(res[sourceId].receptions).forEach(receptionType => {
+      // add the id of the linkede publication to the store
+      dispatch(editLink(receptionType, res[sourceId].receptions[receptionType]));
+      // send a request to get the details of the publication
+      res[sourceId].receptions[receptionType].forEach(id => dispatch(fetchDetails(id)));
+    });
+  });
 };
 
 const saveLinks = links => {
@@ -37,4 +43,4 @@ const saveLinks = links => {
   });
 };
 
-export { editLink, saveLinks };
+export { editSource, setSourceId, saveLinks };
