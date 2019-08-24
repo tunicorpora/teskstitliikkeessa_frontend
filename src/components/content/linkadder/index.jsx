@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { editSource, saveLinks } from '../../../redux/actions/links';
+import { editReceptions, editSource, saveLinks } from '../../../redux/actions/links';
 import { getTooltip } from '../../../utils/misc';
 import AutoCompleteField from '../../ui/autocompletefield/index.jsx';
 import SaveButton from '../../ui/savebutton/index.jsx';
@@ -31,7 +31,6 @@ const linkAdder = props => {
       tooltip: getTooltip(selectProps.tooltipName, details)
     };
   });
-  console.log(translationValues);
 
   return (
     <div>
@@ -40,7 +39,7 @@ const linkAdder = props => {
         <div>
           <AutoCompleteField
             {...selectProps}
-            onChange={selected => dispatch(editSource(selected.value))}
+            onChange={selected => dispatch(editSource(selected.value, publications))}
           />
         </div>
         {source && (
@@ -53,7 +52,9 @@ const linkAdder = props => {
                     {...selectProps}
                     isMulti
                     value={translationValues}
-                    onChange={selected => console.log(selected)}
+                    onChange={selected =>
+                      dispatch(editReceptions('translations', selected, publications))
+                    }
                   />
                 </div>
               </li>

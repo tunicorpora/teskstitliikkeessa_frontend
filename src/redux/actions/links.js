@@ -13,15 +13,27 @@ const editLink = (linkType, ids) => ({
   linkType
 });
 
-const editSource = sourceId => dispatch => {
+const editSource = (sourceId, publications) => dispatch => {
   dispatch(setSourceId(sourceId));
   dispatch(fetchDetails(sourceId)).then(res => {
     Object.keys(res[sourceId].receptions).forEach(receptionType => {
       // add the id of the linkede publication to the store
       dispatch(editLink(receptionType, res[sourceId].receptions[receptionType]));
       // send a request to get the details of the publication
-      res[sourceId].receptions[receptionType].forEach(id => dispatch(fetchDetails(id)));
+      // in case the details are missing
+      res[sourceId].receptions[receptionType]
+        .filter(id => !(id in publications))
+        .forEach(id => dispatch(fetchDetails(id)));
     });
+  });
+};
+
+const editReceptions = (receptionType, selected, publications) => dispatch => {
+  dispatch(editLink(receptionType, selected.map(s => s.value)));
+  selected.forEach(s => {
+    if (!(s.value in publications)) {
+      dispatch(fetchDetails(s.value));
+    }
   });
 };
 
@@ -43,4 +55,4 @@ const saveLinks = links => {
   });
 };
 
-export { editSource, setSourceId, saveLinks };
+export { editSource, setSourceId, saveLinks, editReceptions };
