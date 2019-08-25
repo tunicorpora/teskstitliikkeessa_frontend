@@ -26,15 +26,14 @@ const linkAdder = props => {
   ];
 
   return (
-    <div>
-      <h3>Teosten välisten linkkien (reseptioiden) lisäys</h3>
+    <div className={styles.outerContainer}>
+      <div>
+        <AutoCompleteField
+          {...selectProps}
+          onChange={selected => dispatch(editSource(selected.value, publications))}
+        />
+      </div>
       <div className={styles.container}>
-        <div>
-          <AutoCompleteField
-            {...selectProps}
-            onChange={selected => dispatch(editSource(selected.value, publications))}
-          />
-        </div>
         {source && (
           <div>
             <ul className={styles.relationList}>
@@ -53,7 +52,9 @@ const linkAdder = props => {
           </div>
         )}
       </div>
-      <SaveButton onClick={() => dispatch(saveLinks(links))} />
+      <div className={styles.outerContainer}>
+        <SaveButton onClick={() => dispatch(saveLinks(links))} />
+      </div>
     </div>
   );
 };

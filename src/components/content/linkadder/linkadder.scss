@@ -1,3 +1,7 @@
+.outerContainer {
+  margin-top: 2em;
+}
+
 .container {
   display: flex;
   flex-flow: row nowrap;
@@ -5,6 +9,7 @@
 }
 
 .relationList {
+  padding-left: 0;
   li {
     display: flex;
     flex-flow: row nowrap;

@@ -4,28 +4,26 @@ import { authenticate } from '../../components/auth/utils';
 export function editCredentials(field, val) {
   return {
     type: 'EDIT_CREDENTIALS',
-    field: field,
-    val: val,
+    field,
+    val
   };
 }
 
-export function signIn(user) {
+export function signIn(auth) {
   const url = `${ENV.apiUrl}/signin`;
+  const { username, password } = auth;
   return thunkCreator({
     types: ['SIGNIN_REQUEST', 'SIGNIN_SUCCESS', 'SIGNIN_ERROR'],
     promise: fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Accept: 'application/json',
+        Accept: 'application/json'
       },
       credentials: 'include',
-      body: JSON.stringify(user),
+      body: JSON.stringify({ username, password })
     })
       .then(response => response.json())
-      .then(jwt => authenticate(jwt)),
+      .then(jwt => authenticate(jwt))
   });
-  return {
-    type: 'SIGN_IN',
-  };
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { testAuthors, fetchAuthors } from '../../../redux/actions/author';
+import styles from './authors.scss';
 
 export default class Authorlist extends Component {
   componentDidMount() {
@@ -10,7 +11,7 @@ export default class Authorlist extends Component {
 
   render() {
     return (
-      <div>
+      <div className={styles.container}>
         <h2>Toimijat</h2>
         <ul>
           {this.props.list.map(author => (

@@ -1,30 +1,18 @@
-export function authReducer(state = {}, action) {
+export default (state = {}, action) => {
   const { type, ...rest } = action;
-  let newstate = Object.assign({}, state);
 
   switch (type) {
     case 'EDIT_CREDENTIALS':
-      //const edited = Object.assign({}, newstate);
-      newstate.user[rest.field] = rest.val;
-      return newstate;
-      break;
+      return { ...state, [rest.field]: rest.val };
     case 'SIGNIN_SUCCESS':
-      newstate.status = 'Signed in';
-      return newstate;
-      break;
+      return { ...state, status: 'Signed in' };
     case 'SIGNIN_ERROR':
-      newstate.status = 'Signin failed';
-      return newstate;
-      break;
+      return { ...state, status: 'Signin failed' };
     case 'SIGNOUT':
-      newstate.status = 'Signed out';
-      return newstate;
-      break;
+      return { ...state, status: 'Signed out' };
     case 'SIGNIN':
-      newstate.status = 'Signed in';
-      return newstate;
-      break;
+      return { ...state, status: 'Signed in' };
     default:
       return state;
   }
-}
+};

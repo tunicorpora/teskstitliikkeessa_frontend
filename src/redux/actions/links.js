@@ -38,8 +38,7 @@ const editReceptions = (receptionType, selected, publications) => dispatch => {
 };
 
 const saveLinks = links => {
-  const url = 'http://10.127.153.68/savelinks';
-  console.log(JSON.stringify(links));
+  const url = `${ENV.apiUrl}/savelinks`;
   // const jwt = isAuthenticated();
   return thunkCreator({
     types: ['SAVELINKS_REQUEST', 'SAVELINKS_SUCCESS', 'SAVELINKS_ERROR'],

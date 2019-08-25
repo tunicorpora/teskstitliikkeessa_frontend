@@ -21,7 +21,7 @@ export default class SignIn extends Component {
       <form
         onSubmit={e => {
           e.preventDefault();
-          dispatch(signIn(auth.user));
+          dispatch(signIn(auth));
         }}
       >
         <div className={styles.fieldContainer}>
@@ -29,11 +29,7 @@ export default class SignIn extends Component {
             <label htmlFor="username">Käyttäjänimi</label>
           </div>
           <div>
-            <input
-              onChange={e => this.handleEdit(e.target)}
-              name="username"
-              type="text"
-            />
+            <input onChange={e => this.handleEdit(e.target)} name="username" type="text" />
           </div>
         </div>
         <div className={styles.fieldContainer}>
@@ -41,11 +37,7 @@ export default class SignIn extends Component {
             <label htmlFor="password">Salasana</label>
           </div>
           <div>
-            <input
-              onChange={e => this.handleEdit(e.target)}
-              name="password"
-              type="password"
-            />
+            <input onChange={e => this.handleEdit(e.target)} name="password" type="password" />
           </div>
         </div>
         <button type="submit">Kirjaudu</button>

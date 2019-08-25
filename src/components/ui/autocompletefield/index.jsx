@@ -7,9 +7,6 @@ import Tooltip from '@atlaskit/tooltip';
 import { getTooltip } from '../../../utils/misc';
 import styles from './autocompletefield.scss';
 
-// TODO: get from .env
-const baseUrl = 'http://10.127.153.68';
-
 const selectStyle = {
   container: provided => ({
     ...provided,
@@ -26,7 +23,7 @@ const Option = props => (
 export default class AutoCompleteField extends Component {
   getOptions(inputValue) {
     const { categoryName, tooltipName, path, labelName, maxEntries = 10 } = this.props;
-    const url = `${baseUrl}/${path}?search=${inputValue}`;
+    const url = `${ENV.apiUrl}/${path}?search=${inputValue}`;
     return fetch(url, { mode: 'cors' })
       .then(response => response.json())
       .then(options =>

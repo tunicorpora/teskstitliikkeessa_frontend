@@ -30,7 +30,6 @@ const main = props => {
   return (
     <HashRouter>
       <main>
-        <Header />
         <Nav dispatch={dispatch} />
         <div className={styles.pageContainer}>
           <div className={styles.content}>
@@ -78,20 +77,6 @@ const main = props => {
             </div>
           </div>
         </div>
-        <footer>
-          <p>
-            Tekninen toteutus ja toteutukseen liittyvät kysymykset: Juho Härme (juho.harme at
-            gmail.com).
-          </p>
-          <p>
-            Lähdekoodi &nbsp;
-            <a href="https://github.com/tunicorpora/tekstitliikkeessa_api">täällä</a>
-            &nbsp; ja &nbsp;
-            <a href="https://github.com/tunicorpora/teskstitliikkeessa_frontend">täällä</a>.
-          </p>
-          <p>Palvelin Tampereen yliopistolta / CSC:ltä.</p>
-          <p>YLEISTÄ TIETOA PROJEKTISTA / varsinaiset vastuuhenkilöt?</p>
-        </footer>
       </main>
     </HashRouter>
   );
