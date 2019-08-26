@@ -1,5 +1,5 @@
-export function uploadReducer(state = 'none', action) {
-  const { type, ...uploadStatus } = action;
+export default (state = 'none', action) => {
+  const { type, result } = action;
 
   switch (type) {
     case 'TEST_UPLOAD':
@@ -9,7 +9,7 @@ export function uploadReducer(state = 'none', action) {
       return 'in progress';
       break;
     case 'UPLOAD_SUCCESS':
-      return uploadStatus.result.saved;
+      return result.uploadStatus.saved || 0;
       break;
     case 'UPLOAD_ERROR':
       console.log('upload error');
@@ -19,4 +19,4 @@ export function uploadReducer(state = 'none', action) {
   }
 
   return state;
-}
+};

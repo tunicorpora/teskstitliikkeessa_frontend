@@ -14,11 +14,13 @@ export default props => {
           <ListItem target="authors">Selaa kirjalilijoiden mukaan</ListItem>
           <ListItem target="addlinks">Lisää reseptioita</ListItem>
           <li className={isAuthenticated() ? styles.visible : styles.hidden}>
-            <Link to={'/tuonti'}>Muokkaa tietokantaa</Link>
+            <Link to={'/tuonti'}>Tuo dataa</Link>
           </li>
           <li className={isAuthenticated() ? styles.hidden : styles.visible}>
             <Link to={'/signin'}>Kirjaudu sisään</Link>
           </li>
+          <ListItem target="publicationedit">Muokkaa julkaisuja</ListItem>
+          <ListItem target="authoredit">Muokkaa toimijoita</ListItem>
           <li className={isAuthenticated() ? styles.visible : styles.hidden}>
             <a
               href="javascript:void(0)"

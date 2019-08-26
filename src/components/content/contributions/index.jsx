@@ -1,33 +1,33 @@
-import React from 'react';
-import { Component } from 'react';
-import ReactDOM from 'react-dom';
 import { range } from 'lodash';
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import download from 'downloadjs';
+
+import { addFilter } from '../../../redux/actions/filter';
 import {
   fetchContributions,
   deleteContribution,
   startContributionEdit,
   saveContributionEdit,
   makeContributionEdit,
-  fetchColNames,
-  changeColState,
+  changeColState
 } from '../../../redux/actions/contribution';
-import ToggledBox from '../../ui/ToggledBox';
-import { addFilter } from '../../../redux/actions/filter';
 import { isAuthenticated } from '../../auth/utils';
+import ContributionlistRow from './contributionListRow';
 import Filter from '../filter/index.jsx';
-import styles from './styles.scss';
+import ToggledBox from '../../ui/ToggledBox';
 import generalStyles from '../../main/general_styles.scss';
+import styles from './styles.scss';
 
-export default class Contributionlist extends Component {
-  handleEdit(id, colname, newval, authorId) {
-    this.props.dispatch(
-      makeContributionEdit({
-        [colname]: newval,
-        id: id,
-        authorId: authorId,
-      })
-    );
+class Contributionlist extends Component {
+  componentDidMount() {
+    const { dispatch, filters } = this.props;
+    dispatch(fetchContributions(filters));
+  }
+
+  handleEdit(id, colname, newval) {
+    const { dispatch } = this.props;
+    dispatch(makeContributionEdit(id, colname, newval));
   }
 
   exportToExcel() {
@@ -46,37 +46,38 @@ export default class Contributionlist extends Component {
   }
 
   editOrSave(id, type) {
+    const { dispatch, rowEdit, filters } = this.props;
     if (type == 'Muokkaa') {
-      this.props.dispatch(startContributionEdit(id));
+      dispatch(startContributionEdit(id));
     } else {
-      this.props.dispatch(
-        saveContributionEdit(this.props.rowEdit, this.props.filters)
-      );
+      dispatch(saveContributionEdit(rowEdit, filters));
     }
   }
 
-  componentDidMount() {
-    const { dispatch, filters } = this.props;
-    dispatch(fetchColNames());
-    dispatch(fetchContributions(filters));
-  }
-
   render() {
-    const { dispatch, rowEdit, filters, colnames, list } = this.props,
-      showcontrols = isAuthenticated(),
-      tbody = list.data.length ? list.data : [];
-    // tbody = list.data.length ? list.data : [];
+    const {
+      dispatch,
+      rowEdit,
+      filters,
+      list,
+      editUtils: { lastEdit }
+    } = this.props;
+    const showControls = isAuthenticated() !== false;
+    const colnames = { all: [], active: [] };
+    if (Array.isArray(list) && list.length) {
+      const names = Object.keys(list[0]).filter(
+        key => !['receptions', 'receptionOf', '_id'].includes(key)
+      );
+      colnames.all = [...names];
+      colnames.active = [...names];
+      //colnames.active = colnames.all;
+    }
 
     return (
       <div>
-        <p>
-          Kontribuutioilla tarkoitetaan tässsä kaikkia "kirjallisia tekoja":
-          kirjoja, käännöksiä, artikkeleita, mainintoja...
-        </p>
-
         <section className={styles.optionContainer}>
           <ToggledBox header="Hakuehdot">
-            {filters.map((filter, idx) => (
+            {filters.map((_, idx) => (
               <Filter
                 allfilters={filters}
                 colnames={colnames.all}
@@ -87,22 +88,18 @@ export default class Contributionlist extends Component {
             ))}
 
             <section className={generalStyles.verticalMargin}>
-              <button onClick={() => dispatch(addFilter())}>
-                Lisää hakuehto
-              </button>
+              <button onClick={() => dispatch(addFilter())}>Lisää hakuehto</button>
             </section>
           </ToggledBox>
           <ToggledBox header="Näytettävät kentät">
             <ul className={styles.fieldList}>
               {colnames.all.map(col => (
-                <li>
+                <li key={col}>
                   <input
                     type="checkbox"
-                    onChange={ev =>
-                      this.handleColumnActivity(col, ev.target.checked)
-                    }
+                    onChange={ev => this.handleColumnActivity(col, ev.target.checked)}
                     checked={colnames.active.indexOf(col) > -1 ? true : false}
-                  />{' '}
+                  />
                   {col}
                 </li>
               ))}
@@ -110,39 +107,14 @@ export default class Contributionlist extends Component {
           </ToggledBox>
         </section>
 
-        <div>
-          <p>
-            Näytetään tuloksia: {list.meta.total} ({list.meta.showing} tällä
-            sivulla)
-          </p>
-          <p>
-            <button onClick={this.exportToExcel.bind(this)}>
-              Vie tulokset exceliin
-            </button>
-          </p>
-          <ul className={styles.pageList}>
-            <li>Sivut: </li>
-            {range(1, list.meta.pages + 1).map(no => (
-              <li>
-                <a
-                  href="javascript:void(0)"
-                  onClick={() => dispatch(fetchContributions(filters, no))}
-                >
-                  {list.meta.page == no ? <strong>{no}</strong> : no}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <div />
 
         <table>
           <thead>
             <tr>
               <th
                 key={`header_utils`}
-                style={
-                  showcontrols ? { display: 'block' } : { display: 'none' }
-                }
+                style={showControls ? { display: 'block' } : { display: 'none' }}
               />
               {colnames.active.map(colname => (
                 <th key={`header_${colname}`}>{colname}</th>
@@ -150,58 +122,29 @@ export default class Contributionlist extends Component {
             </tr>
           </thead>
           <tbody>
-            {tbody.map((row, idx) => {
-              const editText = row._id === rowEdit.id ? 'Tallenna' : 'Muokkaa';
-              return (
-                <tr key={row._id}>
-                  <td
-                    key={`td_${idx}_utils`}
-                    style={
-                      showcontrols ? { display: 'block' } : { display: 'none' }
-                    }
-                  >
-                    <button
-                      onClick={() =>
-                        dispatch(deleteContribution(row._id, filters))
-                      }
-                    >
-                      Poista
-                    </button>
-                    <button onClick={() => this.editOrSave(row._id, editText)}>
-                      {editText}
-                    </button>
-                  </td>
-                  {colnames.active.map(colname => {
-                    const key = `td_${idx}_${colname}`,
-                      val =
-                        colname == 'Toimija' ? row.author.name : row[colname];
-                    if (rowEdit.id === row._id) {
-                      return (
-                        <td key={key}>
-                          <input
-                            type="text"
-                            defaultValue={val}
-                            onChange={ev => {
-                              this.handleEdit(
-                                row._id,
-                                colname,
-                                ev.target.value,
-                                row.author._id
-                              );
-                            }}
-                          />
-                        </td>
-                      );
-                    } else {
-                      return <td key={key}>{val}</td>;
-                    }
-                  })}
-                </tr>
-              );
-            })}
+            {Array.isArray(list) &&
+              list.map(row => (
+                <ContributionlistRow
+                  dispatch={dispatch}
+                  id={row._id}
+                  activeCols={colnames.active}
+                  filters={filters}
+                  rowEdit={rowEdit}
+                  row={row}
+                  showControls={showControls}
+                  key={row._id}
+                  lastEdit={lastEdit}
+                />
+              ))}
           </tbody>
         </table>
       </div>
     );
   }
 }
+
+Contributionlist.defaultProps = {
+  list: []
+};
+
+export default Contributionlist;

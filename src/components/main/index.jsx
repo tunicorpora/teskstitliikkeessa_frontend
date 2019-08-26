@@ -24,8 +24,10 @@ const main = props => {
     contributioncolnames: colnames,
     links,
     author,
-    publications
+    publications,
+    editUtils
   } = props;
+  console.log(editUtils);
 
   return (
     <HashRouter>
@@ -62,7 +64,7 @@ const main = props => {
                 />
                 <Route path="/signin" render={() => <Signin dispatch={dispatch} auth={auth} />} />
                 <Route
-                  path="/kontribuutiot"
+                  path="/publicationedit"
                   render={() => (
                     <Contributions
                       rowEdit={rowEdit}
@@ -70,6 +72,7 @@ const main = props => {
                       filters={contributionfilters}
                       dispatch={dispatch}
                       colnames={colnames}
+                      editUtils={editUtils}
                     />
                   )}
                 />

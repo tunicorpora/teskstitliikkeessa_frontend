@@ -1,0 +1,131 @@
+// Styles applied to the entire application as a whole
+@import './configs.scss';
+
+body {
+  padding: 0 0 0 0;
+  margin: 0 0 0 0;
+  overflow-x: hidden;
+  font-family: $bodyfont;
+  font-weight: 300;
+}
+
+body > div {
+  @include center_container(column nowrap);
+  // background: $bodybg;
+}
+
+main {
+  @include center_container();
+}
+
+.outerContainer {
+  background: $contentbg;
+  @include center_contained();
+  min-height: 99vh;
+  max-width: 1200px;
+}
+
+.responsiveList {
+  padding-left: 0px;
+  @media screen and (min-width: 1180px) {
+    > li {
+      display: inline-block;
+    }
+    li + li {
+      margin-left: 1em;
+    }
+  }
+}
+
+a,
+a:visited,
+a:active {
+  color: black;
+}
+
+.labelContainer,
+.labelContainerLight {
+  display: flex;
+  align-items: center;
+  > *:first-child {
+    width: 15em;
+    margin-right: 1em;
+  }
+  & + & {
+    margin-top: 1em;
+  }
+}
+
+.labelContainer {
+  > *:first-child {
+    font-weight: 500;
+  }
+}
+
+.iconContainer {
+  display: flex;
+  > *:first-child {
+    width: 2em;
+  }
+}
+
+.labelContainerStacked {
+  > div:first-child {
+    margin: 0em 0 1em 0;
+    font-weight: 500;
+    // background: lighten($logodark, 10%);
+    // color: #fff;
+    // padding: 2.9em 0.3em 0.5em 0.5em;
+  }
+  & + & {
+    margin-top: 2em;
+  }
+}
+
+.unlist {
+  padding-left: 0em;
+  li {
+    list-style-type: none;
+  }
+}
+
+.someBottomMargin {
+  margin-bottom: 1em;
+}
+
+.largeBottomMargin {
+  margin-bottom: 2em;
+}
+
+.someTopMargin {
+  margin-top: 1em;
+}
+
+.extraLargeTopMargin {
+  margin-top: 3em;
+}
+
+.largeTopMargin {
+  margin-top: 2em;
+}
+
+.sublist {
+  margin-left: 0.1em;
+  padding: 0px;
+}
+
+.noIndent {
+  padding: 0px;
+}
+
+.nobullet {
+  li {
+    list-style-type: none;
+  }
+}
+
+.bulletlist {
+  li {
+    list-style-type: circle;
+  }
+}

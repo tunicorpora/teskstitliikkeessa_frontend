@@ -13,6 +13,7 @@ function mapStateToProps(state) {
     contributioncolnames: state.contributioncolnames,
     links: state.links,
     publications: state.publications,
+    editUtils: state.editUtils
   };
 }
 
