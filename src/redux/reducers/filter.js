@@ -1,30 +1,21 @@
-export function filterReducer(state = [], action) {
-  const { type, ...rest } = action;
+export default (state = [{ fieldname: 'title' }], action) => {
+  const { type, idx, field, val } = action;
+  const newstate = [...state];
 
   switch (type) {
     case 'ADD_FILTER':
-      return [...state, {}];
-      break;
+      return [...state, { fieldname: 'title' }];
     case 'REMOVE_FILTER':
-      let newstate = state;
-      newstate.splice(rest.idx, 1);
-      return state;
-      break;
+      newstate.splice(idx, 1);
+      return newstate;
     case 'UPDATE_FILTER':
-      const { idx, field, val } = rest;
       return state.map((filter, stateidx) => {
         if (stateidx === idx) {
-          let altered = filter;
-          if (!altered.fieldname) {
-            altered.fieldname = 'Toimija';
-          }
-          return { ...altered, ...{ [field]: val } };
-        } else {
-          return filter;
+          return { ...filter, ...{ [field]: val } };
         }
+        return filter;
       });
-      break;
     default:
       return state;
   }
-}
+};

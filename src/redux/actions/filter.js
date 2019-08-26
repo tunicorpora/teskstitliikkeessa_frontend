@@ -1,18 +1,18 @@
 import { thunkCreator } from './utils';
 import { fetchContributions } from './contribution';
-import { filterReducer } from '../reducers/filter';
+import filterReducer from '../reducers/filter';
 
 function _updateFilter(field, val, idx) {
   return {
     type: 'UPDATE_FILTER',
-    field: field == 'Toimija' ? 'author' : field,
-    val: val,
-    idx: idx,
+    field,
+    val,
+    idx
   };
 }
 
 export const updateFilter = (field, val, idx, allfilters) => dispatch => {
-  const action = { type: 'UPDATE_FILTER', field: field, val: val, idx: idx };
+  const action = { type: 'UPDATE_FILTER', field, val, idx };
   // Kind of a hack: getting the latest state by (mis)using the reducer
   const futureState = filterReducer(allfilters, action);
   dispatch(action);
@@ -29,12 +29,12 @@ export const removeFilter = (idx, allfilters) => dispatch => {
 
 export function filterContributions() {
   return {
-    type: 'FILTER',
+    type: 'FILTER'
   };
 }
 
 export function addFilter() {
   return {
-    type: 'ADD_FILTER',
+    type: 'ADD_FILTER'
   };
 }

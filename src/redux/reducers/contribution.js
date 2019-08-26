@@ -34,29 +34,22 @@ export function colNameReducer(state = {}, action) {
           colname =>
             (rest.name === colname && rest.include) ||
             (rest.name !== colname && state.active.indexOf(colname) > -1)
-        ),
+        )
       };
       break;
     case 'CONTRIBUTION_COLNAMES_REQUEST':
       return state;
       break;
     case 'CONTRIBUTION_COLNAMES_SUCCESS':
-      const colnames = Object.keys(rest.result)
-        .filter(key => key.indexOf('_') !== 0 && key)
-        .map(key => (key === 'author' ? 'Toimija' : key));
+      const colnames = Object.keys(rest.result).filter(key => key.indexOf('_') !== 0 && key);
       return {
         all: colnames,
         active: colnames.filter(
           col =>
-            [
-              'Ensi-ilta',
-              'Ohjaaja',
-              'Esityspaikka',
-              'Linkki',
-              'Tietokanta',
-              'Lisätiedot',
-            ].indexOf(col) < 0
-        ),
+            ['Ensi-ilta', 'Ohjaaja', 'Esityspaikka', 'Linkki', 'Tietokanta', 'Lisätiedot'].indexOf(
+              col
+            ) < 0
+        )
       };
       break;
 

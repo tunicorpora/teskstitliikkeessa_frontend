@@ -4,7 +4,7 @@ import { contributionReducer, colNameReducer } from './contribution';
 import { rowReducer, colReducer } from './editing';
 import uploadReducer from './upload';
 import authReducer from './auth';
-import { filterReducer } from './filter';
+import filterReducer from './filter';
 import linkReducer from './links';
 import publicationReducer from './publication';
 import editUtilsReducer from './editUtils';
