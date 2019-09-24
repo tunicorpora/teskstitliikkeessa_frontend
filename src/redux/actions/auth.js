@@ -21,6 +21,7 @@ export function signIn(auth) {
         Accept: 'application/json'
       },
       credentials: 'include',
+      mode: 'cors',
       body: JSON.stringify({ username, password })
     })
       .then(response => response.json())
