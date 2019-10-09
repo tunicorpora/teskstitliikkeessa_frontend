@@ -11,6 +11,7 @@ export default class Publication extends Component {
     const { title, receptions, receptionOf, _id, ...fields } = details;
     return (
       <RaisableBox header={`${pretitle ? `${pretitle} : ` : ''}${title}`}>
+        <div className={styles.idline}>{_id}</div>
         <ul className={styles.details}>
           {Object.keys(fields)
             .filter(field => fields[field])

@@ -6,13 +6,13 @@ export function testUpload(targetform) {
   const form = new FormData(targetform);
   console.log(form);
   return {
-    type: 'TEST_UPLOAD',
+    type: 'TEST_UPLOAD'
   };
 }
 
-export function uploadData(targetform) {
+export function uploadData(targetform, uploadType = '') {
   const form = new FormData(targetform);
-  const url = `${ENV.apiUrl}/upload`;
+  const url = `${ENV.apiUrl}/upload${uploadType}`;
   const jwt = isAuthenticated();
   console.log(jwt);
   return thunkCreator({
@@ -21,9 +21,9 @@ export function uploadData(targetform) {
       method: 'POST',
       headers: {
         Accept: 'application/json',
-        Authorization: 'Bearer ' + jwt.token,
+        Authorization: 'Bearer ' + jwt.token
       },
-      body: form,
-    }).then(response => response.json()),
+      body: form
+    }).then(response => response.json())
   });
 }

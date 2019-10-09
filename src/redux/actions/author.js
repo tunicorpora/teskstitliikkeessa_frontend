@@ -1,4 +1,5 @@
 import { thunkCreator } from './utils';
+import { isAuthenticated } from '../../components/auth/utils';
 
 export function testAuthors() {
   return {
@@ -36,5 +37,21 @@ export function fetchReceptions(id) {
         });
         return publications;
       })
+  });
+}
+
+export function deleteAll() {
+  const url = `${ENV.apiUrl}/author`;
+  const jwt = isAuthenticated();
+  return thunkCreator({
+    types: ['TOTALDELETE_REQUEST', 'TOTALDELETE_SUCCESS', 'TOTALDELETE_ERROR'],
+    promise: fetch(url, {
+      method: 'DELETE',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${jwt.token}`
+      }
+    }).then(response => response.json())
   });
 }
