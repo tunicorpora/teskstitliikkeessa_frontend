@@ -9,6 +9,7 @@ import linkReducer from './links';
 import publicationReducer from './publication';
 import editUtilsReducer from './editUtils';
 import searchResultReducer from './searchResults';
+import textTypeFilterReducer from './textTypeFilter';
 
 const appReducer = combineReducers({
   author: authorReducer,
@@ -22,7 +23,8 @@ const appReducer = combineReducers({
   links: linkReducer,
   publications: publicationReducer,
   editUtils: editUtilsReducer,
-  searchResults: searchResultReducer
+  searchResults: searchResultReducer,
+  textTypeFilter: textTypeFilterReducer
 });
 
 export default appReducer;

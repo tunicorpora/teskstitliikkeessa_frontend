@@ -14,7 +14,8 @@ function mapStateToProps(state) {
     links: state.links,
     publications: state.publications,
     editUtils: state.editUtils,
-    searchResults: state.searchResults
+    searchResults: state.searchResults,
+    textTypeFilter: state.textTypeFilter
   };
 }
 

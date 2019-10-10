@@ -28,7 +28,8 @@ const main = props => {
     author,
     publications,
     editUtils,
-    searchResults
+    searchResults,
+    textTypeFilter
   } = props;
 
   return (
@@ -66,6 +67,7 @@ const main = props => {
                       publications={publications}
                       searchResults={searchResults}
                       filters={contributionfilters}
+                      textTypeFilter={textTypeFilter}
                     />
                   )}
                 />

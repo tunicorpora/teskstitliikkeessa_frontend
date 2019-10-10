@@ -1,7 +1,22 @@
 import React, { Component } from 'react';
+import Select from 'react-select';
 import styles from './styles.scss';
 import { updateFilter, removeFilter, filterContributions } from '../../../redux/actions/filter';
-import { fetchContributions } from '../../../redux/actions/contribution';
+import BasicButton from '../../ui/buttons/BasicButton';
+
+const selectStyle = {
+  container: provided => ({
+    ...provided,
+    width: '20em'
+  })
+};
+
+const selectStyleSmall = {
+  container: provided => ({
+    ...provided,
+    width: '8em'
+  })
+};
 
 export default class Filter extends Component {
   handleChange(field, val, idx) {
@@ -15,30 +30,31 @@ export default class Filter extends Component {
     return (
       <div className={styles.cont}>
         <div>
-          {/*TODO: MIKÄ TAHANSA kenttä...*/}
-          <select
-            onChange={ev => this.handleChange('fieldname', ev.target.value, filterIndex)}
-            value={allfilters[filterIndex].fieldname}
-          >
-            {colnames.map((colname, idx) => {
-              if (colname) {
-                return (
-                  <option value={colname} key={`colnameopt _${idx}`}>
-                    {colname}
-                  </option>
-                );
-              }
-            })}
-          </select>
+          <Select
+            styles={selectStyle}
+            onChange={selected => this.handleChange('fieldname', selected.value, filterIndex)}
+            value={{
+              label: allfilters[filterIndex].fieldname,
+              value: allfilters[filterIndex].fieldname
+            }}
+            options={colnames
+              .filter(colname => colname)
+              .map(colname => ({ label: colname, value: colname }))}
+          />
         </div>
         <div>
-          <select
-            onChange={ev => this.handleChange('operator', ev.target.value, filterIndex)}
-            value={allfilters[filterIndex].operator}
-          >
-            <option>Sisältää</option>
-            <option value="=">On täsmälleen</option>
-          </select>
+          <Select
+            styles={selectStyleSmall}
+            onChange={selected => this.handleChange('operator', selected.value, filterIndex)}
+            value={{
+              label: allfilters[filterIndex].operator === '=' ? 'On täsmälleen' : 'Sisältää',
+              value: allfilters[filterIndex].operator
+            }}
+            options={[
+              { label: 'Sisältää', value: 'Sisältää' },
+              { label: 'On täsmälleen', value: '=' }
+            ]}
+          />
         </div>
         <div>
           <input
@@ -50,7 +66,12 @@ export default class Filter extends Component {
           />
         </div>
         <div>
-          <button onClick={() => dispatch(removeFilter(filterIndex))}>Poista ehto</button>
+          <BasicButton
+            customClass={styles.redButton}
+            text="Poista ehto"
+            onClick={() => dispatch(removeFilter(filterIndex))}
+            iconName="faTrash"
+          />
         </div>
       </div>
     );

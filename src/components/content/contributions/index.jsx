@@ -1,12 +1,7 @@
-import { range } from 'lodash';
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import download from 'downloadjs';
-
-import { addFilter } from '../../../redux/actions/filter';
 import {
   fetchContributions,
-  deleteContribution,
   startContributionEdit,
   saveContributionEdit,
   makeContributionEdit,
@@ -14,10 +9,7 @@ import {
 } from '../../../redux/actions/contribution';
 import { isAuthenticated } from '../../auth/utils';
 import ContributionlistRow from './contributionListRow';
-import Filter from '../filter/index.jsx';
-import ToggledBox from '../../ui/ToggledBox';
-import generalStyles from '../../main/general_styles.scss';
-import styles from './styles.scss';
+import FilterSet from '../filterset';
 
 class Contributionlist extends Component {
   componentDidMount() {
@@ -76,45 +68,17 @@ class Contributionlist extends Component {
 
     return (
       <div>
-        <section className={styles.optionContainer}>
-          <ToggledBox header="Hakuehdot">
-            {filters.map((_, idx) => (
-              <Filter
-                allfilters={filters}
-                colnames={colnames.all}
-                dispatch={dispatch}
-                key={idx}
-                idx={idx}
-              />
-            ))}
-
-            <section className={generalStyles.verticalMargin}>
-              <button onClick={() => dispatch(addFilter())}>Lisää hakuehto</button>
-            </section>
-          </ToggledBox>
-          <ToggledBox header="Näytettävät kentät">
-            <ul className={styles.fieldList}>
-              {colnames.all.map(col => (
-                <li key={col}>
-                  <input
-                    type="checkbox"
-                    onChange={ev => this.handleColumnActivity(col, ev.target.checked)}
-                    checked={colnames.active.indexOf(col) > -1 ? true : false}
-                  />
-                  {col}
-                </li>
-              ))}
-            </ul>
-          </ToggledBox>
-        </section>
-
-        <div />
-
+        <FilterSet
+          action={() => dispatch(fetchContributions(filters))}
+          filters={filters}
+          dispatch={dispatch}
+        />
         <table>
           <thead>
             <tr>
+              <th key="dummy_id" />
               <th
-                key={`header_utils`}
+                key="header_utils"
                 style={showControls ? { display: 'block' } : { display: 'none' }}
               />
               {colnames.active.map(colname => (

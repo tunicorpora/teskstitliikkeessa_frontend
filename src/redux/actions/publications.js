@@ -1,9 +1,15 @@
 import { thunkCreator } from './utils';
 
-const performSearch = (filters, page = 1) => {
+const performSearch = (filters, textTypeFilter, page = 1) => {
   let url = `${ENV.apiUrl}/search?page=${page}`;
   if (filters.length) {
     url += `&filters=${encodeURIComponent(JSON.stringify(filters))}`;
+  }
+  if (!Object.entries(textTypeFilter).every(([_, val]) => val)) {
+    url += `&textTypes=${Object.entries(textTypeFilter)
+      .filter(([_, val]) => val)
+      .map(([cat]) => cat)
+      .join(',')}`;
   }
   return thunkCreator({
     types: ['SEARCH_REQUEST', 'SEARCH_SUCCESS', 'SEARCH_ERROR'],

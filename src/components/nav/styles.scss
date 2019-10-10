@@ -1,15 +1,12 @@
-@import 'src/components/main/configs.scss';
+@import 'src/general_styles/configs.scss';
 
 .logo {
   background: black;
-  padding: 0.2em 0.2em 0.2em 0.9em;
+  padding: 0.1em 0.1em 0.1em 0.1em;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.logoFirst {
-  transform: skewX(25deg);
+  white-space: nowrap;
 }
 
 .mainNav {
@@ -29,7 +26,8 @@
   }
   ul {
     list-style-type: none;
-    padding-left: 0em;
+    padding: 0em;
+    margin: 0em;
   }
   li {
     display: inline-block;
@@ -49,8 +47,5 @@
 
 .navItems {
   width: 100%;
-  padding: 0em 0em 0em 1em;
-  @media only screen and (min-width: 920px) {
-    max-width: $contentwidth;
-  }
+  padding: 0.2em;
 }
