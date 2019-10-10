@@ -66,7 +66,8 @@ class Contributionlist extends Component {
     const colnames = { all: [], active: [] };
     if (Array.isArray(list) && list.length) {
       const names = Object.keys(list[0]).filter(
-        key => !['receptions', 'receptionOf', '_id'].includes(key)
+        key =>
+          !['receptions', 'receptionOf', '_id', 'reception_type', 'tempId', 'target'].includes(key)
       );
       colnames.all = [...names];
       colnames.active = [...names];

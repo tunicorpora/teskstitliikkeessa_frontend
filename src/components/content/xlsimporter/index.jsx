@@ -13,7 +13,7 @@ import { faPencilAlt, faTrashAlt, faSave } from '@fortawesome/free-solid-svg-ico
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { fetchAuthors } from '../../../redux/actions/author';
 import { isAuthenticated } from '../../auth/utils';
-import Deleter from './deleter'
+import Deleter from './deleter';
 
 const removeCol = (colName, dispatch) => {
   const proceed = window.confirm(`Oletko varma, että haluat poistaa sarakkeen ${colName} ?`);
@@ -63,24 +63,8 @@ const xlsImporter = props => {
         </form>
       </div>
       <div className={styles.narrowed}>
-        <form
-          id="recuploadForm"
-          onSubmit={event => {
-            event.preventDefault();
-            dispatch(uploadData(event.target, '_receptions'));
-          }}
-        >
-          <p>Voit lisätä myös reseptioita suoraan xls-tiedoston perusteella.</p>
-          <div>{uploadInfo}</div>
-          <div className={generalStyles.verticalMargin}>
-            <input id="recfilefield" type="file" name="upload" />
-            <input type="submit" value="Lataa tiedosto" />
-          </div>
-        </form>
+        <Deleter dispatch={dispatch} />
       </div>
-        <div className={styles.narrowed}>
-          <Deleter dispatch={dispatch} />
-        </div>
     </div>
   );
 };

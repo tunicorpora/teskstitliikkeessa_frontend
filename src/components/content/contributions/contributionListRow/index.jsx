@@ -16,6 +16,7 @@ const contributionListRow = props => {
 
   return (
     <tr className={lastEdit === row._id ? styles.lastEditedRow : ''}>
+      <td>{row._id}</td>
       {showControls && (
         <td key="controls" className={styles.controls}>
           <BasicButton

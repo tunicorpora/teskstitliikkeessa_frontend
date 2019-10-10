@@ -6,6 +6,7 @@ import AutoCompleteField from '../../ui/autocompletefield/index.jsx';
 import ReceptionAdder from './receptionAdder/index.jsx';
 import SaveButton from '../../ui/savebutton/index.jsx';
 import styles from './linkadder.scss';
+import { uploadData } from '../../../redux/actions/upload';
 
 const linkAdder = props => {
   const { dispatch, links, publications } = props;
@@ -27,6 +28,7 @@ const linkAdder = props => {
 
   return (
     <div className={styles.outerContainer}>
+      <h1>Metodi 1: interaktiivisesti </h1>
       <div>
         <AutoCompleteField
           {...selectProps}
@@ -54,6 +56,22 @@ const linkAdder = props => {
       </div>
       <div className={styles.outerContainer}>
         <SaveButton onClick={() => dispatch(saveLinks(links))} />
+      </div>
+      <div>
+        <h1>Metodi 2: .xlsx-tiedostosta </h1>
+        <form
+          id="recuploadForm"
+          onSubmit={event => {
+            event.preventDefault();
+            dispatch(uploadData(event.target, '_receptions'));
+          }}
+        >
+          <p>Voit lisätä reseptioita myös .xlsx-tiedoston perusteella.</p>
+          <div>
+            <input id="recfilefield" type="file" name="upload" />
+            <input type="submit" value="Lataa tiedosto" />
+          </div>
+        </form>
       </div>
     </div>
   );

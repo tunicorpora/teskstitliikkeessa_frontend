@@ -22,12 +22,13 @@ const Publication = props => {
           ))}
       </ul>
       <FoldableBox header="Reseptiot" onOpen={() => dispatch(fetchReceptions(_id))}>
-        {Object.keys(receptions).map(key =>
-          receptions[key].map(
+        {Object.entries(receptions).map(([receptionType, reception]) =>
+          reception.map(
             rId =>
               publications[rId] && (
                 <Publication
-                  pretitle={key.replace(/s$/, '')}
+                  key={reception._id}
+                  pretitle={receptionType.replace(/s$/, '')}
                   details={publications[rId]}
                   publications={publications}
                   dispatch={dispatch}
