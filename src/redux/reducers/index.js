@@ -8,6 +8,7 @@ import filterReducer from './filter';
 import linkReducer from './links';
 import publicationReducer from './publication';
 import editUtilsReducer from './editUtils';
+import searchResultReducer from './searchResults';
 
 const appReducer = combineReducers({
   author: authorReducer,
@@ -20,7 +21,8 @@ const appReducer = combineReducers({
   contributioncolnames: colNameReducer,
   links: linkReducer,
   publications: publicationReducer,
-  editUtils: editUtilsReducer
+  editUtils: editUtilsReducer,
+  searchResults: searchResultReducer
 });
 
 export default appReducer;

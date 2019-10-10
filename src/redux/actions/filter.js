@@ -11,13 +11,7 @@ function _updateFilter(field, val, idx) {
   };
 }
 
-export const updateFilter = (field, val, idx, allfilters) => dispatch => {
-  const action = { type: 'UPDATE_FILTER', field, val, idx };
-  // Kind of a hack: getting the latest state by (mis)using the reducer
-  const futureState = filterReducer(allfilters, action);
-  dispatch(action);
-  return dispatch(fetchContributions(futureState));
-};
+export const updateFilter = (field, val, idx) => ({ type: 'UPDATE_FILTER', field, val, idx });
 
 export const removeFilter = (idx, allfilters) => dispatch => {
   const action = { type: 'REMOVE_FILTER', idx: idx };

@@ -1,5 +1,6 @@
 import { HashRouter, Switch, Route } from 'react-router-dom';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import About from '../content/about/index.jsx';
 import Agents from '../content/authors/index.jsx';
@@ -11,6 +12,7 @@ import Nav from '../nav/index.jsx';
 import Signin from '../auth/signin.jsx';
 import Xlsimporter from '../content/xlsimporter/index.jsx';
 import styles from './general_styles.scss';
+import SearchPage from '../content/search';
 
 const main = props => {
   const {
@@ -25,9 +27,9 @@ const main = props => {
     links,
     author,
     publications,
-    editUtils
+    editUtils,
+    searchResults
   } = props;
-  console.log(editUtils);
 
   return (
     <HashRouter>
@@ -53,6 +55,17 @@ const main = props => {
                       colEdit={colEdit}
                       colnames={colnames}
                       uploadStatus={uploadStatus}
+                    />
+                  )}
+                />
+                <Route
+                  path="/search"
+                  render={() => (
+                    <SearchPage
+                      dispatch={dispatch}
+                      publications={publications}
+                      searchResults={searchResults}
+                      filters={contributionfilters}
                     />
                   )}
                 />
@@ -83,6 +96,10 @@ const main = props => {
       </main>
     </HashRouter>
   );
+};
+
+main.propTypes = {
+  searchResults: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 export default main;

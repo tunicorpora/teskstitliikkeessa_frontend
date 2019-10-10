@@ -13,7 +13,8 @@ function mapStateToProps(state) {
     contributioncolnames: state.contributioncolnames,
     links: state.links,
     publications: state.publications,
-    editUtils: state.editUtils
+    editUtils: state.editUtils,
+    searchResults: state.searchResults
   };
 }
 

@@ -11,7 +11,8 @@ export default props => {
       <div className={styles.logo}>Tekstit liikkeessä</div>
       <div className={styles.navItems}>
         <ul>
-          <ListItem target="authors">Selaa kirjalilijoiden mukaan</ListItem>
+          <ListItem target="search">Haku</ListItem>
+          <ListItem target="authors">Selaus kirjailijoittain</ListItem>
           <ListItem target="addlinks">Lisää reseptioita</ListItem>
           <li className={isAuthenticated() ? styles.visible : styles.hidden}>
             <Link to={'/tuonti'}>Tuo dataa</Link>

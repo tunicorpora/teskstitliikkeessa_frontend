@@ -10,22 +10,32 @@ export default class Filter extends Component {
   }
 
   render() {
-    const { colnames, idx: filterIndex, dispatch } = this.props;
+    const { colnames, idx: filterIndex, dispatch, allfilters } = this.props;
 
     return (
       <div className={styles.cont}>
         <div>
           {/*TODO: MIKÄ TAHANSA kenttä...*/}
-          <select onChange={ev => this.handleChange('fieldname', ev.target.value, filterIndex)}>
+          <select
+            onChange={ev => this.handleChange('fieldname', ev.target.value, filterIndex)}
+            value={allfilters[filterIndex].fieldname}
+          >
             {colnames.map((colname, idx) => {
               if (colname) {
-                return <option key={`colnameopt _${idx}`}>{colname}</option>;
+                return (
+                  <option value={colname} key={`colnameopt _${idx}`}>
+                    {colname}
+                  </option>
+                );
               }
             })}
           </select>
         </div>
         <div>
-          <select onChange={ev => this.handleChange('operator', ev.target.value, filterIndex)}>
+          <select
+            onChange={ev => this.handleChange('operator', ev.target.value, filterIndex)}
+            value={allfilters[filterIndex].operator}
+          >
             <option>Sisältää</option>
             <option value="=">On täsmälleen</option>
           </select>
@@ -33,6 +43,7 @@ export default class Filter extends Component {
         <div>
           <input
             type="text"
+            value={allfilters[filterIndex].value || ''}
             onChange={ev => {
               this.handleChange('value', ev.target.value, filterIndex);
             }}
