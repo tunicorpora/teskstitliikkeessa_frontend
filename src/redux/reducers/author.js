@@ -1,18 +1,15 @@
-export function authorReducer(state = {}, action) {
-  const { type, ...rest } = action;
-
+export default function authorReducer(state = {}, action) {
+  const { type, result, fieldname, val } = action;
   switch (type) {
-    case 'AUTHOR_REQUEST':
-      break;
     case 'AUTHOR_SUCCESS':
-      return rest.result;
+      return result;
+    case 'EDIT_AUTHOR':
+      return { ...state, [fieldname]: val };
     case 'AUTHOR_ERROR':
-      console.log('Error requesting author..');
-      console.log(rest);
-      break;
+      return {};
+    case 'RESET_AUTHOR':
+      return {};
     default:
       return state;
   }
-
-  return state;
 }

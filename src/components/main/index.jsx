@@ -3,9 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import About from '../content/about/index.jsx';
-import Agents from '../content/authors/index.jsx';
 import Contributions from '../content/contributions/index.jsx';
-import Header from '../header/index.jsx';
 import Inspector from '../content/inspector/index.jsx';
 import LinkAdder from '../content/linkadder/index.jsx';
 import Nav from '../nav/index.jsx';
@@ -13,6 +11,7 @@ import Signin from '../auth/signin.jsx';
 import Xlsimporter from '../content/xlsimporter/index.jsx';
 import styles from './general_styles.scss';
 import SearchPage from '../content/search';
+import AuthorEdit from '../content/authoredit';
 
 const main = props => {
   const {
@@ -47,6 +46,10 @@ const main = props => {
                   render={() => (
                     <Inspector author={author} dispatch={dispatch} publications={publications} />
                   )}
+                />
+                <Route
+                  path="/authoredit"
+                  render={() => <AuthorEdit author={author} dispatch={dispatch} />}
                 />
                 <Route
                   path="/tuonti"

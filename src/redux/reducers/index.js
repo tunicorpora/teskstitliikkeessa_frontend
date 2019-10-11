@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { authorReducer } from './author';
+import authorReducer from './author';
 import { contributionReducer, colNameReducer } from './contribution';
 import { rowReducer, colReducer } from './editing';
 import uploadReducer from './upload';

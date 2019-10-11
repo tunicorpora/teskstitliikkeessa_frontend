@@ -40,7 +40,7 @@ BasicButton.defaultProps = {
   noBackground: false,
   customClass: '',
   iconName: '',
-  noKeyDown: false
+  noKeyDown: true
 };
 
 export default BasicButton;

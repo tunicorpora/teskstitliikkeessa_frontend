@@ -55,3 +55,34 @@ export function deleteAll() {
     }).then(response => response.json())
   });
 }
+
+export const editAuthor = (fieldname, val) => ({
+  type: 'EDIT_AUTHOR',
+  fieldname,
+  val
+});
+
+export const resetAuthor = () => ({
+  type: 'RESET_AUTHOR'
+});
+
+export const saveAuthorEdit = author => {
+  console.log('FIRE!!');
+  const url = `${ENV.apiUrl}/author`;
+  const jwt = isAuthenticated();
+  const validatedAuthor = { ...author };
+  delete validatedAuthor.publications;
+  delete validatedAuthor.publications;
+  return thunkCreator({
+    types: ['SAVEAUTHOR_REQUEST', 'SAVEAUTHOR_SUCCESS', 'SAVEAUTHOR_ERROR'],
+    promise: fetch(url, {
+      method: author._id ? 'PUT' : 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + jwt.token
+      },
+      body: JSON.stringify(validatedAuthor)
+    }).then(response => response.json())
+  });
+};
