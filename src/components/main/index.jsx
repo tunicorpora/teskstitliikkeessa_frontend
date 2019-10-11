@@ -91,6 +91,7 @@ const main = props => {
                       dispatch={dispatch}
                       colnames={colnames}
                       editUtils={editUtils}
+                      textTypeFilter={textTypeFilter}
                     />
                   )}
                 />

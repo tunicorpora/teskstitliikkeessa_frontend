@@ -52,7 +52,8 @@ class Contributionlist extends Component {
       rowEdit,
       filters,
       list,
-      editUtils: { lastEdit }
+      editUtils: { lastEdit },
+      textTypeFilter
     } = this.props;
     const showControls = isAuthenticated() !== false;
     const colnames = { all: [], active: [] };
@@ -72,6 +73,7 @@ class Contributionlist extends Component {
           action={() => dispatch(fetchContributions(filters))}
           filters={filters}
           dispatch={dispatch}
+        textTypeFilter={textTypeFilter}
         />
         <table>
           <thead>

@@ -25,7 +25,7 @@ class AuthorEdit extends Component {
     const { isEdit } = this.state;
     return (
       <div>
-        <div>
+        <div className={styles.switch}>
           <div>
             <input type="radio" checked={isEdit} onChange={() => this.setState({ isEdit: true })} />{' '}
             Muokkaa vanhaa
@@ -37,7 +37,7 @@ class AuthorEdit extends Component {
         </div>
         {isEdit && (
           <section className={styles.authorSearch}>
-            <div>Hae tekijän nimellä</div>
+            <div className={styles.authorSearchHeading}>Hae tekijän nimellä</div>
             <AutocompleteField
               path="authornames"
               categoryName="flat"
@@ -45,7 +45,6 @@ class AuthorEdit extends Component {
             />
           </section>
         )}
-        <h2>{isEdit ? author.name && 'Muokkaa tekijän tietoja' : 'Uusi tekijä'}</h2>
         {(!isEdit || (isEdit && author.name)) && (
           <section>
             <section>

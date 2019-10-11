@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import Publication from '../publication';
 import pubStyles from '../inspector/inspector.scss';
 import FilterSet from '../filterset';
-import { performSearch } from '../../../redux/actions/publications';
+import { performSearch, exportResults } from '../../../redux/actions/publications';
+import BasicButton from '../../ui/buttons/BasicButton';
 
 const SearchPage = props => {
   const { dispatch, searchResults, publications, filters, textTypeFilter } = props;
@@ -17,6 +18,14 @@ const SearchPage = props => {
       />
       {searchResults.length > 0 && (
         <section>
+          {false && (
+            <div>
+              <BasicButton
+                text="vie tulokset json-muodossa"
+                onClick={() => dispatch(exportResults(searchResults))}
+              />
+            </div>
+          )}
           <h2>Löytyneet tekstit ({searchResults.length})</h2>
           <ul className={pubStyles.receptionList}>
             {searchResults.map(pub => (

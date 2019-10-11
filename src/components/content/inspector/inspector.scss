@@ -11,3 +11,14 @@
   max-width: 25em;
   margin-bottom: 2em;
 }
+
+.authorDetails {
+  font-size: 0.9;
+  font-weight: 200;
+  ul {
+    padding-left: 2em;
+  }
+  li + li {
+    margin-top: 1.2em;
+  }
+}

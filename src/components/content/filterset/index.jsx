@@ -43,7 +43,7 @@ const FilterSet = props => {
           <section>
             <ul className={styles.additionalConditions}>
               {Object.entries({
-                original: 'Alkuperäisteksti',
+                original: 'Alkuperäistekstit',
                 translations: 'Käännökset',
                 reviews: 'Arvostelut',
                 articles: 'Muut artikkelit / uutiset / blogitekstit',

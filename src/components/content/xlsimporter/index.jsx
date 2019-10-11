@@ -62,9 +62,11 @@ const xlsImporter = props => {
           </div>
         </form>
       </div>
-      <div className={styles.narrowed}>
-        <Deleter dispatch={dispatch} />
-      </div>
+      {true && (
+        <div className={styles.narrowed}>
+          <Deleter dispatch={dispatch} />
+        </div>
+      )}
     </div>
   );
 };

@@ -33,4 +33,13 @@ const fetchDetails = id => {
   });
 };
 
-export { fetchDetails, fetchDetailsRaw, performSearch };
+const exportResults = alldata => {
+  console.log(alldata.map(item => item._id));
+  const url = `${ENV.apiUrl}/export?ids=${alldata.map(item => item._id).join(',')}`;
+  return thunkCreator({
+    types: ['EXPORT_REQUEST', 'EXPORT_SUCCESS', 'EXPORT_ERROR'],
+    promise: fetch(url).then(response => response.json())
+  });
+};
+
+export { fetchDetails, fetchDetailsRaw, performSearch, exportResults };
