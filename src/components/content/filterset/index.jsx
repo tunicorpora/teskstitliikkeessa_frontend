@@ -46,8 +46,9 @@ const FilterSet = props => {
                 original: 'Alkuperäisteksti',
                 translations: 'Käännökset',
                 reviews: 'Arvostelut',
+                articles: 'Muut artikkelit / uutiset / blogitekstit',
                 adaptations: 'Adaptaatiot',
-                other: 'Muut'
+                other: 'Muut reseptiot'
               }).map(([value, text]) => (
                 <li key={value}>
                   <TextTypeFilter

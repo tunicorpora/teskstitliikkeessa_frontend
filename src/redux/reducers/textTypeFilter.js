@@ -1,5 +1,12 @@
 export default (
-  state = { original: true, translations: true, adaptations: true, reviews: true, other: true },
+  state = {
+    original: true,
+    translations: true,
+    adaptations: true,
+    reviews: true,
+    articles: true,
+    other: true
+  },
   action
 ) => {
   const { type, isChecked, value } = action;

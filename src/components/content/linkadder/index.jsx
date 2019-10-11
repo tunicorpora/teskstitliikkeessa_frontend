@@ -23,7 +23,9 @@ const linkAdder = props => {
   const receptionAdders = [
     { label: 'Käännökset', labelInDatabase: 'translations' },
     { label: 'Adaptaatiot', labelInDatabase: 'adaptations' },
-    { label: 'Muut', labelInDatabase: 'other' }
+    { label: 'Arvostelut', labelInDatabase: 'reviews' },
+    { label: 'Muut artikkelit / uutiset / blogitekstit ym.', labelInDatabase: 'articles' },
+    { label: 'Muut reseptiot', labelInDatabase: 'other' }
   ];
 
   return (
@@ -84,6 +86,8 @@ linkAdder.propTypes = {
       receptions: {
         translations: PropTypes.arrayOf(PropTypes.string),
         adaptations: PropTypes.arrayOf(PropTypes.string),
+        reviews: PropTypes.arrayOf(PropTypes.string),
+        articles: PropTypes.arrayOf(PropTypes.string),
         other: PropTypes.arrayOf(PropTypes.string)
       }
     }
