@@ -27,27 +27,30 @@ export default class AutoCompleteField extends Component {
     return fetch(url, { mode: 'cors' })
       .then(response => response.json())
       .then(options =>
-        options.slice(0, maxEntries).map(option => {
-          if (categoryName === 'flat') {
-            return {
-              label: option,
-              value: option,
-              tooltip: undefined
-            };
-          }
+        options
+          .slice(0, maxEntries)
+          .filter(option => option)
+          .map(option => {
+            if (categoryName === 'flat') {
+              return {
+                label: option,
+                value: option,
+                tooltip: undefined
+              };
+            }
 
-          let tooltip;
-          if (Array.isArray(tooltipName)) {
-            tooltip = getTooltip(tooltipName, option);
-          } else {
-            tooltip = option[tooltipName];
-          }
-          return {
-            label: option[labelName || categoryName],
-            value: option[categoryName],
-            tooltip
-          };
-        })
+            let tooltip;
+            if (Array.isArray(tooltipName)) {
+              tooltip = getTooltip(tooltipName, option);
+            } else {
+              tooltip = option[tooltipName];
+            }
+            return {
+              label: option[labelName || categoryName],
+              value: option[categoryName],
+              tooltip
+            };
+          })
       );
   }
 

@@ -12,10 +12,15 @@ export default props => {
         <ul>
           <ListItem target="search">Tekstit</ListItem>
           <ListItem target="authors">Tekijät</ListItem>
-          <ListItem target="addlinks">Lisää reseptioita</ListItem>
           <li className={isAuthenticated() ? styles.visible : styles.hidden}>
-            <Link to={'/tuonti'}>Tuo dataa</Link>
+            <Link to={'/tuonti'}>Lisää alkuperäisteoksia</Link>
           </li>
+          <ListItem
+            className={isAuthenticated() ? styles.visible : styles.hidden}
+            target="addlinks"
+          >
+            Lisää reseptioita
+          </ListItem>
           <ListItem target="publicationedit">Muokkaa tekstejä</ListItem>
           <ListItem target="authoredit">Muokkaa tekijöitä</ListItem>
           <li className={isAuthenticated() ? styles.hidden : styles.visible}>

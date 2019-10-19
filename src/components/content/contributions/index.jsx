@@ -6,12 +6,17 @@ import {
   makeContributionEdit,
   changeColState
 } from '../../../redux/actions/contribution';
-import { performSearch } from '../../../redux/actions/publications';
+import { performSearch, resetRouteState } from '../../../redux/actions/publications';
 import { isAuthenticated } from '../../auth/utils';
 import ContributionlistRow from './contributionListRow';
 import FilterSet from '../filterset';
 
 class Contributionlist extends Component {
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch(resetRouteState());
+  }
+
   handleEdit(id, colname, newval) {
     const { dispatch } = this.props;
     dispatch(makeContributionEdit(id, colname, newval));

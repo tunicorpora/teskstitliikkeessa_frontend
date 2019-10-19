@@ -2,6 +2,12 @@
   margin-top: 2em;
 }
 
+.narrowed {
+  @media only screen and (min-width: 920px) {
+    max-width: 60vw;
+  }
+}
+
 .container {
   display: flex;
   flex-flow: row nowrap;

@@ -1,44 +1,52 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Publication from '../publication';
 import pubStyles from '../inspector/inspector.scss';
 import FilterSet from '../filterset';
-import { performSearch, exportResults } from '../../../redux/actions/publications';
+import { performSearch, exportResults, resetRouteState } from '../../../redux/actions/publications';
 import BasicButton from '../../ui/buttons/BasicButton';
 
-const SearchPage = props => {
-  const { dispatch, searchResults, publications, filters, textTypeFilter } = props;
-  return (
-    <div>
-      <FilterSet
-        dispatch={dispatch}
-        filters={filters}
-        action={() => dispatch(performSearch(filters, textTypeFilter))}
-        textTypeFilter={textTypeFilter}
-      />
-      {searchResults.length > 0 && (
-        <section>
-          {false && (
-            <div>
-              <BasicButton
-                text="vie tulokset json-muodossa"
-                onClick={() => dispatch(exportResults(searchResults))}
-              />
-            </div>
-          )}
-          <h2>Löytyneet tekstit ({searchResults.length})</h2>
-          <ul className={pubStyles.receptionList}>
-            {searchResults.map(pub => (
-              <li>
-                <Publication details={pub} publications={publications} dispatch={dispatch} />
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
-    </div>
-  );
-};
+class SearchPage extends Component {
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch(resetRouteState());
+  }
+
+  render() {
+    const { dispatch, searchResults, publications, filters, textTypeFilter } = this.props;
+
+    return (
+      <div>
+        <FilterSet
+          dispatch={dispatch}
+          filters={filters}
+          action={() => dispatch(performSearch(filters, textTypeFilter))}
+          textTypeFilter={textTypeFilter}
+        />
+        {searchResults.length > 0 && (
+          <section>
+            {false && (
+              <div>
+                <BasicButton
+                  text="vie tulokset json-muodossa"
+                  onClick={() => dispatch(exportResults(searchResults))}
+                />
+              </div>
+            )}
+            <h2>Löytyneet tekstit ({searchResults.length})</h2>
+            <ul className={pubStyles.receptionList}>
+              {searchResults.map(pub => (
+                <li>
+                  <Publication details={pub} publications={publications} dispatch={dispatch} />
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+      </div>
+    );
+  }
+}
 
 SearchPage.propTypes = {
   dispatch: PropTypes.func.isRequired,

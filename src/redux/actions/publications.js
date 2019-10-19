@@ -1,6 +1,7 @@
 import { thunkCreator } from './utils';
 
 const performSearch = (filters, textTypeFilter, page = 1) => {
+  console.log('heeee');
   let url = `${ENV.apiUrl}/publication?page=${page}`;
   if (filters.length) {
     url += `&filters=${encodeURIComponent(JSON.stringify(filters))}`;
@@ -42,4 +43,6 @@ const exportResults = alldata => {
   });
 };
 
-export { fetchDetails, fetchDetailsRaw, performSearch, exportResults };
+const resetRouteState = () => ({ type: 'RESET_ROUTE_STATE' });
+
+export { fetchDetails, fetchDetailsRaw, performSearch, exportResults, resetRouteState };

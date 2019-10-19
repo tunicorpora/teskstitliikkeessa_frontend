@@ -77,7 +77,12 @@ const main = props => {
                 <Route
                   path="/addlinks"
                   render={() => (
-                    <LinkAdder dispatch={dispatch} links={links} publications={publications} />
+                    <LinkAdder
+                      uploadStatus={uploadStatus}
+                      dispatch={dispatch}
+                      links={links}
+                      publications={publications}
+                    />
                   )}
                 />
                 <Route path="/signin" render={() => <Signin dispatch={dispatch} auth={auth} />} />
@@ -86,7 +91,7 @@ const main = props => {
                   render={() => (
                     <Contributions
                       rowEdit={rowEdit}
-                      list={contributionlist}
+                      list={searchResults}
                       filters={contributionfilters}
                       dispatch={dispatch}
                       colnames={colnames}

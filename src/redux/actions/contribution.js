@@ -1,5 +1,6 @@
 import { thunkCreator } from './utils';
 import { isAuthenticated } from '../../components/auth/utils';
+import { performSearch } from './publications';
 
 function changeColState(name, include) {
   return { type: 'CHANGE_COL_STATE', name, include };
@@ -33,7 +34,7 @@ function deleteContributionRaw(id) {
 }
 
 const deleteContribution = (id, filters) => dispatch => {
-  dispatch(deleteContributionRaw(id)).then(() => fetchContributions(filters)(dispatch));
+  dispatch(deleteContributionRaw(id)).then(() => performSearch(filters, {})(dispatch));
 };
 
 const startContributionEdit = id => {
@@ -75,7 +76,7 @@ const saveContributionEdit = (rowEdit, filters) => dispatch => {
   dispatch(saveContributionEditRaw(rowEdit))
     .then(dispatch({ type: 'LAST_EDIT', id: rowEdit.id }))
     .then(dispatch({ type: 'CANCEL_EDITS' }))
-    .then(() => dispatch(fetchContributions(filters)));
+    .then(() => dispatch(performSearch(filters, {})));
 };
 
 const makeContributionEdit = (col, val) => {

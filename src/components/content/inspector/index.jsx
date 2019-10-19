@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import { fetchAuthorByName } from '../../../redux/actions/author';
+import { resetRouteState } from '../../../redux/actions/publications';
 import AutocompleteField from '../../ui/autocompletefield/index.jsx';
 import Publication from '../publication/index.jsx';
 import styles from './inspector.scss';
@@ -31,43 +32,52 @@ const translateDetails = key => {
   }
 };
 
-export default props => {
-  const { dispatch, author = {}, publications: allPublications } = props;
-  const { publications = [], _id, __v, ...authorDetails } = author;
+class AuthorInspector extends Component {
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch(resetRouteState());
+  }
 
-  return (
-    <div className={styles.inspector}>
-      <section className={styles.searchContainer}>
-        <AutocompleteField
-          path="authornames"
-          categoryName="flat"
-          onChange={selected => dispatch(fetchAuthorByName(selected.value))}
-        />
-      </section>
-      <section className={styles.authorDetails}>
-        {authorDetails.name && (
-          <FoldableBox header="Tekijän tiedot">
-            <ul>
-              {authorDetails &&
-                Object.entries(authorDetails).map(([key, val]) => (
-                  <li key={key}>
-                    <strong>{translateDetails(key)}</strong>: {val}
-                  </li>
-                ))}
-            </ul>
-          </FoldableBox>
-        )}
-      </section>
-      {publications.length > 0 && <h3>Teokset</h3>}
-      <section>
-        <ul className={styles.receptionList}>
-          {publications.map(pub => (
-            <li>
-              <Publication details={pub} publications={allPublications} dispatch={dispatch} />
-            </li>
-          ))}
-        </ul>
-      </section>
-    </div>
-  );
-};
+  render() {
+    const { dispatch, author = {}, publications: allPublications } = this.props;
+    const { publications = [], _id, __v, ...authorDetails } = author;
+
+    return (
+      <div className={styles.inspector}>
+        <section className={styles.searchContainer}>
+          <AutocompleteField
+            path="authornames"
+            categoryName="flat"
+            onChange={selected => dispatch(fetchAuthorByName(selected.value))}
+          />
+        </section>
+        <section className={styles.authorDetails}>
+          {authorDetails.name && (
+            <FoldableBox header="Tekijän tiedot">
+              <ul>
+                {authorDetails &&
+                  Object.entries(authorDetails).map(([key, val]) => (
+                    <li key={key}>
+                      <strong>{translateDetails(key)}</strong>: {val}
+                    </li>
+                  ))}
+              </ul>
+            </FoldableBox>
+          )}
+        </section>
+        {publications.length > 0 && <h3>Teokset</h3>}
+        <section>
+          <ul className={styles.receptionList}>
+            {publications.map(pub => (
+              <li>
+                <Publication details={pub} publications={allPublications} dispatch={dispatch} />
+              </li>
+            ))}
+          </ul>
+        </section>
+      </div>
+    );
+  }
+}
+
+export default AuthorInspector;

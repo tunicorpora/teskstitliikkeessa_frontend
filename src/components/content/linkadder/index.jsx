@@ -6,10 +6,12 @@ import AutoCompleteField from '../../ui/autocompletefield/index.jsx';
 import ReceptionAdder from './receptionAdder/index.jsx';
 import SaveButton from '../../ui/savebutton/index.jsx';
 import styles from './linkadder.scss';
-import { uploadData } from '../../../redux/actions/upload';
+import { uploadData, resetUploadStatus } from '../../../redux/actions/upload';
+import BasicButton from '../../ui/buttons/BasicButton';
+import Save from '../../ui/buttons/save';
 
 const linkAdder = props => {
-  const { dispatch, links, publications } = props;
+  const { dispatch, links, publications, uploadStatus } = props;
 
   const { source, receptions } = links;
 
@@ -30,51 +32,77 @@ const linkAdder = props => {
 
   return (
     <div className={styles.outerContainer}>
-      <h1>Metodi 1: interaktiivisesti </h1>
-      <div>
-        <AutoCompleteField
-          {...selectProps}
-          onChange={selected => dispatch(editSource(selected.value, publications))}
-        />
-      </div>
-      <div className={styles.container}>
-        {source && (
+      <div className={styles.narrowed}>
+        {uploadStatus === 'receptions ok' ? (
           <div>
-            <ul className={styles.relationList}>
-              {receptionAdders.map(adder => (
-                <li key={adder.labelInDatabase}>
-                  <ReceptionAdder
-                    {...adder}
-                    publications={publications}
-                    dispatch={dispatch}
-                    selectProps={selectProps}
-                    receptionIds={receptions[adder.labelInDatabase]}
-                  />
-                </li>
-              ))}
-            </ul>
+            Lataus onnistui.
+            <br /> <br />
+            <BasicButton text="Lataa lisää" onClick={() => dispatch(resetUploadStatus())} />
           </div>
+        ) : (
+          <form
+            id="recuploadForm"
+            onSubmit={event => {
+              event.preventDefault();
+              dispatch(uploadData(event.target, 'reception'));
+            }}
+          >
+            <p>
+              Huom! Olethan muistanut lisätä ensin alkuperäisteokset (ks. linkki vasemmalla)?
+              <br />
+              <br />
+              Voit lisätä reseptioita .xlsx-tiedoston perusteella. Käytä{' '}
+              <a href="https://puolukka.uta.fi/files/tekstit_liikkeessa_pohja.xlsx">
+                samaa mallipohjaa
+              </a>{' '}
+              kuin alkuperäisteoksiin, mutta muista täyttää target- ja reception_type-sarakkeet.
+              Target-sarakkeeseen tarvittavat tunnisteet voit hakea Tekstit-sivun hakutoiminnon
+              avulla.
+            </p>
+            <div>
+              <input id="recfilefield" type="file" name="upload" />
+              <Save text="Lataa tiedosto" />
+            </div>
+          </form>
         )}
       </div>
-      <div className={styles.outerContainer}>
-        <SaveButton onClick={() => dispatch(saveLinks(links))} />
-      </div>
-      <div>
-        <h1>Metodi 2: .xlsx-tiedostosta </h1>
-        <form
-          id="recuploadForm"
-          onSubmit={event => {
-            event.preventDefault();
-            dispatch(uploadData(event.target, 'reception'));
-          }}
-        >
-          <p>Voit lisätä reseptioita myös .xlsx-tiedoston perusteella.</p>
+      {false && (
+        <div>
+          <h1>Metodi 2: interaktiivisesti </h1>
           <div>
-            <input id="recfilefield" type="file" name="upload" />
-            <input type="submit" value="Lataa tiedosto" />
+            Voit myös merkitä jonkin jo ladatun teoksen jonkin toisen teoksen reseptioksi alla
+            olevien pudotusvalikkojen avulla.
           </div>
-        </form>
-      </div>
+          <div>
+            <AutoCompleteField
+              {...selectProps}
+              onChange={selected => dispatch(editSource(selected.value, publications))}
+            />
+          </div>
+          <div className={styles.container}>
+            {source && (
+              <div>
+                <ul className={styles.relationList}>
+                  {receptionAdders.map(adder => (
+                    <li key={adder.labelInDatabase}>
+                      <ReceptionAdder
+                        {...adder}
+                        publications={publications}
+                        dispatch={dispatch}
+                        selectProps={selectProps}
+                        receptionIds={receptions[adder.labelInDatabase]}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+          <div className={styles.outerContainer}>
+            <SaveButton onClick={() => dispatch(saveLinks(links))} />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
