@@ -10,9 +10,9 @@ export function testUpload(targetform) {
   };
 }
 
-export function uploadData(targetform, uploadType = '') {
+export function uploadData(targetform, uploadType = 'publication') {
   const form = new FormData(targetform);
-  const url = `${ENV.apiUrl}/upload${uploadType}`;
+  const url = `${ENV.apiUrl}/${uploadType}`;
   const jwt = isAuthenticated();
   console.log(jwt);
   return thunkCreator({

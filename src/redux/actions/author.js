@@ -25,7 +25,7 @@ export function fetchAuthorByName(name) {
 }
 
 export function fetchReceptions(id) {
-  const url = `${ENV.apiUrl}/receptions/${id}`;
+  const url = `${ENV.apiUrl}/reception/${id}`;
   return thunkCreator({
     types: ['RECEPTIONS_REQUEST', 'RECEPTIONS_SUCCESS', 'RECEPTIONS_ERROR'],
     promise: fetch(url)

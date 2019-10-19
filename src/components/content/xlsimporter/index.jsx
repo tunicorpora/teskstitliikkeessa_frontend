@@ -15,22 +15,6 @@ import { fetchAuthors } from '../../../redux/actions/author';
 import { isAuthenticated } from '../../auth/utils';
 import Deleter from './deleter';
 
-const removeCol = (colName, dispatch) => {
-  const proceed = window.confirm(`Oletko varma, että haluat poistaa sarakkeen ${colName} ?`);
-  if (proceed) {
-    const jwt = isAuthenticated();
-    const url = `${ENV.apiUrl}/colnames/` + encodeURIComponent(colName);
-    fetch(url, {
-      method: 'DELETE',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + jwt.token
-      }
-    }).then(() => dispatch(fetchColNames()));
-  }
-};
-
 const xlsImporter = props => {
   const { dispatch, colnames, colEdit, uploadStatus } = props;
 

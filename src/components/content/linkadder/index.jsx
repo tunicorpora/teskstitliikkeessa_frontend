@@ -14,7 +14,7 @@ const linkAdder = props => {
   const { source, receptions } = links;
 
   const selectProps = {
-    path: 'publications',
+    path: 'publication',
     labelName: 'title',
     categoryName: '_id',
     tooltipName: ['title', 'author', 'Language']
@@ -65,7 +65,7 @@ const linkAdder = props => {
           id="recuploadForm"
           onSubmit={event => {
             event.preventDefault();
-            dispatch(uploadData(event.target, '_receptions'));
+            dispatch(uploadData(event.target, 'reception'));
           }}
         >
           <p>Voit lisätä reseptioita myös .xlsx-tiedoston perusteella.</p>

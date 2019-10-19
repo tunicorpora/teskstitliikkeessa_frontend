@@ -1,24 +1,12 @@
 import { thunkCreator } from './utils';
 import { isAuthenticated } from '../../components/auth/utils';
 
-function fetchColNames() {
-  const url = `${ENV.apiUrl}/colnames`;
-  return thunkCreator({
-    types: [
-      'CONTRIBUTION_COLNAMES_REQUEST',
-      'CONTRIBUTION_COLNAMES_SUCCESS',
-      'CONTRIBUTION_COLNAMES_ERROR'
-    ],
-    promise: fetch(url).then(response => response.json())
-  });
-}
-
 function changeColState(name, include) {
   return { type: 'CHANGE_COL_STATE', name, include };
 }
 
 function fetchContributions(filters, page = 1) {
-  let url = `${ENV.apiUrl}/entry?page=${page}`;
+  let url = `${ENV.apiUrl}/publication?page=${page}`;
   if (filters.length) {
     url += `&filters=${encodeURIComponent(JSON.stringify(filters))}`;
   }
@@ -29,7 +17,7 @@ function fetchContributions(filters, page = 1) {
 }
 
 function deleteContributionRaw(id) {
-  const url = `${ENV.apiUrl}/entry/${id}`;
+  const url = `${ENV.apiUrl}/publication/${id}`;
   const jwt = isAuthenticated();
   return thunkCreator({
     types: ['CONTRIBUTIONDELETE_REQUEST', 'CONTRIBUTIONDELETE_SUCCESS', 'CONTRIBUTIONDELETE_ERROR'],
@@ -57,7 +45,7 @@ const startContributionEdit = id => {
 
 function saveContributionEditRaw(rowEdit) {
   const { id, ...data } = rowEdit;
-  const url = `${ENV.apiUrl}/entry/${id}`;
+  const url = `${ENV.apiUrl}/publication/${id}`;
   const jwt = isAuthenticated();
   return thunkCreator({
     types: ['CONTRIBUTIONEDIT_REQUEST', 'CONTRIBUTIONEDIT_SUCCESS', 'CONTRIBUTIONEDIT_ERROR'],
@@ -104,6 +92,5 @@ export {
   saveContributionEdit,
   fetchContributions,
   deleteContribution,
-  fetchColNames,
   changeColState
 };

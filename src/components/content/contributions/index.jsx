@@ -1,40 +1,25 @@
 import React, { Component } from 'react';
-import download from 'downloadjs';
+import PropTypes from 'prop-types';
 import {
-  fetchContributions,
   startContributionEdit,
   saveContributionEdit,
   makeContributionEdit,
   changeColState
 } from '../../../redux/actions/contribution';
+import { performSearch } from '../../../redux/actions/publications';
 import { isAuthenticated } from '../../auth/utils';
 import ContributionlistRow from './contributionListRow';
 import FilterSet from '../filterset';
 
 class Contributionlist extends Component {
-  componentDidMount() {
-    const { dispatch, filters } = this.props;
-    dispatch(fetchContributions(filters));
-  }
-
   handleEdit(id, colname, newval) {
     const { dispatch } = this.props;
     dispatch(makeContributionEdit(id, colname, newval));
   }
 
-  exportToExcel() {
-    const { filters } = this.props;
-    let url = `${ENV.apiUrl}/entry/excel`;
-    if (filters.length) {
-      url += '?filters=' + encodeURIComponent(JSON.stringify(filters));
-    }
-    fetch(url)
-      .then(response => response.blob())
-      .then(file => download(file, 'tekstit-liikkeessa_tietokannasta.xlsx'));
-  }
-
   handleColumnActivity(colname, checked) {
-    this.props.dispatch(changeColState(colname, checked));
+    const { dispatch } = this.props;
+    dispatch(changeColState(colname, checked));
   }
 
   editOrSave(id, type) {
@@ -70,10 +55,10 @@ class Contributionlist extends Component {
     return (
       <div>
         <FilterSet
-          action={() => dispatch(fetchContributions(filters))}
+          action={() => dispatch(performSearch(filters, {}))}
           filters={filters}
           dispatch={dispatch}
-        textTypeFilter={textTypeFilter}
+          textTypeFilter={textTypeFilter}
         />
         <table>
           <thead>
@@ -109,6 +94,10 @@ class Contributionlist extends Component {
     );
   }
 }
+
+Contributionlist.propTypes = {
+  dispatch: PropTypes.func.isRequired
+};
 
 Contributionlist.defaultProps = {
   list: []

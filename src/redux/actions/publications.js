@@ -1,7 +1,7 @@
 import { thunkCreator } from './utils';
 
 const performSearch = (filters, textTypeFilter, page = 1) => {
-  let url = `${ENV.apiUrl}/search?page=${page}`;
+  let url = `${ENV.apiUrl}/publication?page=${page}`;
   if (filters.length) {
     url += `&filters=${encodeURIComponent(JSON.stringify(filters))}`;
   }
@@ -18,12 +18,12 @@ const performSearch = (filters, textTypeFilter, page = 1) => {
 };
 
 const fetchDetailsRaw = id => {
-  const url = `${ENV.apiUrl}/publications/${id}`;
+  const url = `${ENV.apiUrl}/publication/${id}`;
   return fetch(url).then(response => response.json());
 };
 
 const fetchDetails = id => {
-  const url = `${ENV.apiUrl}/publications/${id}`;
+  const url = `${ENV.apiUrl}/publication/${id}`;
 
   return thunkCreator({
     types: ['DETAILS_REQUEST', 'DETAILS_SUCCESS', 'DETAILS_ERROR'],
