@@ -8,6 +8,14 @@
   }
 }
 
+.margined {
+  margin: 1em 0em 1em 0em;
+}
+
+.marginedLarge {
+  margin: 4em 0em 1em 0em;
+}
+
 .container {
   display: flex;
   flex-flow: row nowrap;

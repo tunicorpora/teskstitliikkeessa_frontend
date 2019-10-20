@@ -12,5 +12,9 @@ export default (state = { source: null, receptions: {} }, action) => {
     return { ...state, ...{ receptions: updated } };
   }
 
+  if (type === 'RESET_ROUTE_STATE') {
+    return { source: null, receptions: {} };
+  }
+
   return state;
 };

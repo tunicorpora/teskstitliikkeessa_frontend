@@ -1,6 +1,6 @@
 import { thunkCreator } from './utils';
-import { fetchReceptions } from './author';
-import { fetchDetails, fetchDetailsRaw } from './publications';
+import { fetchDetails } from './publications';
+import { isAuthenticated } from '../../components/auth/utils';
 
 const setSourceId = id => ({
   type: 'SET_SOURCE_ID',
@@ -39,15 +39,15 @@ const editReceptions = (receptionType, selected, publications) => dispatch => {
 
 const saveLinks = links => {
   const url = `${ENV.apiUrl}/savelinks`;
-  // const jwt = isAuthenticated();
+  const jwt = isAuthenticated();
   return thunkCreator({
     types: ['SAVELINKS_REQUEST', 'SAVELINKS_SUCCESS', 'SAVELINKS_ERROR'],
     promise: fetch(url, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
-        'Content-Type': 'application/json'
-        // Authorization: 'Bearer ' + jwt.token,
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + jwt.token
       },
       body: JSON.stringify(links)
     }).then(response => response.json())
