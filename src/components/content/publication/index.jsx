@@ -4,6 +4,8 @@ import { fetchReceptions } from '../../../redux/actions/author';
 import FoldableBox from '../../ui/foldablebox/index.jsx';
 import RaisableBox from '../../ui/raisableBox/index.jsx';
 import styles from './publications.scss';
+import { signout, isAuthenticated } from '../../auth/utils';
+import AddButton from '../../ui/buttons/add';
 
 const translateReceptionKey = key => {
   switch (key) {
@@ -59,10 +61,10 @@ const Publication = props => {
             );
           }
         })}
+        {isAuthenticated() && false && <AddButton text="Lisää uusi" />}
       </FoldableBox>
     </RaisableBox>
   );
 };
 
 export default Publication;
-

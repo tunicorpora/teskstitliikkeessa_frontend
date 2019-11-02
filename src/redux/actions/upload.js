@@ -1,4 +1,4 @@
-import { thunkCreator } from './utils';
+import { thunkCreator, resetRouteState } from './utils';
 import { isAuthenticated } from '../../components/auth/utils';
 
 const uploadDataRaw = (targetform, uploadType) => {
@@ -27,4 +27,26 @@ const resetUploadStatus = () => ({
   type: 'UPLOAD_RESET'
 });
 
-export { uploadData, resetUploadStatus };
+const submitPublicationRaw = (publication, type) => {
+  const url = `${ENV.apiUrl}/singlepublication`;
+  const jwt = isAuthenticated();
+  const { token } = jwt;
+  return thunkCreator({
+    types: ['UPLOAD_REQUEST', 'UPLOAD_SUCCESS', 'UPLOAD_ERROR'],
+    promise: fetch(url, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({ publication, type })
+    }).then(response => response.json())
+  });
+};
+
+const submitPublication = (publication, type) => dispatch => {
+  dispatch(submitPublicationRaw(publication, type)).then(() => dispatch(resetRouteState));
+};
+
+export { uploadData, resetUploadStatus, submitPublication };

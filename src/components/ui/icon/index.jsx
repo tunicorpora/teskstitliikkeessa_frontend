@@ -34,12 +34,14 @@ import {
   faSignInAlt,
   faFilePdf,
   faFileImage,
-  faSave
+  faSave,
+  faArrowRight
 } from '@fortawesome/free-solid-svg-icons';
 import utilityStyles from '../../../general_styles/utilities.scss';
 
 const icons = {
   faSave,
+  faArrowRight,
   faFileImage,
   faFileWord,
   faSignInAlt,

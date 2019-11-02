@@ -66,6 +66,22 @@ export const resetAuthor = () => ({
   type: 'RESET_AUTHOR'
 });
 
+export function deleteAuthor(id) {
+  const url = `${ENV.apiUrl}/author/${id}`;
+  const jwt = isAuthenticated();
+  return thunkCreator({
+    types: ['AUTHORDELETE_REQUEST', 'AUTHORDELETE_SUCCESS', 'AUTHORDELETE_ERROR'],
+    promise: fetch(url, {
+      method: 'DELETE',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${jwt.token}`
+      }
+    }).then(response => response.json())
+  });
+}
+
 export const saveAuthorEdit = author => {
   console.log('FIRE!!');
   const url = `${ENV.apiUrl}/author`;

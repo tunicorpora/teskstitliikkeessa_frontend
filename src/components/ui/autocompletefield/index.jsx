@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { components } from 'react-select';
 import AsyncSelect from 'react-select/async';
+import AsyncCreatableSelect from 'react-select/async-creatable';
 import React, { Component } from 'react';
 import Tooltip from '@atlaskit/tooltip';
 
@@ -22,14 +23,15 @@ const Option = props => (
 
 export default class AutoCompleteField extends Component {
   getOptions(inputValue) {
-    const { categoryName, tooltipName, path, labelName, maxEntries = 10 } = this.props;
+    const { categoryName, tooltipName, path, labelName } = this.props;
+    // if no input, load nothing
+    const maxEntries = 400;
     const url = `${ENV.apiUrl}/${path}?search=${inputValue}`;
     return fetch(url, { mode: 'cors' })
       .then(response => response.json())
       .then(options =>
         options
           .slice(0, maxEntries)
-          .filter(option => option)
           .map(option => {
             if (categoryName === 'flat') {
               return {
@@ -51,6 +53,7 @@ export default class AutoCompleteField extends Component {
               tooltip
             };
           })
+          .filter(option => option.label)
       );
   }
 
@@ -62,8 +65,10 @@ export default class AutoCompleteField extends Component {
       isMulti = false,
       onChange,
       fieldname,
-      defaultOptions = true,
-      value
+      defaultOptions = false,
+      value,
+      noOptionsMessage,
+      creatable
     } = this.props;
 
     let select;
@@ -74,11 +79,16 @@ export default class AutoCompleteField extends Component {
       loadOptions: inputValue => this.getOptions(inputValue),
       defaultOptions,
       styles: selectStyle,
-      creatable: false
+      noOptionsMessage: () => noOptionsMessage || 'Kirjoita jotain hakukenttään...'
     };
     if (value !== undefined) {
       outProps.value = value;
     }
-    return <AsyncSelect {...outProps} components={{ Option }} />;
+
+    return creatable ? (
+      <AsyncCreatableSelect {...outProps} components={{ Option }} />
+    ) : (
+      <AsyncSelect {...outProps} components={{ Option }} />
+    );
   }
 }

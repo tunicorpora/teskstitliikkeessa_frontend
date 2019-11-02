@@ -6,7 +6,8 @@ import {
   makeContributionEdit,
   changeColState
 } from '../../../redux/actions/contribution';
-import { performSearch, resetRouteState } from '../../../redux/actions/publications';
+import { performSearch } from '../../../redux/actions/publications';
+import { resetRouteState } from '../../../redux/actions/utils';
 import { isAuthenticated } from '../../auth/utils';
 import ContributionlistRow from './contributionListRow';
 import FilterSet from '../filterset';

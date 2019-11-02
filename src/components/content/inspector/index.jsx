@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { fetchAuthorByName } from '../../../redux/actions/author';
-import { resetRouteState } from '../../../redux/actions/publications';
+import { resetRouteState } from '../../../redux/actions/utils';
 import AutocompleteField from '../../ui/autocompletefield/index.jsx';
 import Publication from '../publication/index.jsx';
 import styles from './inspector.scss';
@@ -49,6 +49,7 @@ class AuthorInspector extends Component {
             path="authornames"
             categoryName="flat"
             onChange={selected => dispatch(fetchAuthorByName(selected.value))}
+            noOptionsMessage="Kirjoita tekijän nimi..."
           />
         </section>
         <section className={styles.authorDetails}>

@@ -10,6 +10,7 @@ export default function authorReducer(state = {}, action) {
     case 'AUTHOR_ERROR':
       return {};
     case 'RESET_AUTHOR':
+    case 'UPLOAD_RESET':
       return {};
     default:
       return state;

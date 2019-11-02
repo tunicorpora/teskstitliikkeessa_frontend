@@ -3,8 +3,11 @@ import PropTypes from 'prop-types';
 import Publication from '../publication';
 import pubStyles from '../inspector/inspector.scss';
 import FilterSet from '../filterset';
-import { performSearch, exportResults, resetRouteState } from '../../../redux/actions/publications';
+import { performSearch, exportResults } from '../../../redux/actions/publications';
+import { resetRouteState } from '../../../redux/actions/utils';
 import BasicButton from '../../ui/buttons/BasicButton';
+import Loader from '../../ui/CustomLoader';
+import styles from './styles.scss';
 
 class SearchPage extends Component {
   componentDidMount() {
@@ -13,7 +16,14 @@ class SearchPage extends Component {
   }
 
   render() {
-    const { dispatch, searchResults, publications, filters, textTypeFilter } = this.props;
+    const {
+      dispatch,
+      searchResults,
+      publications,
+      filters,
+      textTypeFilter,
+      uploadStatus
+    } = this.props;
 
     return (
       <div>
@@ -23,6 +33,11 @@ class SearchPage extends Component {
           action={() => dispatch(performSearch(filters, textTypeFilter))}
           textTypeFilter={textTypeFilter}
         />
+        {uploadStatus.match('progress') && (
+          <div class={styles.indicatorContainer}>
+            <Loader />
+          </div>
+        )}
         {searchResults.length > 0 && (
           <section>
             {false && (
@@ -52,7 +67,8 @@ SearchPage.propTypes = {
   dispatch: PropTypes.func.isRequired,
   searchResults: PropTypes.arrayOf(PropTypes.object).isRequired,
   publications: PropTypes.objectOf(PropTypes.object).isRequired,
-  filters: PropTypes.arrayOf(PropTypes.object).isRequired
+  filters: PropTypes.arrayOf(PropTypes.object).isRequired,
+  uploadStatus: PropTypes.oneOfType([Array, PropTypes.string]).isRequired
 };
 
 export default SearchPage;

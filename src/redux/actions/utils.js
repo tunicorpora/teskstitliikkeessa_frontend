@@ -17,3 +17,5 @@ export const thunkCreator = action => {
       });
   };
 };
+
+export const resetRouteState = () => ({ type: 'RESET_ROUTE_STATE' });

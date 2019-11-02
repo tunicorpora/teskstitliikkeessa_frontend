@@ -2,20 +2,13 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import { editReceptions } from '../../../../redux/actions/links';
-import { getTooltip } from '../../../../utils/misc';
-import AutoCompleteField from '../../../ui/autocompletefield/index.jsx';
+import { selectProps, formatReceptionValues } from '../../../../utils/misc';
+import AutoCompleteField from '../../../ui/autocompletefield/index';
 
 const receptionAdder = props => {
-  const { label, labelInDatabase, publications, dispatch, receptionIds, selectProps } = props;
+  const { label, labelInDatabase, publications, dispatch, receptionIds } = props;
 
-  const values = receptionIds.map(id => {
-    const details = publications[id] || { title: '...', author: '', Language: '' };
-    return {
-      label: details.title || '...',
-      value: id,
-      tooltip: getTooltip(selectProps.tooltipName, details)
-    };
-  });
+  const values = receptionIds.map(id => formatReceptionValues(id, publications));
 
   return (
     <div>
@@ -25,7 +18,9 @@ const receptionAdder = props => {
           {...selectProps}
           isMulti
           value={values}
+          path="searchpublication"
           onChange={selected => dispatch(editReceptions(labelInDatabase, selected, publications))}
+          noOptionsMessage="Kirjoita teoksen nimi..."
         />
       </div>
     </div>

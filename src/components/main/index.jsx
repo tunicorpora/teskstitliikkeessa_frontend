@@ -12,6 +12,7 @@ import Xlsimporter from '../content/xlsimporter/index.jsx';
 import styles from './general_styles.scss';
 import SearchPage from '../content/search';
 import AuthorEdit from '../content/authoredit';
+import PublicationAdder from '../content/PublicationAdder';
 
 const main = props => {
   const {
@@ -28,7 +29,8 @@ const main = props => {
     publications,
     editUtils,
     searchResults,
-    textTypeFilter
+    textTypeFilter,
+    newPublication
   } = props;
 
   return (
@@ -49,7 +51,20 @@ const main = props => {
                 />
                 <Route
                   path="/authoredit"
-                  render={() => <AuthorEdit author={author} dispatch={dispatch} />}
+                  render={() => (
+                    <AuthorEdit author={author} dispatch={dispatch} uploadStatus={uploadStatus} />
+                  )}
+                />
+                <Route
+                  path="/newpublication"
+                  render={() => (
+                    <PublicationAdder
+                      dispatch={dispatch}
+                      newPublication={newPublication}
+                      publications={publications}
+                      uploadStatus={uploadStatus}
+                    />
+                  )}
                 />
                 <Route
                   path="/tuonti"
@@ -71,6 +86,7 @@ const main = props => {
                       searchResults={searchResults}
                       filters={contributionfilters}
                       textTypeFilter={textTypeFilter}
+                      uploadStatus={uploadStatus}
                     />
                   )}
                 />
