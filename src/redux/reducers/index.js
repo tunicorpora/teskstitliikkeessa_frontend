@@ -11,6 +11,7 @@ import editUtilsReducer from './editUtils';
 import searchResultReducer from './searchResults';
 import textTypeFilterReducer from './textTypeFilter';
 import newPublicationReducer from './newPublicationReducer';
+import pendingEditsReducer from './pendingEditsReducer';
 
 const appReducer = combineReducers({
   author: authorReducer,
@@ -26,7 +27,8 @@ const appReducer = combineReducers({
   editUtils: editUtilsReducer,
   searchResults: searchResultReducer,
   textTypeFilter: textTypeFilterReducer,
-  newPublication: newPublicationReducer
+  newPublication: newPublicationReducer,
+  pendingEdits: pendingEditsReducer
 });
 
 export default appReducer;

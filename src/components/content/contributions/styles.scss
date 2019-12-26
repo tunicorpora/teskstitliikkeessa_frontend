@@ -17,3 +17,12 @@
     margin-left: 0.3em;
   }
 }
+
+.pendingEditsContainer{
+  margin: 1em 0em 1em 0em;
+  display: flex;
+  align-items: center;
+  div + div {
+    margin-left: 2em;
+  }
+}

@@ -79,7 +79,9 @@ const FilterSet = props => {
 FilterSet.propTypes = {
   dispatch: PropTypes.func.isRequired,
   action: PropTypes.func.isRequired,
-  filters: PropTypes.objectOf(PropTypes.object).isRequired
+  filters: PropTypes.arrayOf(
+    PropTypes.shape({ fieldname: PropTypes.string, value: PropTypes.string })
+  ).isRequired
 };
 
 export default FilterSet;

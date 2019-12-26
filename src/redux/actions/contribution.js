@@ -17,6 +17,22 @@ function fetchContributions(filters, page = 1) {
   });
 }
 
+function batchDeleteContributionRaw(ids) {
+  const url = `${ENV.apiUrl}/publication?ids=${ids.join(',')}`;
+  const jwt = isAuthenticated();
+  return thunkCreator({
+    types: ['BATCHDELETE_REQUEST', 'BATCHDELETE_SUCCESS', 'BATCHDELETE_ERROR'],
+    promise: fetch(url, {
+      method: 'DELETE',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${jwt.token}`
+      }
+    }).then(response => response.json())
+  });
+}
+
 function deleteContributionRaw(id) {
   const url = `${ENV.apiUrl}/publication/${id}`;
   const jwt = isAuthenticated();
@@ -35,6 +51,10 @@ function deleteContributionRaw(id) {
 
 const deleteContribution = (id, filters) => dispatch => {
   dispatch(deleteContributionRaw(id)).then(() => performSearch(filters, {})(dispatch));
+};
+
+const batchDeleteContribution = (ids, filters) => dispatch => {
+  dispatch(batchDeleteContributionRaw(ids)).then(() => performSearch(filters, {})(dispatch));
 };
 
 const startContributionEdit = id => {
@@ -87,11 +107,35 @@ const makeContributionEdit = (col, val) => {
   };
 };
 
+const addPendingId = id => {
+  return {
+    type: 'ADD_PENDING_ID',
+    id
+  };
+};
+
+const removePendingId = id => {
+  return {
+    type: 'REMOVE_PENDING_ID',
+    id
+  };
+};
+
+const removeAllPendingIds = () => {
+  return {
+    type: 'REMOVE_ALL_PENDING_IDS'
+  };
+};
+
 export {
   startContributionEdit,
   makeContributionEdit,
   saveContributionEdit,
   fetchContributions,
   deleteContribution,
-  changeColState
+  changeColState,
+  addPendingId,
+  removePendingId,
+  removeAllPendingIds,
+  batchDeleteContribution
 };

@@ -34,7 +34,7 @@ class SearchPage extends Component {
           textTypeFilter={textTypeFilter}
         />
         {uploadStatus.match('progress') && (
-          <div class={styles.indicatorContainer}>
+          <div className={styles.indicatorContainer}>
             <Loader />
           </div>
         )}
@@ -51,7 +51,7 @@ class SearchPage extends Component {
             <h2>Löytyneet tekstit ({searchResults.length})</h2>
             <ul className={pubStyles.receptionList}>
               {searchResults.map(pub => (
-                <li>
+                <li key={pub._id}>
                   <Publication details={pub} publications={publications} dispatch={dispatch} />
                 </li>
               ))}
@@ -67,8 +67,18 @@ SearchPage.propTypes = {
   dispatch: PropTypes.func.isRequired,
   searchResults: PropTypes.arrayOf(PropTypes.object).isRequired,
   publications: PropTypes.objectOf(PropTypes.object).isRequired,
-  filters: PropTypes.arrayOf(PropTypes.object).isRequired,
-  uploadStatus: PropTypes.oneOfType([Array, PropTypes.string]).isRequired
+  filters: PropTypes.arrayOf(
+    PropTypes.shape({ fieldname: PropTypes.string, value: PropTypes.string })
+  ).isRequired,
+  uploadStatus: PropTypes.oneOfType([Array, PropTypes.string]).isRequired,
+  textTypeFilter: PropTypes.shape({
+    original: PropTypes.bool,
+    translations: PropTypes.bool,
+    adaptations: PropTypes.bool,
+    reviews: PropTypes.bool,
+    articles: PropTypes.bool,
+    other: PropTypes.bool
+  }).isRequired
 };
 
 export default SearchPage;

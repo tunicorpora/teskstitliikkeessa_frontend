@@ -5,17 +5,40 @@ import {
   deleteContribution,
   makeContributionEdit,
   saveContributionEdit,
-  startContributionEdit
+  startContributionEdit,
+  addPendingId,
+  removePendingId
 } from '../../../../redux/actions/contribution';
 import BasicButton from '../../../ui/buttons/BasicButton';
 import styles from './contributionlistrow.scss';
 
 const contributionListRow = props => {
-  const { id, dispatch, showControls, rowEdit, activeCols, filters, row, lastEdit } = props;
+  const {
+    id,
+    dispatch,
+    showControls,
+    rowEdit,
+    activeCols,
+    filters,
+    row,
+    lastEdit,
+    deletePending
+  } = props;
   const editPending = id === rowEdit.id && rowEdit.id !== undefined;
+  const batchPending = true;
 
   return (
     <tr className={lastEdit === row._id ? styles.lastEditedRow : ''}>
+      <td>
+        <input
+          type="checkbox"
+          name=""
+          checked={deletePending}
+          onChange={ev =>
+            ev.target.checked ? dispatch(addPendingId(row._id)) : dispatch(removePendingId(row._id))
+          }
+        />
+      </td>
       <td>{row._id}</td>
       {showControls && (
         <td key="controls" className={styles.controls}>
@@ -72,11 +95,13 @@ contributionListRow.propTypes = {
   activeCols: PropTypes.arrayOf(PropTypes.string).isRequired,
   row: PropTypes.objectOf(PropTypes.any).isRequired,
   filters: PropTypes.arrayOf(PropTypes.any).isRequired,
-  wasLastEdit: PropTypes.bool
+  wasLastEdit: PropTypes.bool,
+  deletePending: PropTypes.bool
 };
 
 contributionListRow.defaultProps = {
-  wasLastEdit: false
+  wasLastEdit: false,
+  deletePending: false
 };
 
 export default contributionListRow;

@@ -7,6 +7,7 @@ module.exports = {
   },
   rules: {
     'max-len': 1,
+    'no-underscore-dangle': 'off',
     'jsx-a11y/label-has-for': [
       2,
       {

@@ -30,7 +30,8 @@ const main = props => {
     editUtils,
     searchResults,
     textTypeFilter,
-    newPublication
+    newPublication,
+    pendingEdits
   } = props;
 
   return (
@@ -113,6 +114,7 @@ const main = props => {
                       colnames={colnames}
                       editUtils={editUtils}
                       textTypeFilter={textTypeFilter}
+                      pendingEdits={pendingEdits}
                     />
                   )}
                 />

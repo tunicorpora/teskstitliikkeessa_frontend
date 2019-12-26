@@ -4,13 +4,17 @@ import {
   startContributionEdit,
   saveContributionEdit,
   makeContributionEdit,
-  changeColState
+  changeColState,
+  removeAllPendingIds,
+  batchDeleteContribution
 } from '../../../redux/actions/contribution';
 import { performSearch } from '../../../redux/actions/publications';
 import { resetRouteState } from '../../../redux/actions/utils';
 import { isAuthenticated } from '../../auth/utils';
 import ContributionlistRow from './contributionListRow';
 import FilterSet from '../filterset';
+import BasicButton from '../../ui/buttons/BasicButton';
+import styles from './styles.scss';
 
 class Contributionlist extends Component {
   componentDidMount() {
@@ -30,7 +34,7 @@ class Contributionlist extends Component {
 
   editOrSave(id, type) {
     const { dispatch, rowEdit, filters } = this.props;
-    if (type == 'Muokkaa') {
+    if (type === 'Muokkaa') {
       dispatch(startContributionEdit(id));
     } else {
       dispatch(saveContributionEdit(rowEdit, filters));
@@ -44,7 +48,8 @@ class Contributionlist extends Component {
       filters,
       list,
       editUtils: { lastEdit },
-      textTypeFilter
+      textTypeFilter,
+      pendingEdits
     } = this.props;
     const showControls = isAuthenticated() !== false;
     const colnames = { all: [], active: [] };
@@ -66,6 +71,16 @@ class Contributionlist extends Component {
           dispatch={dispatch}
           textTypeFilter={textTypeFilter}
         />
+        {pendingEdits.length > 0 && (
+          <div className={styles.pendingEditsContainer}>
+            <BasicButton text="Tyhjennä valinta" onClick={() => dispatch(removeAllPendingIds())} />
+            <BasicButton
+              text="Poista valitut teokset tietokannasta"
+              iconName="faTrash"
+              onClick={() => dispatch(batchDeleteContribution(pendingEdits, filters))}
+            />
+          </div>
+        )}
         <table>
           <thead>
             <tr>
@@ -92,6 +107,7 @@ class Contributionlist extends Component {
                   showControls={showControls}
                   key={row._id}
                   lastEdit={lastEdit}
+                  deletePending={pendingEdits.includes(row._id)}
                 />
               ))}
           </tbody>
@@ -102,7 +118,8 @@ class Contributionlist extends Component {
 }
 
 Contributionlist.propTypes = {
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
+  pendingEdits: PropTypes.arrayOf(PropTypes.number).isRequired
 };
 
 Contributionlist.defaultProps = {
