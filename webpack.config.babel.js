@@ -9,8 +9,8 @@ export default {
     icon: './src/components/ui/icon'
   },
   output: {
-    filename: '[name].bundle.js',
-    chunkFilename: '[name].bundle.js',
+    filename: '[name].[contenthash].bundle.js',
+    chunkFilename: '[name].[contenthash].bundle.js',
     publicPath: '/'
   },
   devServer: {
