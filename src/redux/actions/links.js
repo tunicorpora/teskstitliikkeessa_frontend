@@ -29,7 +29,12 @@ const editSource = (sourceId, publications) => dispatch => {
 };
 
 const editReceptions = (receptionType, selected, publications) => dispatch => {
-  dispatch(editLink(receptionType, selected.map(s => s.value)));
+  dispatch(
+    editLink(
+      receptionType,
+      selected.map(s => s.value)
+    )
+  );
   selected.forEach(s => {
     if (!(s.value in publications)) {
       dispatch(fetchDetails(s.value));
@@ -38,7 +43,7 @@ const editReceptions = (receptionType, selected, publications) => dispatch => {
 };
 
 const saveLinks = links => {
-  const url = `${ENV.apiUrl}/savelinks`;
+  const url = `${process.env.API_URL}/savelinks`;
   const jwt = isAuthenticated();
   return thunkCreator({
     types: ['SAVELINKS_REQUEST', 'SAVELINKS_SUCCESS', 'SAVELINKS_ERROR'],

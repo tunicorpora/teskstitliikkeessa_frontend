@@ -9,7 +9,7 @@ export function testAuthors() {
 }
 
 export function fetchAuthors() {
-  const url = `${ENV.apiUrl}/author`;
+  const url = `${process.env.API_URL}/author`;
   return thunkCreator({
     types: ['AUTHORLIST_REQUEST', 'AUTHORLIST_SUCCESS', 'AUTHORLIST_ERROR'],
     promise: fetch(url).then(response => response.json())
@@ -17,7 +17,7 @@ export function fetchAuthors() {
 }
 
 export function fetchAuthorByName(name) {
-  const url = `${ENV.apiUrl}/author/${name}`;
+  const url = `${process.env.API_URL}/author/${name}`;
   return thunkCreator({
     types: ['AUTHOR_REQUEST', 'AUTHOR_SUCCESS', 'AUTHOR_ERROR'],
     promise: fetch(url).then(response => response.json())
@@ -25,7 +25,7 @@ export function fetchAuthorByName(name) {
 }
 
 export function fetchReceptions(id) {
-  const url = `${ENV.apiUrl}/reception/${id}`;
+  const url = `${process.env.API_URL}/reception/${id}`;
   return thunkCreator({
     types: ['RECEPTIONS_REQUEST', 'RECEPTIONS_SUCCESS', 'RECEPTIONS_ERROR'],
     promise: fetch(url)
@@ -41,7 +41,7 @@ export function fetchReceptions(id) {
 }
 
 export function deleteAll() {
-  const url = `${ENV.apiUrl}/author`;
+  const url = `${process.env.API_URL}/author`;
   const jwt = isAuthenticated();
   return thunkCreator({
     types: ['TOTALDELETE_REQUEST', 'TOTALDELETE_SUCCESS', 'TOTALDELETE_ERROR'],
@@ -67,7 +67,7 @@ export const resetAuthor = () => ({
 });
 
 export function deleteAuthor(id) {
-  const url = `${ENV.apiUrl}/author/${id}`;
+  const url = `${process.env.API_URL}/author/${id}`;
   const jwt = isAuthenticated();
   return thunkCreator({
     types: ['AUTHORDELETE_REQUEST', 'AUTHORDELETE_SUCCESS', 'AUTHORDELETE_ERROR'],
@@ -84,7 +84,7 @@ export function deleteAuthor(id) {
 
 export const saveAuthorEdit = author => {
   console.log('FIRE!!');
-  const url = `${ENV.apiUrl}/author`;
+  const url = `${process.env.API_URL}/author`;
   const jwt = isAuthenticated();
   const validatedAuthor = { ...author };
   delete validatedAuthor.publications;

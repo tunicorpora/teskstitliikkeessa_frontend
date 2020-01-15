@@ -3,7 +3,7 @@ import { isAuthenticated } from '../../components/auth/utils';
 
 const uploadDataRaw = (targetform, uploadType) => {
   const form = new FormData(targetform);
-  const url = `${ENV.apiUrl}/${uploadType}`;
+  const url = `${process.env.API_URL}/${uploadType}`;
   const jwt = isAuthenticated();
   const { token } = jwt;
   return thunkCreator({
@@ -28,7 +28,7 @@ const resetUploadStatus = () => ({
 });
 
 const submitPublicationRaw = (publication, type) => {
-  const url = `${ENV.apiUrl}/singlepublication`;
+  const url = `${process.env.API_URL}/singlepublication`;
   const jwt = isAuthenticated();
   const { token } = jwt;
   return thunkCreator({

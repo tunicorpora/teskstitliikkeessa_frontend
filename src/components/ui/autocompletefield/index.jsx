@@ -26,7 +26,7 @@ export default class AutoCompleteField extends Component {
     const { categoryName, tooltipName, path, labelName } = this.props;
     // if no input, load nothing
     const maxEntries = 400;
-    const url = `${ENV.apiUrl}/${path}?search=${inputValue}`;
+    const url = `${process.env.API_URL}/${path}?search=${inputValue}`;
     return fetch(url, { mode: 'cors' })
       .then(response => response.json())
       .then(options =>

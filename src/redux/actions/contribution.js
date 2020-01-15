@@ -7,7 +7,7 @@ function changeColState(name, include) {
 }
 
 function fetchContributions(filters, page = 1) {
-  let url = `${ENV.apiUrl}/publication?page=${page}`;
+  let url = `${process.env.API_URL}/publication?page=${page}`;
   if (filters.length) {
     url += `&filters=${encodeURIComponent(JSON.stringify(filters))}`;
   }
@@ -18,7 +18,7 @@ function fetchContributions(filters, page = 1) {
 }
 
 function batchDeleteContributionRaw(ids) {
-  const url = `${ENV.apiUrl}/publication?ids=${ids.join(',')}`;
+  const url = `${process.env.API_URL}/publication?ids=${ids.join(',')}`;
   const jwt = isAuthenticated();
   return thunkCreator({
     types: ['BATCHDELETE_REQUEST', 'BATCHDELETE_SUCCESS', 'BATCHDELETE_ERROR'],
@@ -34,7 +34,7 @@ function batchDeleteContributionRaw(ids) {
 }
 
 function deleteContributionRaw(id) {
-  const url = `${ENV.apiUrl}/publication/${id}`;
+  const url = `${process.env.API_URL}/publication/${id}`;
   const jwt = isAuthenticated();
   return thunkCreator({
     types: ['CONTRIBUTIONDELETE_REQUEST', 'CONTRIBUTIONDELETE_SUCCESS', 'CONTRIBUTIONDELETE_ERROR'],
@@ -66,7 +66,7 @@ const startContributionEdit = id => {
 
 function saveContributionEditRaw(rowEdit) {
   const { id, ...data } = rowEdit;
-  const url = `${ENV.apiUrl}/publication/${id}`;
+  const url = `${process.env.API_URL}/publication/${id}`;
   const jwt = isAuthenticated();
   return thunkCreator({
     types: ['CONTRIBUTIONEDIT_REQUEST', 'CONTRIBUTIONEDIT_SUCCESS', 'CONTRIBUTIONEDIT_ERROR'],

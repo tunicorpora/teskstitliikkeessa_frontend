@@ -1,7 +1,7 @@
 import { thunkCreator } from './utils';
 
 const performSearch = (filters, textTypeFilter, page = 1) => {
-  let url = `${ENV.apiUrl}/publication?page=${page}`;
+  let url = `${process.env.API_URL}/publication?page=${page}`;
   if (filters.length) {
     url += `&filters=${encodeURIComponent(JSON.stringify(filters))}`;
   }
@@ -18,12 +18,12 @@ const performSearch = (filters, textTypeFilter, page = 1) => {
 };
 
 const fetchDetailsRaw = id => {
-  const url = `${ENV.apiUrl}/publication/${id}`;
+  const url = `${process.env.API_URL}/publication/${id}`;
   return fetch(url).then(response => response.json());
 };
 
 const fetchDetails = id => {
-  const url = `${ENV.apiUrl}/publication/${id}`;
+  const url = `${process.env.API_URL}/publication/${id}`;
 
   return thunkCreator({
     types: ['DETAILS_REQUEST', 'DETAILS_SUCCESS', 'DETAILS_ERROR'],
@@ -35,7 +35,7 @@ const fetchDetails = id => {
 
 const exportResults = alldata => {
   console.log(alldata.map(item => item._id));
-  const url = `${ENV.apiUrl}/export?ids=${alldata.map(item => item._id).join(',')}`;
+  const url = `${process.env.API_URL}/export?ids=${alldata.map(item => item._id).join(',')}`;
   return thunkCreator({
     types: ['EXPORT_REQUEST', 'EXPORT_SUCCESS', 'EXPORT_ERROR'],
     promise: fetch(url).then(response => response.json())

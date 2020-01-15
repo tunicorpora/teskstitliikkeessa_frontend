@@ -10,7 +10,7 @@ export function editCredentials(field, val) {
 }
 
 export function signIn(auth) {
-  const url = `${ENV.apiUrl}/signin`;
+  const url = `${process.env.API_URL}/signin`;
   const { username, password } = auth;
   console.log(username);
   console.log(password);

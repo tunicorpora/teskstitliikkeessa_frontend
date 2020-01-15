@@ -47,12 +47,6 @@ class xlsImporter extends Component {
             </form>
           </div>
         )}
-
-        {true && (
-          <div className={styles.narrowed}>
-            <Deleter dispatch={dispatch} />
-          </div>
-        )}
       </div>
     );
   }
