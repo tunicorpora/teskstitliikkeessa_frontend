@@ -17,7 +17,9 @@ function mapStateToProps(state) {
     searchResults: state.searchResults,
     textTypeFilter: state.textTypeFilter,
     newPublication: state.newPublication,
-    pendingEdits: state.pendingEdits
+    pendingEdits: state.pendingEdits,
+    authorNames: state.authorNames,
+    authorLetters: state.authorLetters
   };
 }
 

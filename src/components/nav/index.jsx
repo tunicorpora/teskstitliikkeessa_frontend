@@ -26,7 +26,7 @@ export default props => {
           </li>
           <li className={isAuthenticated() ? styles.visible : styles.hidden}>
             <a
-              href="javascript:void(0)"
+              href="#"
               onClick={() => {
                 signout();
                 dispatch({ type: 'SIGNOUT' });

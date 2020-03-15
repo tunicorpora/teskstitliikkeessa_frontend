@@ -12,9 +12,13 @@ import searchResultReducer from './searchResults';
 import textTypeFilterReducer from './textTypeFilter';
 import newPublicationReducer from './newPublicationReducer';
 import pendingEditsReducer from './pendingEditsReducer';
+import authorNameReducer from './authorNameReducer';
+import authorLetterReducer from './authorLetterReducer';
 
 const appReducer = combineReducers({
   author: authorReducer,
+  authorNames: authorNameReducer,
+  authorLetters: authorLetterReducer,
   contributionlist: contributionReducer,
   uploadStatus: uploadReducer,
   rowEdit: rowReducer,

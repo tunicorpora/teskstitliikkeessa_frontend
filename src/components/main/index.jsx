@@ -1,14 +1,14 @@
 import { HashRouter, Switch, Route } from 'react-router-dom';
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-import About from '../content/about/index.jsx';
-import Contributions from '../content/contributions/index.jsx';
-import Inspector from '../content/inspector/index.jsx';
-import LinkAdder from '../content/linkadder/index.jsx';
-import Nav from '../nav/index.jsx';
-import Signin from '../auth/signin.jsx';
-import Xlsimporter from '../content/xlsimporter/index.jsx';
+import About from '../content/about';
+import Contributions from '../content/contributions';
+import Inspector from '../content/inspector';
+import LinkAdder from '../content/linkadder';
+import Nav from '../nav';
+import Signin from '../auth/signin';
+import Xlsimporter from '../content/xlsimporter';
 import styles from './general_styles.scss';
 import SearchPage from '../content/search';
 import AuthorEdit from '../content/authoredit';
@@ -31,7 +31,9 @@ const main = props => {
     searchResults,
     textTypeFilter,
     newPublication,
-    pendingEdits
+    pendingEdits,
+    authorNames,
+    authorLetters
   } = props;
 
   return (
@@ -47,7 +49,14 @@ const main = props => {
                 <Route
                   path="/authors"
                   render={() => (
-                    <Inspector author={author} dispatch={dispatch} publications={publications} />
+                    <Inspector
+                      author={author}
+                      dispatch={dispatch}
+                      publications={publications}
+                      authorNames={authorNames}
+                      authorLetters={authorLetters}
+                      uploadStatus={uploadStatus}
+                    />
                   )}
                 />
                 <Route
@@ -128,7 +137,9 @@ const main = props => {
 };
 
 main.propTypes = {
-  searchResults: PropTypes.arrayOf(PropTypes.object).isRequired
+  searchResults: PropTypes.arrayOf(PropTypes.object).isRequired,
+  authorNames: PropTypes.arrayOf(PropTypes.string).isRequired,
+  authorLetters: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
 export default main;

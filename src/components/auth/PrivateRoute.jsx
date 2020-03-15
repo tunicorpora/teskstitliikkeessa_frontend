@@ -3,9 +3,7 @@ import { Route, Redirect } from 'react-router-dom';
 import { authenticate, isAuthenticated, signout } from './utils';
 
 export default ({ component: Component, ...rest }) => (
-  <Route
-    {...rest}
-    render={props =>
+  <Route {...rest} render={props =>
       isAuthenticated() ? (
         <Component {...props} />
       ) : (

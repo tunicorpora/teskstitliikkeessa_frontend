@@ -6,9 +6,9 @@ import Icon from '../../icon';
 const BasicButton = props => {
   const { onClick, id, text, iconName, noBackground, customClass, noKeyDown } = props;
   return (
-    <div
+    <button
       id={id}
-      role="button"
+      type="button"
       tabIndex={0}
       onClick={onClick}
       onKeyDown={!noKeyDown ? onClick : () => null}
@@ -20,7 +20,7 @@ const BasicButton = props => {
           <Icon iconName={iconName} />
         </div>
       )}
-    </div>
+    </button>
   );
 };
 

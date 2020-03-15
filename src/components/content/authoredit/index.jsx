@@ -7,14 +7,17 @@ import {
   editAuthor,
   saveAuthorEdit,
   resetAuthor,
-  deleteAuthor
+  deleteAuthor,
+  combineAuthors
 } from '../../../redux/actions/author';
 import BasicButton from '../../ui/buttons/BasicButton';
 import UploadIndicator from '../../ui/uploadIndicator';
+import AuthorCombiner from './AuthorCombiner';
 import styles from './styles.scss';
+import styleUtils from '../../../general_styles/utilities.scss';
 
 class AuthorEdit extends Component {
-  state = { isEdit: true };
+  state = { isEdit: true, isCombining: false };
 
   switchToNew() {
     const { dispatch } = this.props;
@@ -24,11 +27,12 @@ class AuthorEdit extends Component {
 
   render() {
     const { dispatch, author, uploadStatus } = this.props;
-    const { isEdit } = this.state;
+    const { isEdit, isCombining } = this.state;
+
     return (
       <div>
         <UploadIndicator dispatch={dispatch} uploadStatus={uploadStatus} />
-        {uploadStatus == 'none' && (
+        {uploadStatus === 'none' && (
           <div>
             <div className={styles.switch}>
               <div>
@@ -44,19 +48,30 @@ class AuthorEdit extends Component {
                 Lisää uusi
               </div>
             </div>
-            {isEdit && (
-              <section className={styles.authorSearch}>
-                <div className={styles.authorSearchHeading}>Hae tekijän nimellä</div>
-                <AutocompleteField
-                  path="authornames"
-                  categoryName="flat"
-                  noOptionsMessage="Kirjoita tekijän nimi..."
-                  onChange={selected => dispatch(fetchAuthorByName(selected.value))}
-                />
-              </section>
+            {isEdit && !isCombining && (
+              <div>
+                <div className={styles.authorSearch}>
+                  <div className={styles.authorSearchHeading}>Hae tekijän nimellä</div>
+                  <AutocompleteField
+                    path="authornames"
+                    categoryName="flat"
+                    noOptionsMessage="Kirjoita tekijän nimi..."
+                    onChange={selected => dispatch(fetchAuthorByName(selected.value))}
+                  />
+                </div>
+              </div>
             )}
-            {isEdit && author.name && (
-              <div className={styles.margined}>
+            {isCombining && (
+              <AuthorCombiner
+                initialCombineFrom={author}
+                onSubmit={(from, to) => {
+                  this.setState({ isCombining: false });
+                  dispatch(combineAuthors(from, to));
+                }}
+              />
+            )}
+            {isEdit && author.name && !isCombining && (
+              <div className={`${styles.margined} ${styles.buttonContainer}`}>
                 <BasicButton
                   text="Poista tekijä"
                   iconName="faTrash"
@@ -65,9 +80,15 @@ class AuthorEdit extends Component {
                     dispatch(deleteAuthor(author._id))
                   }
                 />
+                <BasicButton
+                  iconName="faArrowRight"
+                  customClass={styleUtils.ml1}
+                  onClick={() => this.setState({ isCombining: true })}
+                  text="Yhdistä toiseen"
+                />
               </div>
             )}
-            {(!isEdit || (isEdit && author.name)) && (
+            {(!isEdit || (isEdit && author.name)) && !isCombining && (
               <section>
                 <section>
                   <LabelledField

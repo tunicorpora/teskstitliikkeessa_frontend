@@ -19,3 +19,23 @@
 .margined {
   margin: 2em 0em 2em 0em;
 }
+
+.buttonContainer {
+  display: flex;
+  > div {
+    margin-right: 1rem;
+  }
+}
+
+.searchBoxContainer {
+  display: flex;
+  > * {
+    margin-right: 1rem;
+  }
+  align-items: flex-end;
+}
+
+.message {
+  padding: 0.3rem;
+  background: lighten(grey, 20%);
+}

@@ -16,6 +16,22 @@ export function fetchAuthors() {
   });
 }
 
+export function listAuthorNames(letter, page, offset) {
+  const url = `${process.env.API_URL}/authornames?page=${page}&offset=${offset}&letter=${letter}`;
+  return thunkCreator({
+    types: ['AUTHORNAMELIST_REQUEST', 'AUTHORNAMELIST_SUCCESS', 'AUTHORNAMELIST_ERROR'],
+    promise: fetch(url).then(response => response.json())
+  });
+}
+
+export function listAuthorLetters() {
+  const url = `${process.env.API_URL}/authorletters`;
+  return thunkCreator({
+    types: ['AUTHORLETTERLIST_REQUEST', 'AUTHORLETTERLIST_SUCCESS', 'AUTHORLETTERLIST_ERROR'],
+    promise: fetch(url).then(response => response.json())
+  });
+}
+
 export function fetchAuthorByName(name) {
   const url = `${process.env.API_URL}/author/${name}`;
   return thunkCreator({
@@ -83,7 +99,6 @@ export function deleteAuthor(id) {
 }
 
 export const saveAuthorEdit = author => {
-  console.log('FIRE!!');
   const url = `${process.env.API_URL}/author`;
   const jwt = isAuthenticated();
   const validatedAuthor = { ...author };
@@ -99,6 +114,22 @@ export const saveAuthorEdit = author => {
         Authorization: 'Bearer ' + jwt.token
       },
       body: JSON.stringify(validatedAuthor)
+    }).then(response => response.json())
+  });
+};
+
+export const combineAuthors = (from, to) => {
+  const url = `${process.env.API_URL}/authors/combine/${from}/${to}`;
+  const jwt = isAuthenticated();
+  return thunkCreator({
+    types: ['COMBINEAUTHORS_REQUEST', 'COMBINEAUTHORS_SUCCESS', 'COMBINEAUTHORS_ERROR'],
+    promise: fetch(url, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + jwt.token
+      }
     }).then(response => response.json())
   });
 };

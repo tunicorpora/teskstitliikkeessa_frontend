@@ -33,12 +33,12 @@ class SearchPage extends Component {
           action={() => dispatch(performSearch(filters, textTypeFilter))}
           textTypeFilter={textTypeFilter}
         />
-        {uploadStatus.match('progress') && (
+        {typeof uploadStatus === 'string' && uploadStatus.match('progress') && (
           <div className={styles.indicatorContainer}>
             <Loader />
           </div>
         )}
-        {searchResults.length > 0 && (
+        {searchResults.length > 0 ? (
           <section>
             {false && (
               <div>
@@ -57,6 +57,8 @@ class SearchPage extends Component {
               ))}
             </ul>
           </section>
+        ) : typeof uploadStatus === 'string' && uploadStatus.match('success') && (
+          <section className={styles.resultCont}>Ei yhtään osumaa.</section>
         )}
       </div>
     );
@@ -80,5 +82,6 @@ SearchPage.propTypes = {
     other: PropTypes.bool
   }).isRequired
 };
+
 
 export default SearchPage;

@@ -11,7 +11,7 @@ import styles from './autocompletefield.scss';
 const selectStyle = {
   container: provided => ({
     ...provided,
-    'min-width': '10em'
+    minWidth: '10em'
   })
 };
 
@@ -68,7 +68,8 @@ export default class AutoCompleteField extends Component {
       defaultOptions = false,
       value,
       noOptionsMessage,
-      creatable
+      creatable,
+      label
     } = this.props;
 
     let select;
@@ -81,8 +82,8 @@ export default class AutoCompleteField extends Component {
       styles: selectStyle,
       noOptionsMessage: () => noOptionsMessage || 'Kirjoita jotain hakukenttään...'
     };
-    if (value !== undefined) {
-      outProps.value = value;
+    if (value !== undefined && label !== undefined) {
+      outProps.value = { label, value };
     }
 
     return creatable ? (

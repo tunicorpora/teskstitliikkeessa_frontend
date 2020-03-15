@@ -11,6 +11,7 @@ export default {
   output: {
     filename: '[name].[contenthash].bundle.js',
     chunkFilename: '[name].[contenthash].bundle.js',
+    // publicPath: 'https://puolukka.uta.fi/tekstitliikkeessa/',
     publicPath: '/'
   },
   devServer: {

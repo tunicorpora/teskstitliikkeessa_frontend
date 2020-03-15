@@ -4,6 +4,8 @@ export default (state = 'none', action) => {
   switch (type) {
     case 'TEST_UPLOAD':
       return 'testing an upload..';
+    case 'COMBINEAUTHORS_SUCCESS':
+      return 'authors combined';
     case 'UPLOAD_RESET':
       return 'none';
     case 'RESET_ROUTE_STATE':
