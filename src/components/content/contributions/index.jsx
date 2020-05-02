@@ -85,6 +85,7 @@ class Contributionlist extends Component {
           <thead>
             <tr>
               <th key="dummy_id" />
+              <th key="dummy_buttons" />
               <th
                 key="header_utils"
                 style={showControls ? { display: 'block' } : { display: 'none' }}
