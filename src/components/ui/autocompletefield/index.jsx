@@ -82,7 +82,12 @@ export default class AutoCompleteField extends Component {
       styles: selectStyle,
       noOptionsMessage: () => noOptionsMessage || 'Kirjoita jotain hakukenttään...'
     };
-    if (value !== undefined && label !== undefined) {
+		if(isMulti){
+			if (value !== undefined) {
+				outProps.value = value;
+			}
+		}
+    else if (value !== undefined && label !== undefined) {
       outProps.value = { label, value };
     }
 

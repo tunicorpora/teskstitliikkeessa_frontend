@@ -33,12 +33,6 @@ receptionAdder.propTypes = {
   dispatch: PropTypes.func.isRequired,
   publications: PropTypes.objectOf(PropTypes.object).isRequired,
   receptionIds: PropTypes.arrayOf(PropTypes.string),
-  selectProps: PropTypes.shape({
-    path: PropTypes.string,
-    label: PropTypes.string,
-    value: PropTypes.string,
-    tooltipName: PropTypes.arrayOf(PropTypes.string)
-  }).isRequired
 };
 
 receptionAdder.defaultProps = {
