@@ -8,7 +8,7 @@ import styles from './publications.scss';
 import { isAuthenticated } from '../../auth/utils';
 import AddButton from '../../ui/buttons/add';
 
-const translateReceptionKey = key => {
+const translateReceptionKey = (key) => {
   switch (key) {
     case 'translations':
       return 'Käännökset';
@@ -25,7 +25,7 @@ const translateReceptionKey = key => {
   }
 };
 
-const Publication = props => {
+const Publication = (props) => {
   const { details, dispatch, publications, pretitle } = props;
   const { title, receptions, receptionOf, _id, ...fields } = details;
   return (
@@ -37,18 +37,18 @@ const Publication = props => {
           .map(([field, val]) => (
             <li key={field}>
               <span>{field}:</span>
-              <span>{val}</span>
+              <span>{field === 'link' ? <a href={val}>{val}</a> : val}</span>
             </li>
           ))}
       </ul>
       <FoldableBox header="Reseptiot" onOpen={() => dispatch(fetchReceptions(_id))}>
-        {Object.keys(receptions).map(key => {
+        {Object.keys(receptions).map((key) => {
           if (Array.isArray(receptions[key]) && receptions[key].length > 0) {
             return (
               <div key={key}>
-                <h5 className={styles.receptionHeader}>{translateReceptionKey(key)}</h5>
+                <h5 className={styles.receptionHeader}>{translateReceptionKey(key)}</h5>{' '}
                 {receptions[key].map(
-                  rId =>
+                  (rId) =>
                     publications[rId] && (
                       <Publication
                         key={rId}
@@ -76,18 +76,18 @@ Publication.propTypes = {
       reviews: PropTypes.array,
       other: PropTypes.array,
       adaptations: PropTypes.array,
-      articles: PropTypes.array
+      articles: PropTypes.array,
     }),
     receptionOf: PropTypes.array,
-    _id: PropTypes.string.isRequired
+    _id: PropTypes.string.isRequired,
   }).isRequired,
   dispatch: PropTypes.func.isRequired,
   publications: PropTypes.objectOf(PropTypes.object).isRequired,
-  pretitle: PropTypes.string
+  pretitle: PropTypes.string,
 };
 
 Publication.defaultProps = {
-  pretitle: ''
+  pretitle: '',
 };
 
 export default Publication;
