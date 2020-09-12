@@ -89,7 +89,7 @@ const main = props => {
                 />
                 <Route
                   path="/search"
-                  render={() => (
+                  render={(renderProps) => (
                     <SearchPage
                       dispatch={dispatch}
                       publications={publications}
@@ -97,6 +97,7 @@ const main = props => {
                       filters={contributionfilters}
                       textTypeFilter={textTypeFilter}
                       uploadStatus={uploadStatus}
+											{...renderProps}
                     />
                   )}
                 />

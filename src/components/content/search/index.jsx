@@ -4,6 +4,7 @@ import Publication from '../publication';
 import pubStyles from '../inspector/inspector.scss';
 import FilterSet from '../filterset';
 import { performSearch, exportResults } from '../../../redux/actions/publications';
+import { updateFilter } from '../../../redux/actions/filter';
 import { resetRouteState } from '../../../redux/actions/utils';
 import BasicButton from '../../ui/buttons/BasicButton';
 import Loader from '../../ui/CustomLoader';
@@ -11,7 +12,21 @@ import styles from './styles.scss';
 
 class SearchPage extends Component {
   componentDidMount() {
-    const { dispatch } = this.props;
+    const {
+      dispatch,
+      location: { search },
+      filters,
+      textTypeFilter,
+    } = this.props;
+    const params = search.match(/title=([^&]+)/);
+    if (params && params.length && params.length > 1) {
+      const title = params[1];
+      dispatch(updateFilter('field', 'title', 0, filters));
+      dispatch(updateFilter('value', title, 0, filters));
+      dispatch(
+        performSearch([{ fieldname: 'title', field: 'title', value: title }], textTypeFilter)
+      );
+    }
     dispatch(resetRouteState());
   }
 
@@ -22,7 +37,7 @@ class SearchPage extends Component {
       publications,
       filters,
       textTypeFilter,
-      uploadStatus
+      uploadStatus,
     } = this.props;
 
     return (
@@ -50,15 +65,18 @@ class SearchPage extends Component {
             )}
             <h2>Löytyneet tekstit ({searchResults.length})</h2>
             <ul className={pubStyles.receptionList}>
-              {searchResults.map(pub => (
+              {searchResults.map((pub) => (
                 <li key={pub._id}>
                   <Publication details={pub} publications={publications} dispatch={dispatch} />
                 </li>
               ))}
             </ul>
           </section>
-        ) : typeof uploadStatus === 'string' && uploadStatus.match('success') && (
-          <section className={styles.resultCont}>Ei yhtään osumaa.</section>
+        ) : (
+          typeof uploadStatus === 'string' &&
+          uploadStatus.match('success') && (
+            <section className={styles.resultCont}>Ei yhtään osumaa.</section>
+          )
         )}
       </div>
     );
@@ -68,6 +86,7 @@ class SearchPage extends Component {
 SearchPage.propTypes = {
   dispatch: PropTypes.func.isRequired,
   searchResults: PropTypes.arrayOf(PropTypes.object).isRequired,
+  location: PropTypes.shape({ search: PropTypes.string }).isRequired,
   publications: PropTypes.objectOf(PropTypes.object).isRequired,
   filters: PropTypes.arrayOf(
     PropTypes.shape({ fieldname: PropTypes.string, value: PropTypes.string })
@@ -79,9 +98,8 @@ SearchPage.propTypes = {
     adaptations: PropTypes.bool,
     reviews: PropTypes.bool,
     articles: PropTypes.bool,
-    other: PropTypes.bool
-  }).isRequired
+    other: PropTypes.bool,
+  }).isRequired,
 };
-
 
 export default SearchPage;
