@@ -5,17 +5,22 @@ import { updateFilter, removeFilter, filterContributions } from '../../../redux/
 import BasicButton from '../../ui/buttons/BasicButton';
 
 const selectStyle = {
-  container: provided => ({
+  container: (provided) => ({
     ...provided,
-    width: '20em'
-  })
+    width: '20em',
+  }),
 };
 
 const selectStyleSmall = {
-  container: provided => ({
+  container: (provided) => ({
     ...provided,
-    width: '8em'
-  })
+    width: '8em',
+  }),
+};
+
+const getOperatorText = (operator, fieldOptions) => {
+  const pickedOption = fieldOptions.find((o) => o.value == operator);
+  return pickedOption ? pickedOption.label : 'Sisältää';
 };
 
 export default class Filter extends Component {
@@ -27,40 +32,50 @@ export default class Filter extends Component {
   render() {
     const { colnames, idx: filterIndex, dispatch, allfilters } = this.props;
 
+    let fieldOptions = [
+      { label: 'Sisältää', value: 'Sisältää' },
+      { label: 'On täsmälleen', value: '=' },
+    ];
+
+    if (allfilters[filterIndex].fieldname === 'year') {
+      fieldOptions = [
+        ...fieldOptions,
+        { label: 'Suurempi kuin', value: '>' },
+        { label: 'Pienempi kuin', value: '<' },
+      ];
+    }
+
     return (
       <div className={styles.cont}>
         <div>
           <Select
             styles={selectStyle}
-            onChange={selected => this.handleChange('fieldname', selected.value, filterIndex)}
+            onChange={(selected) => this.handleChange('fieldname', selected.value, filterIndex)}
             value={{
               label: allfilters[filterIndex].fieldname,
-              value: allfilters[filterIndex].fieldname
+              value: allfilters[filterIndex].fieldname,
             }}
             options={colnames
-              .filter(colname => colname)
-              .map(colname => ({ label: colname, value: colname }))}
+              .filter((colname) => colname)
+              .map((colname) => ({ label: colname, value: colname }))}
           />
         </div>
         <div>
           <Select
             styles={selectStyleSmall}
-            onChange={selected => this.handleChange('operator', selected.value, filterIndex)}
+            onChange={(selected) => this.handleChange('operator', selected.value, filterIndex)}
             value={{
-              label: allfilters[filterIndex].operator === '=' ? 'On täsmälleen' : 'Sisältää',
-              value: allfilters[filterIndex].operator
+              label: getOperatorText(allfilters[filterIndex].operator, fieldOptions),
+              value: allfilters[filterIndex].operator,
             }}
-            options={[
-              { label: 'Sisältää', value: 'Sisältää' },
-              { label: 'On täsmälleen', value: '=' }
-            ]}
+            options={fieldOptions}
           />
         </div>
         <div>
           <input
             type="text"
             value={allfilters[filterIndex].value || ''}
-            onChange={ev => {
+            onChange={(ev) => {
               this.handleChange('value', ev.target.value, filterIndex);
             }}
           />
