@@ -15,6 +15,7 @@ export default {
     publicPath: '/'
   },
   devServer: {
-    historyApiFallback: true
+    historyApiFallback: true,
+    host: '0.0.0.0',
   }
 };
