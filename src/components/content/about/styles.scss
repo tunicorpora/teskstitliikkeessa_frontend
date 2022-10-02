@@ -1,0 +1,29 @@
+.wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.content {
+  max-width: 750px;
+  text-align: justify;
+  padding: 22px;
+}
+
+.imageContainer {
+  display: grid;
+  background: none;
+  grid-template-columns: 1fr 1fr 1fr;
+  @media only screen and (max-width: 800px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media only screen and (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+
+  row-gap: 20px;
+  img {
+    max-width: 200px;
+  }
+}
