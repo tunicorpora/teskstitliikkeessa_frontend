@@ -10,6 +10,20 @@
   padding: 22px;
 }
 
+.imgLeft {
+  max-height: 250px;
+  shape-outside: rectangle(50%);
+  float: left;
+  margin-right: 22px;
+}
+
+.imgRight {
+  max-height: 250px;
+  shape-outside: rectangle(50%);
+  float: right;
+  margin-left: 22px;
+}
+
 .imageContainer {
   display: grid;
   background: none;
@@ -21,9 +35,26 @@
   @media only screen and (max-width: 600px) {
     grid-template-columns: 1fr;
   }
+}
 
-  row-gap: 20px;
-  img {
-    max-width: 200px;
+.fi {
+  padding: 0 70px 0 70px;
+  padding: 22px;
+  background: hsl(0, 0, 95%);
+  color: hsl(0, 0%, 9%);
+  margin-bottom: 44px;
+  &:after {
+    visibility: hidden;
+    display: table;
+    font-size: 0;
+    content: ' ';
+    clear: both;
+    height: 0;
   }
+}
+
+.ru {
+  padding: 22px;
+  background: hsl(0, 0, 55%);
+  color: hsl(0, 0%, 99%);
 }
